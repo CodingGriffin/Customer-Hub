@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import HubPage from '../../page/Hub';
+import HubPage from '../../page/Hub/Customer';
 
 function HubContainer() {
   return <HubPage />
