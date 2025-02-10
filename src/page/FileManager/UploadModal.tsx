@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Upload, X, Image } from 'lucide-react';
 
-function WelcomeModal() {
+function UploadModal() {
 
   const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -144,4 +144,4 @@ function WelcomeModal() {
   )
 }
 
-export default WelcomeModal;
+export default UploadModal;
