@@ -1,9 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-function AIModal() {
+interface AIModalProps {
+  _closeAIModal: () => void;
+}
+
+const AIModal = React.memo(({ _closeAIModal }: AIModalProps) => {
   
   const [analysisStep, setAnalysisStep] = useState(0);
+
+  const handleClose = (e: React.MouseEvent) => {
+    e.preventDefault();
+    _closeAIModal();
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -12,7 +21,7 @@ function AIModal() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Analyzing Partition with AI</h2>
             <button
-              // onClick={() => setShowAIModal(false)}
+              onClick={handleClose}
               className="text-gray-500 hover:text-gray-700"
             >
               <X className="w-5 h-5" />
@@ -49,6 +58,6 @@ function AIModal() {
       </div>
     </div>
   )
-}
+})
 
 export default AIModal;

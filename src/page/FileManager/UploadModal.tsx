@@ -1,7 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Upload, X, Image } from 'lucide-react';
 
-function UploadModal() {
+interface UploadModalProps {
+  _closeUploadModal: () => void;
+}
+
+const UploadModal = React.memo(({ _closeUploadModal }: UploadModalProps) => {
 
   const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -109,7 +113,7 @@ function UploadModal() {
                     </div>
                   </div>
                   <button
-                    onClick={() => removeFile(index)}
+                    onClick={_closeUploadModal}
                     className="text-gray-400 hover:text-red-600 ml-3 flex-shrink-0"
                   >
                     <X className="w-4 h-4" />
@@ -122,14 +126,14 @@ function UploadModal() {
           {/* Action Buttons */}
           <div className="flex justify-end space-x-3 mt-6">
             <button
-              // onClick={() => setShowUploadModal(false)}
+              onClick={_closeUploadModal}
               className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
             >
               Cancel
             </button>
             <button
               onClick={() => {
-                // setShowUploadModal(false);
+                _closeUploadModal;
                 // setSelectedFiles([]);
               }}
               className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -142,6 +146,6 @@ function UploadModal() {
       </div>
     </div>
   )
-}
+});
 
 export default UploadModal;

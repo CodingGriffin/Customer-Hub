@@ -2,14 +2,14 @@ import React from 'react';
 import { X, Info } from 'lucide-react';
 
 interface WelcomeModalProps {
-  _closeAIModal: () => void;
+  _closeWelcomeModal: () => void;
 }
 
-const WelcomeModal = React.memo(({ _closeAIModal }: WelcomeModalProps) => {
+const WelcomeModal = React.memo(({ _closeWelcomeModal }: WelcomeModalProps) => {
 
   const handleClose = (e: React.MouseEvent) => {
     e.preventDefault();
-    _closeAIModal();
+    _closeWelcomeModal();
   }
   
   return (

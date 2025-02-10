@@ -57,6 +57,14 @@ const FileManagerPage = () => {
     setShowWelcomeModal(false);
   }, []);
 
+  const handleCloseAIModal = useCallback(() => {
+    setShowAIModal(false);
+  }, []);
+
+  const handleCloseWUploadModal = useCallback(() => {
+    setShowUploadModal(false);
+  }, []);
+
   const handleAIAnalysis = () => {
     setShowAIModal(true);
     setAnalysisStep(0);
@@ -153,7 +161,7 @@ const FileManagerPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Welcome Modal */}
-      {showWelcomeModal && <WelcomeModal _closeAIModal = {handleCloseWelcomeModal} />}
+      {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
       {/* Main Content */}
       <Header />
@@ -380,10 +388,10 @@ const FileManagerPage = () => {
       </div>
 
       {/* Upload Modal */}
-      {showUploadModal && <UploadModal />}
+      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} />}
 
       {/* AI Modal */}
-      {showAIModal && <AIModal />}
+      {showAIModal && <AIModal _closeAIModal = {handleCloseAIModal} />}
 
     </div>
   )
