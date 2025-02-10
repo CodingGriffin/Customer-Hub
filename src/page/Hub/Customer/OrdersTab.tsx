@@ -21,11 +21,7 @@ interface Order {
   productImage?: string;
 }
 
-interface OrdersTabProps {
-  onOrdersTabClick: () => void;
-}
-
-export default function OrdersTab({ onOrdersTabClick }: OrdersTabProps) {
+export default function OrdersTab() {
   const [orders] = useState<Order[]>([
     {
       id: '1',
@@ -61,12 +57,6 @@ export default function OrdersTab({ onOrdersTabClick }: OrdersTabProps) {
   const [selectedStep, setSelectedStep] = useState<number>(1);
 
   const selectedOrderData = orders.find(o => o.id === selectedOrder);
-
-  useEffect(() => {
-    if (!selectedOrder) {
-      onOrdersTabClick();
-    }
-  }, [selectedOrder, onOrdersTabClick]);
 
   const resetView = () => {
     setSelectedOrder(null);
