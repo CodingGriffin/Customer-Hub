@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
 interface AIModalProps {
+  analysisStep: number;
   _closeAIModal: () => void;
 }
 
-const AIModal = React.memo(({ _closeAIModal }: AIModalProps) => {
+const AIModal = React.memo(({analysisStep, _closeAIModal }: AIModalProps) => {
   
-  const [analysisStep, setAnalysisStep] = useState(0);
-
   const handleClose = (e: React.MouseEvent) => {
     e.preventDefault();
     _closeAIModal();

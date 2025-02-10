@@ -391,7 +391,7 @@ const FileManagerPage = () => {
       {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} />}
 
       {/* AI Modal */}
-      {showAIModal && <AIModal _closeAIModal = {handleCloseAIModal} />}
+      {showAIModal && <AIModal analysisStep = {analysisStep} _closeAIModal = {handleCloseAIModal} />}
 
     </div>
   )
