@@ -1,4 +1,4 @@
-import React,  { useState, useEffect } from 'react';
+import React,  { useState, useEffect, useCallback } from 'react';
 import { Folder, File, ChevronRight, Upload, Trash2, FolderPlus, MoreVertical, Copy, Pencil, FolderInput, Search, EyeOff, Eye, Sparkles } from 'lucide-react';
 
 import WelcomeModal from './WelcomeModal';
@@ -19,7 +19,7 @@ type FileItem = {
   };
 };
 
-function FileManagerPage() {
+const FileManagerPage = () => {
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [currentPath, setCurrentPath] = useState<string[]>(['Home']);
@@ -52,6 +52,10 @@ function FileManagerPage() {
     }
     return () => clearInterval(timer);
   }, [showAIModal]);
+
+  const handleCloseWelcomeModal = useCallback(() => {
+    setShowWelcomeModal(false);
+  }, []);
 
   const handleAIAnalysis = () => {
     setShowAIModal(true);
@@ -149,7 +153,7 @@ function FileManagerPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Welcome Modal */}
-      {showWelcomeModal && <WelcomeModal />}
+      {showWelcomeModal && <WelcomeModal _closeAIModal = {handleCloseWelcomeModal} />}
 
       {/* Main Content */}
       <Header />

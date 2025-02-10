@@ -1,6 +1,16 @@
+import React from 'react';
 import { X, Info } from 'lucide-react';
 
-function WelcomeModal() {
+interface WelcomeModalProps {
+  _closeAIModal: () => void;
+}
+
+const WelcomeModal = React.memo(({ _closeAIModal }: WelcomeModalProps) => {
+
+  const handleClose = (e: React.MouseEvent) => {
+    e.preventDefault();
+    _closeAIModal();
+  }
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -12,7 +22,7 @@ function WelcomeModal() {
               <h2 className="text-xl font-semibold text-gray-800">Important Guidelines</h2>
             </div>
             <button
-              // onClick={() => setShowWelcomeModal(false)}
+              onClick={handleClose}
               className="text-gray-500 hover:text-gray-700"
             >
               <X className="w-5 h-5" />
@@ -39,7 +49,7 @@ function WelcomeModal() {
 
           <div className="mt-6">
             <button
-              // onClick={() => setShowWelcomeModal(false)}
+              onClick={handleClose}
               className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
             >
               Got it
@@ -49,6 +59,6 @@ function WelcomeModal() {
       </div>
     </div>
   )
-}
+})
 
 export default WelcomeModal;
