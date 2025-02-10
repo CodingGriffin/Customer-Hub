@@ -5,19 +5,7 @@ import WelcomeModal from './WelcomeModal';
 import Header from './Header';
 import UploadModal from './UploadModal';
 import AIModal from './AIModal';
-
-type FileItem = {
-  id: string;
-  name: string;
-  type: 'file' | 'folder';
-  size?: string;
-  modified?: string;
-  hidden?: boolean;
-  aiRecommendation?: {
-    type: 'rename' | 'delete';
-    newName?: string;
-  };
-};
+import { FileItemType } from '../../types';
 
 const FileManagerPage = () => {
 
@@ -32,7 +20,7 @@ const FileManagerPage = () => {
   const [isRenaming, setIsRenaming] = useState<string | null>(null);
   const [newName, setNewName] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [items, setItems] = useState<FileItem[]>([
+  const [items, setItems] = useState<FileItemType[]>([
     { id: '1', name: 'Documents', type: 'folder', hidden: false },
     { id: '2', name: 'Images', type: 'folder', hidden: false },
     { id: '3', name: 'report.pdf', type: 'file', size: '2.4 MB', modified: '2024-03-15', hidden: false },
@@ -149,7 +137,7 @@ const FileManagerPage = () => {
         return item.aiRecommendation.type === 'delete' ? null : item;
       }
       return item;
-    }).filter((item): item is FileItem => item !== null));
+    }).filter((item): item is FileItemType => item !== null));
   };
 
   const handleDiscardRecommendation = (id: string) => {

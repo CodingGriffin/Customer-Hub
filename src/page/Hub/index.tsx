@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Users, MapPin, ShoppingCart, Building2, Sun, Moon } from 'lucide-react';
+import { Users, MapPin, ShoppingCart } from 'lucide-react';
+
+import Header from './Header';
 import ContactsTab from './ContactsTab';
 import AddressesTab from './AddressesTab';
 import OrdersTab from './OrdersTab';
 import VendorOrdersTab from './VendorOrders';
 
-type TabType = 'orders' | 'contacts' | 'addresses';
-type HubType = 'customer' | 'vendor';
+import { TabType, HubType } from '../../types';
 
 function HubPage() {
   const [activeTab, setActiveTab] = useState<TabType>('orders');
@@ -32,36 +33,8 @@ function HubPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {hubType === 'customer' ? 'Customer Hub' : 'Vendor Hub'}
-            </h1>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
-              <button
-                onClick={() => setHubType(hubType === 'customer' ? 'vendor' : 'customer')}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-              >
-                <Building2 className="w-4 h-4 mr-2" />
-                Switch to {hubType === 'customer' ? 'Vendor' : 'Customer'} Hub
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
 
+      <Header hubType={hubType} isDarkMode={isDarkMode} setHubType={setHubType} toggleDarkMode={toggleDarkMode} />
       <main className="max-w-7xl mx-auto px-4 py-6">
         {hubType === 'customer' ? (
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
