@@ -2,7 +2,7 @@ import React,  { useState, useEffect, useCallback } from 'react';
 import { Folder, File, ChevronRight, Upload, Trash2, FolderPlus, MoreVertical, Copy, Pencil, FolderInput, Search, EyeOff, Eye, Sparkles } from 'lucide-react';
 
 import WelcomeModal from './WelcomeModal';
-import Header from './Header';
+import Header from '../../component/FileManager/HeaderComponent';
 import UploadModal from './UploadModal';
 import AIModal from './AIModal';
 import { FileItemType } from '../../types';

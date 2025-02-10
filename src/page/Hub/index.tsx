@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, MapPin, ShoppingCart } from 'lucide-react';
 
-import Header from './Header';
+import Header from '../../component/Hub/HeaderComponent';
 import ContactsTab from './ContactsTab';
 import AddressesTab from './AddressesTab';
 import OrdersTab from './OrdersTab';
