@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import VersionSetup from './VersionSetup';
 
@@ -8,6 +9,7 @@ interface StepSetupProps {
 
 function StepSetup({setSelectedStep}: StepSetupProps) {
 
+  const navigate = useNavigate();
   const [setupOption, setSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
   const [selectedSetupOption, setSelectedSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
   const [wantsSamplePhotos, setWantsSamplePhotos] = useState(false);
@@ -22,6 +24,7 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
         setSelectedSetupOption('version');
         break;
       case 'previous':
+        navigate('/file_manager')
         break;
       default:
         break;
