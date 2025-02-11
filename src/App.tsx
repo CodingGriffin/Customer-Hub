@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import FileManagerContainer from './container/FileManager';
-import HubContainer from './container/Hub';
+import HubContainer from './container';
 
 export default function App() {
   return (

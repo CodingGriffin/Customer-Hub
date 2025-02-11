@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Building2, Sun, Moon } from 'lucide-react';
-import { HubType } from '../../types';
+import { HubType } from '../types';
 
 interface HeaderProps {
   isDarkMode: boolean;

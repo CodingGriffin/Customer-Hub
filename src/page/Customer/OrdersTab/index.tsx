@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import OrdersList from './OrdersList';
 import OrdersDetail from './OrdersDetail';
-import { Order } from '../../../../types';
+import { Order } from '../../../types';
 
 export default function OrdersTab() {
 

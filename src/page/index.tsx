@@ -3,9 +3,9 @@ import { Users, MapPin, ShoppingCart } from 'lucide-react';
 
 import CustomerHubPage from './Customer';
 import VendorOrdersTab from './Vendor/VendorOrders';
-import Header from '../../component/Hub/HeaderComponent';
+import Header from '../component/HeaderComponent';
 
-import { HubType } from '../../types';
+import { HubType } from '../types';
 
 function HubPage() {
   const [hubType, setHubType] = useState<HubType>('customer');

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import ContactsTabContainer from '../../../container/Hub/Customer/ContractsTabContainer';
-import AddressesTabContainer from '../../../container/Hub/Customer/AddressesTabContainer';
-import OrdersTabContainer from '../../../container/Hub/Customer/OrdersTabContainer';
-import TabNav from '../../../component/Hub/TabNavComponent';
+import ContactsTabContainer from '../../container/Customer/ContractsTabContainer';
+import AddressesTabContainer from '../../container/Customer/AddressesTabContainer';
+import OrdersTabContainer from '../../container/Customer/OrdersTabContainer';
+import TabNav from '../../component/TabNavComponent';
 
-import { TabType } from '../../../types';
+import { TabType } from '../../types';
 
 function CustomerHubPage() {
   const [activeTab, setActiveTab] = useState<TabType>('orders');

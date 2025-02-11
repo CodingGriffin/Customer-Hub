@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import OrdersTab from '../../../page/Hub/Customer/OrdersTab';
+import OrdersTab from '../../page/Customer/OrdersTab';
 
 function OrdersTabContainer() {
   return <OrdersTab />
