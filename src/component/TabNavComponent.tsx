@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Users, MapPin, ShoppingCart } from 'lucide-react';
 
-import { TabType } from '../../types';
+import { TabType } from '../types';
 
 interface TabNavProps {
   activeTab: TabType;
