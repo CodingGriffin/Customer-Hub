@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, Plus, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
+import StepUpload from './StepUpload';
 
 function Versions() {
 
@@ -54,22 +55,7 @@ function Versions() {
         )}
 
         {selectedStep === 2 && (
-          <div className="text-center py-12">
-            <HardDrive className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">Upload Files</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Drag and drop your files here</p>
-            <div className="mt-6">
-              <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Files
-              </button>
-            </div>
-            <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-md p-4 mt-4">
-              <p className="text-sm text-blue-700 dark:text-blue-300">
-                The file browser will be implemented here with a button that says "Add Files Here" will call Uppy.js.
-              </p>
-            </div>
-          </div>
+          <StepUpload />
         )}
 
         {selectedStep === 3 && (
