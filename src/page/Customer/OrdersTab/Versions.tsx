@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, Plus, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
-import StepUpload from './StepUploads/StepUpload';
+import StepUpload from './StepUploads';
 
 function Versions() {
 

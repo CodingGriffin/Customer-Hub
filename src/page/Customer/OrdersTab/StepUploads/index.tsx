@@ -12,20 +12,12 @@ function StepUpload() {
   const [activeTab, setActiveTab] = useState('format');
   const [selectedFormat, setSelectedFormat] = useState('FAT32');
 
-  const formatContent = (
-    <Advanced selectedFormat={selectedFormat} setSelectedFormat={setSelectedFormat} />
-  );
-
-  const finalizeContent = (
-    <Review selectedFormat={selectedFormat} windowsDriveLabel={windowsDriveLabel} macosDriveLabel={macosDriveLabel} />
-  );
-
   const renderContent = () => {
     switch (activeTab) {
       case 'advanced':
-        return formatContent;
+        return <Advanced selectedFormat={selectedFormat} setSelectedFormat={setSelectedFormat} />;
       case 'review':
-        return finalizeContent;
+        return <Review selectedFormat={selectedFormat} windowsDriveLabel={windowsDriveLabel} macosDriveLabel={macosDriveLabel} />;
       case 'data-files':
         return <div></div>; // Empty content for data-files tab
       default:
