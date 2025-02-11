@@ -1,77 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Users, MapPin, ShoppingCart, Building2, Settings, FileText, Camera, ArrowLeft, Plus, Truck, Package, Palette, Database, Clock, ChevronDown, ChevronRight, CheckSquare, HardDrive } from 'lucide-react';
+import { MapPin, Settings, FileText, Camera, ArrowLeft, Plus, Truck, Package, Palette, Database, ChevronDown, ChevronRight, HardDrive } from 'lucide-react';
 
-interface OrderJob {
-  id: string;
-  version: number;
-  section: 'packaging' | 'artwork' | 'data';
-  type: 'setup' | 'upload' | 'view' | 'approve' | 'approve-sample' | 'approve-live';
-  title: string;
-  status?: 'pending' | 'approved' | 'rejected';
+interface OrdersDetailProps {
+  selectedOrderData: any;
+  setSelectedOrder: (id: any) => void;
 }
 
-interface Order {
-  id: string;
-  orderNumber: string;
-  status: 'active' | 'completed' | 'on-hold';
-  createdAt: string;
-  jobs: OrderJob[];
-  productName?: string;
-  productConfig?: string;
-  productImage?: string;
-}
-
-export default function OrdersTab() {
-  const [orders] = useState<Order[]>([
-    {
-      id: '1',
-      orderNumber: '12345',
-      status: 'active',
-      createdAt: '2024-03-15',
-      jobs: [],
-      productName: 'Custom USB Drive',
-      productConfig: '32GB Metal Swivel, Brushed Silver',
-      productImage: 'https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=50&h=50&q=80'
-    },
-    {
-      id: '2',
-      orderNumber: '12346',
-      status: 'completed',
-      createdAt: '2024-03-14',
-      jobs: []
-    },
-    {
-      id: '3',
-      orderNumber: '12347',
-      status: 'on-hold',
-      createdAt: '2024-03-13',
-      jobs: []
-    }
-  ]);
-
-  const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
+function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps) {
   const [expandedVersions, setExpandedVersions] = useState<Record<string, boolean>>({});
   const [selectedSection, setSelectedSection] = useState<'packaging' | 'artwork' | 'data' | 'shipments' | null>(null);
   const [setupOption, setSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
   const [wantsSamplePhotos, setWantsSamplePhotos] = useState(false);
   const [selectedStep, setSelectedStep] = useState<number>(1);
 
-  const selectedOrderData = orders.find(o => o.id === selectedOrder);
-
   const resetView = () => {
     setSelectedOrder(null);
     setSelectedSection(null);
     setSelectedStep(1);
-  };
-
-  const getSectionIcon = (section: string) => {
-    switch (section) {
-      case 'packaging': return <Package className="w-5 h-5" />;
-      case 'artwork': return <Palette className="w-5 h-5" />;
-      case 'data': return <Database className="w-5 h-5" />;
-      case 'shipments': return <Truck className="w-5 h-5" />;
-      default: return null;
-    }
   };
 
   const toggleVersion = (version: number) => {
@@ -84,71 +29,15 @@ export default function OrdersTab() {
     });
   };
 
-  if (!selectedOrder) {
-    return (
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Orders</h2>
-        </div>
-
-        <div className="overflow-hidden bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-          <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-            <thead>
-              <tr>
-                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  Order Number
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  Status
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  Created
-                </th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">View</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {orders.map((order) => (
-                <tr
-                  key={order.id}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
-                  onClick={() => setSelectedOrder(order.id)}
-                >
-                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {order.orderNumber}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm">
-                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      order.status === 'completed'
-                        ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-                        : order.status === 'on-hold'
-                        ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
-                        : 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
-                    }`}>
-                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {new Date(order.createdAt).toLocaleDateString()}
-                    </div>
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
-                    <button className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
-                      View<span className="sr-only">, {order.orderNumber}</span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
+  const getSectionIcon = (section: string) => {
+    switch (section) {
+      case 'packaging': return <Package className="w-5 h-5" />;
+      case 'artwork': return <Palette className="w-5 h-5" />;
+      case 'data': return <Database className="w-5 h-5" />;
+      case 'shipments': return <Truck className="w-5 h-5" />;
+      default: return null;
+    }
+  };
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
@@ -454,3 +343,5 @@ export default function OrdersTab() {
     </div>
   );
 }
+
+export default OrdersDetail;

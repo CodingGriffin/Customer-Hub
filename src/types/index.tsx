@@ -14,3 +14,23 @@ export type FileItemType = {
     newName?: string;
   };
 };
+
+export interface OrderJob {
+  id: string;
+  version: number;
+  section: 'packaging' | 'artwork' | 'data';
+  type: 'setup' | 'upload' | 'view' | 'approve' | 'approve-sample' | 'approve-live';
+  title: string;
+  status?: 'pending' | 'approved' | 'rejected';
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  status: 'active' | 'completed' | 'on-hold';
+  createdAt: string;
+  jobs: OrderJob[];
+  productName?: string;
+  productConfig?: string;
+  productImage?: string;
+}
