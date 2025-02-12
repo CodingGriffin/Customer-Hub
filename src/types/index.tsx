@@ -34,3 +34,18 @@ export interface Order {
   productConfig?: string;
   productImage?: string;
 }
+
+export type ArtworkManagerItemType = {
+  id: string;
+  name: string;
+  type: 'file';
+  size?: string;
+  modified?: string;
+  hidden?: boolean;
+  printLocation?: string;
+  comment?: string;
+  aiRecommendation?: {
+    type: 'rename' | 'delete';
+    newName?: string;
+  };
+};
