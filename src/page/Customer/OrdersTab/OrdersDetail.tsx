@@ -125,7 +125,7 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
             {selectedSection === 'shipments' ? (
               <Shipments /> 
             ) : (
-              <Versions />
+              <Versions selectedSection={selectedSection} />
             )}
           </div>
         ) : (

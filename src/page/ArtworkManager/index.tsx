@@ -9,7 +9,7 @@ import { ArtworkManagerItemType } from '../../types';
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const FileManagerPage = () => {
+const ArtworkManagerPage = () => {
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [currentPath, setCurrentPath] = useState<string[]>(['Home']);
@@ -401,4 +401,4 @@ const FileManagerPage = () => {
   )
 }
 
-export default FileManagerPage;
+export default ArtworkManagerPage;

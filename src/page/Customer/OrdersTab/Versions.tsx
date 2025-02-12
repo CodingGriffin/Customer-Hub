@@ -3,8 +3,13 @@ import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
 import StepUpload from './StepUploads';
+import ArtworkManagerPage from '../../ArtworkManager';
 
-function Versions() {
+interface VersionsProps {
+  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments';
+}
+
+function Versions({selectedSection}: VersionsProps) {
 
 
   const [selectedStep, setSelectedStep] = useState<number>(1);
@@ -56,7 +61,7 @@ function Versions() {
         )}
 
         {selectedStep === 2 && (
-          <StepUpload />
+          selectedSection === 'data' ? <StepUpload /> : <ArtworkManagerPage />
         )}
 
         {selectedStep === 3 && (
