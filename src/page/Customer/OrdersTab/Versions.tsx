@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, FileText, Camera, Plus, HardDrive } from 'lucide-react';
+import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
 import StepUpload from './StepUploads';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import VersionSetup from './VersionSetup';
+import VersionSetup from '../VersionSetup';
 
 interface StepSetupProps {
   setSelectedStep: (id: number) => void;
