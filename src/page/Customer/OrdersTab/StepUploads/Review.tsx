@@ -8,7 +8,7 @@ function Review({selectedFormat, windowsDriveLabel, macosDriveLabel}: ReviewProp
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-3 gap-6">
-        <div className="bg-[#1e2229] rounded-lg p-6">
+        <div className="border rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Content Overview</h3>
             <span className="text-green-500">
@@ -33,7 +33,7 @@ function Review({selectedFormat, windowsDriveLabel, macosDriveLabel}: ReviewProp
           </div>
         </div>
 
-        <div className="bg-[#1e2229] rounded-lg p-6">
+        <div className="border rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Format Details</h3>
             <span className="text-green-500">
@@ -58,7 +58,7 @@ function Review({selectedFormat, windowsDriveLabel, macosDriveLabel}: ReviewProp
           </div>
         </div>
 
-        <div className="bg-[#1e2229] rounded-lg p-6">
+        <div className="border rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Drive Labels</h3>
             <span className="text-green-500">
@@ -84,7 +84,7 @@ function Review({selectedFormat, windowsDriveLabel, macosDriveLabel}: ReviewProp
         </div>
       </div>
 
-      <div className="bg-[#1e2229] rounded-lg p-6">
+      <div className="border rounded-lg p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold mb-1">Ready for Data Department Review?</h3>
@@ -95,7 +95,7 @@ function Review({selectedFormat, windowsDriveLabel, macosDriveLabel}: ReviewProp
           </button>
         </div>
         
-        <div className="bg-[#2a2e36] rounded-lg p-4 text-sm text-gray-400">
+        <div className="border rounded-lg p-4 text-sm text-gray-400">
           <p>The Data Department will review your configuration and create a proof USB drive. You'll receive an email notification when the proof is ready for testing. Typical turnaround time is 1-2 business days.</p>
         </div>
       </div>
