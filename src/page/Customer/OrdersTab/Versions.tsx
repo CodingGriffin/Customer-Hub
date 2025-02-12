@@ -7,12 +7,11 @@ import ArtworkManagerPage from '../../ArtworkManager';
 
 interface VersionsProps {
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments';
+  selectedStep: number;
+  setSelectedStep: (step: number) => void;
 }
 
-function Versions({selectedSection}: VersionsProps) {
-
-
-  const [selectedStep, setSelectedStep] = useState<number>(1);
+function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsProps) {
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },

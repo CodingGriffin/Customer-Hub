@@ -12,11 +12,12 @@ interface OrdersDetailProps {
 function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps) {
   const [expandedVersions, setExpandedVersions] = useState<Record<string, boolean>>({});
   const [selectedSection, setSelectedSection] = useState<'packaging' | 'artwork' | 'data' | 'shipments' | null>(null);
+  const [selectedStep, setSelectedStep] = useState<number>(1);
 
   const resetView = () => {
     setSelectedOrder(null);
     setSelectedSection(null);
-    // setSelectedStep(1);
+    setSelectedStep(1);
   };
 
   const toggleVersion = (version: number) => {
@@ -28,6 +29,11 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
       return newState;
     });
   };
+
+  const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null) => {
+    await setSelectedStep(1);
+    await setSelectedSection(section);
+  }
 
   const getSectionIcon = (section: string) => {
     switch (section) {
@@ -87,7 +93,7 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
               {['packaging', 'artwork', 'data'].map((section) => (
                 <button
                   key={section}
-                  onClick={() => setSelectedSection(section as any)}
+                  onClick={() => chooseSection(section as any)}
                   className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
                     selectedSection === section
                       ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
@@ -125,7 +131,7 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
             {selectedSection === 'shipments' ? (
               <Shipments /> 
             ) : (
-              <Versions selectedSection={selectedSection} />
+              <Versions selectedSection={selectedSection} selectedStep={selectedStep} setSelectedStep={setSelectedStep} />
             )}
           </div>
         ) : (
