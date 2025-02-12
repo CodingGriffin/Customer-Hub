@@ -26,7 +26,7 @@ function StepUpload() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1d24] text-white p-8">
+    <div className="min-h-screen dark:bg-gray-800/50 p-3">
       {/* Header */}
       <Header />
 

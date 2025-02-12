@@ -105,10 +105,10 @@ function Advanced({selectedFormat, setSelectedFormat}: AdvancedProps) {
         <p className="text-gray-400">Contact our Data Department staff if you need assistance and require advanced configurations.</p>
       </div>
 
-      <div className="bg-[#1e2229] rounded-lg p-8">
+      <div className="rounded-lg p-3">
         <div className="flex justify-between items-start mb-6">
           <select 
-            className={`w-[75%] bg-[#2a2e36] text-white border border-gray-700 rounded-lg p-3 ${!isFormatSelectEnabled && 'opacity-50 cursor-not-allowed'}`}
+            className={`w-[75%] border border-gray-700 rounded-lg p-3 ${!isFormatSelectEnabled && 'opacity-50 cursor-not-allowed'}`}
             value={selectedFormat}
             onChange={(e) => setSelectedFormat(e.target.value)}
             disabled={!isFormatSelectEnabled}
@@ -123,7 +123,7 @@ function Advanced({selectedFormat, setSelectedFormat}: AdvancedProps) {
           <div className="text-center">
             <button 
               onClick={() => setIsFormatSelectEnabled(true)}
-              className="bg-[#2a2e36] px-4 py-2 rounded-lg hover:bg-[#353a44] transition-colors"
+              className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               Change Defaults
             </button>
@@ -131,7 +131,7 @@ function Advanced({selectedFormat, setSelectedFormat}: AdvancedProps) {
           </div>
         </div>
 
-        <div className="bg-[#2a2e36] rounded-lg p-8">
+        <div className="rounded-lg p-8">
           <div className="flex items-center gap-4 mb-4">
             <svg className="w-8 h-8 text-[#4d9fff]" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
