@@ -33,6 +33,7 @@ function Versions() {
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-500 dark:text-gray-400'
               }`}
+              disabled={selectedStep < step.number}
             >
               <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
                 selectedStep === step.number
