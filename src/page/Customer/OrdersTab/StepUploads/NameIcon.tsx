@@ -128,13 +128,13 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, set
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1d24] text-white p-8">
+    <div className="min-h-screen p-3">
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex justify-between items-center mb-6">
-          <h5 className="text-lg font-medium text-gray-200">Name & Icon</h5>
+          <h5 className="text-lg font-medium">Name & Icon</h5>
           <button 
-            className="flex items-center gap-2 bg-[#2a2e36] px-6 py-2 rounded-lg hover:bg-[#353a44] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             onClick={handleContinue}
             disabled={step === 3 && !!labelError}
           >
@@ -149,10 +149,10 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, set
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   stepNumber === step
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-blue-500'
                     : stepNumber < step
-                    ? 'bg-green-500 text-white'
-                    : 'bg-[#2a2e36] text-gray-400'
+                    ? 'bg-green-500'
+                    : 'border'
                 }`}
               >
                 {stepNumber < step ? (

@@ -6,14 +6,14 @@ interface NameIconFirstProps {
 function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="bg-[#1e2229] rounded-lg p-8 mb-6">
+      <div className="border rounded-lg p-8 mb-6">
         <h2 className="text-xl font-semibold mb-4">Would you like to customize your drive icon?</h2>
         <p className="text-gray-400 mb-6">
           A custom icon helps identify your drive in File Explorer and Finder. The icon will be displayed
           when the drive is connected to a computer.
         </p>
         <div className="space-y-4">
-          <label className="flex items-center gap-3 p-4 bg-[#2a2e36] rounded-lg cursor-pointer hover:bg-[#353a44] transition-colors">
+          <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer  transition-colors">
             <input
               type="radio"
               name="iconOption"
@@ -27,7 +27,7 @@ function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
               <p className="text-sm text-gray-400">Use the default system icon</p>
             </div>
           </label>
-          <label className="flex items-center gap-3 p-4 bg-[#2a2e36] rounded-lg cursor-pointer hover:bg-[#353a44] transition-colors">
+          <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer  transition-colors">
             <input
               type="radio"
               name="iconOption"
@@ -41,7 +41,7 @@ function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
               <p className="text-sm text-gray-400">Create new custom icons for Windows and macOS</p>
             </div>
           </label>
-          <label className="flex items-center gap-3 p-4 bg-[#2a2e36] rounded-lg cursor-pointer hover:bg-[#353a44] transition-colors">
+          <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer  transition-colors">
             <input
               type="radio"
               name="iconOption"
