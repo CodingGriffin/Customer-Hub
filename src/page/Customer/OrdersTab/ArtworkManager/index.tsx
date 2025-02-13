@@ -7,9 +7,13 @@ import UploadModal from './UploadModal';
 import AIModal from './AIModal';
 import { ArtworkManagerItemType } from '../../../../types';
 
+interface ArtworkManagerProps {
+  setSelectedStep: (id: number) => void;
+}
+
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = () => {
+const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [currentPath, setCurrentPath] = useState<string[]>(['Home']);
@@ -177,7 +181,7 @@ const ArtworkManagerPage = () => {
       {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
       {/* Main Content */}
-      <Header />
+      <Header setSelectedStep={setSelectedStep} />
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
       {/* Breadcrumb */}
       <div className="flex items-center space-x-2 mb-4 text-sm text-gray-600 overflow-x-auto whitespace-nowrap pb-2">

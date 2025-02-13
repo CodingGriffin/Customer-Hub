@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import { Menu, Binary as Binoculars } from 'lucide-react';
 
-function Header() {
+interface HeaderProps {
+  setSelectedStep: (id: number) => void;
+}
+
+function Header({setSelectedStep} : HeaderProps) {
   
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const continueSetup = () => {
+    setSelectedStep(3);
+  }
 
   return (
     <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
@@ -23,6 +31,17 @@ function Header() {
               className="sm:hidden p-2 hover:bg-gray-100 rounded-lg"
             >
               <Menu className="w-5 h-5 text-gray-600" />
+            </button>
+            <button
+              onClick={continueSetup}
+              // disabled={!(nameIconStep == 3)}
+              className={`px-4 py-2 rounded-md text-white ${
+                // nameIconStep == 3
+                  'bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600'
+                  // : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
+              }`}
+            >
+              Continue
             </button>
           </div>
         </div>
