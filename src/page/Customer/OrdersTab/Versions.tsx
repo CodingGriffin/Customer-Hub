@@ -3,7 +3,7 @@ import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
 import StepUpload from './StepUploads';
-import ArtworkManagerPage from '../../ArtworkManager';
+import ArtworkManagerPage from './ArtworkManager';
 
 interface VersionsProps {
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments';

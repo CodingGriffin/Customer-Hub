@@ -2,10 +2,10 @@ import React,  { useState, useEffect, useCallback } from 'react';
 import { Folder, File, ChevronRight, Upload, Trash2, FolderPlus, MoreVertical, Pencil, Search, Sparkles, MessageSquare } from 'lucide-react';
 
 import WelcomeModal from './WelcomeModal';
-import Header from '../../component/ArtworkManager/HeaderComponent';
+import Header from '../../../../component/ArtworkManager/HeaderComponent';
 import UploadModal from './UploadModal';
 import AIModal from './AIModal';
-import { ArtworkManagerItemType } from '../../types';
+import { ArtworkManagerItemType } from '../../../../types';
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
