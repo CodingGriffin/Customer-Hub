@@ -44,7 +44,7 @@ function StepUpload({setSelectedStep}: StepUploadProps) {
 
       {/* Main Content */}
       {renderContent()}
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-4">
         <button
           onClick={continueSetup}
           disabled={!(nameIconStep == 3)}
