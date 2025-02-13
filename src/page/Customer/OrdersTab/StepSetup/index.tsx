@@ -14,7 +14,6 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
   const [selectedSetupOption, setSelectedSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
   const [wantsSamplePhotos, setWantsSamplePhotos] = useState(false);
 
-
   const continueSetup = () => {
     switch (setupOption) {
       case 'new':

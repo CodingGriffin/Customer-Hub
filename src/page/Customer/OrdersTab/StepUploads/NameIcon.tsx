@@ -9,6 +9,8 @@ interface NameIconProps {
   setWindowsDriveLabel: (status: string) => void;
   macosDriveLabel: string;
   setMacosDriveLabel: (status: string) => void;
+  nameIconStep: number;
+  setNameIconStep: (nameIconStep: number) => void;
 }
 
 // Validation rules for different file systems
@@ -45,8 +47,7 @@ const FILE_SYSTEM_RULES = {
   }
 };
 
-function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, setMacosDriveLabel}: NameIconProps) {
-  const [step, setStep] = useState(1);
+function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsDriveLabel, setMacosDriveLabel, setNameIconStep}: NameIconProps) {
   const [iconOption, setIconOption] = useState('none');
   const [windowsIcon, setWindowsIcon] = useState<File | null>(null);
   const [macosIcon, setMacosIcon] = useState<File | null>(null);
@@ -97,19 +98,19 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, set
   }, [selectedFormat]);
 
   const handleContinue = () => {
-    if (step === 1) {
-      setStep(2);
-    } else if (step === 2) {
+    if (nameIconStep === 1) {
+      setNameIconStep(2);
+    } else if (nameIconStep === 2) {
       if (iconOption === 'upload' && (!windowsIcon || !macosIcon)) {
         return; // Don't proceed if icons are required but not uploaded
       }
-      setStep(3);
+      setNameIconStep(3);
     }
     // Step 3 would handle final submission
   };
 
   const renderStepContent = () => {
-    switch (step) {
+    switch (nameIconStep) {
       case 1:
         return (
           <NameIconFirst iconOption={iconOption} setIconOption={setIconOption} />
@@ -136,7 +137,7 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, set
           <button 
             className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             onClick={handleContinue}
-            disabled={step === 3 && !!labelError}
+            disabled={nameIconStep === 3 && !!labelError}
           >
             Save and Continue
           </button>
@@ -148,14 +149,14 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, set
             <React.Fragment key={stepNumber}>
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  stepNumber === step
+                  stepNumber === nameIconStep
                     ? 'bg-blue-500'
-                    : stepNumber < step
+                    : stepNumber < nameIconStep
                     ? 'bg-green-500'
                     : 'border'
                 }`}
               >
-                {stepNumber < step ? (
+                {stepNumber < nameIconStep ? (
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
@@ -166,7 +167,7 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, setWindowsDriveLabel, set
               {stepNumber < 3 && (
                 <div
                   className={`flex-1 h-0.5 ${
-                    stepNumber < step ? 'bg-green-500' : 'bg-[#2a2e36]'
+                    stepNumber < nameIconStep ? 'bg-green-500' : 'bg-[#2a2e36]'
                   }`}
                 />
               )}

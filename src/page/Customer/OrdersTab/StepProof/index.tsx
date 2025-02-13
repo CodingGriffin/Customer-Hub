@@ -14,7 +14,7 @@ import {
   Loader
 } from 'lucide-react';
 import { Modal } from '../../../../component/StepProof/Modal';
-import { UserManagement } from './components/UserManagement';
+import { UserManagement } from './UserManagement';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 

@@ -60,7 +60,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsPro
         )}
 
         {selectedStep === 2 && (
-          selectedSection === 'data' ? <StepUpload /> : <ArtworkManagerPage />
+          selectedSection === 'data' ? <StepUpload  setSelectedStep = {setSelectedStep} /> : <ArtworkManagerPage />
         )}
 
         {selectedStep === 3 && (
