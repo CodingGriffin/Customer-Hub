@@ -133,7 +133,7 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex justify-between items-center mb-6">
-          <h5 className="text-lg font-medium">Name & Icon</h5>
+          <h5 className="text-lg font-medium dark:text-white">Name & Icon</h5>
         </div>
 
         {/* Progress Steps */}
@@ -141,7 +141,7 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
           {[1, 2, 3].map((stepNumber) => (
             <React.Fragment key={stepNumber}>
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                className={`w-8 h-8 rounded-full flex items-center justify-center dark:text-white ${
                   stepNumber === nameIconStep
                     ? 'bg-blue-500'
                     : stepNumber < nameIconStep

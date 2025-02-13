@@ -7,7 +7,7 @@ function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="border rounded-lg p-8 mb-6">
-        <h2 className="text-xl font-semibold mb-4">Would you like to customize your drive icon?</h2>
+        <h2 className="text-xl font-semibold mb-4 dark:text-white">Would you like to customize your drive icon?</h2>
         <p className="text-gray-400 mb-6">
           A custom icon helps identify your drive in File Explorer and Finder. The icon will be displayed
           when the drive is connected to a computer.
@@ -23,7 +23,7 @@ function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
               className="text-[#4d9fff] focus:ring-[#4d9fff]"
             />
             <div>
-              <span className="font-medium">No custom icon</span>
+              <span className="font-medium dark:text-white">No custom icon</span>
               <p className="text-sm text-gray-400">Use the default system icon</p>
             </div>
           </label>
@@ -37,7 +37,7 @@ function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
               className="text-[#4d9fff] focus:ring-[#4d9fff]"
             />
             <div>
-              <span className="font-medium">Upload new icons</span>
+              <span className="font-medium dark:text-white">Upload new icons</span>
               <p className="text-sm text-gray-400">Create new custom icons for Windows and macOS</p>
             </div>
           </label>
@@ -51,7 +51,7 @@ function NameIconFirst({iconOption, setIconOption}: NameIconFirstProps) {
               className="text-[#4d9fff] focus:ring-[#4d9fff]"
             />
             <div>
-              <span className="font-medium">Use existing icons</span>
+              <span className="font-medium dark:text-white">Use existing icons</span>
               <p className="text-sm text-gray-400">Select from previously created icons</p>
             </div>
           </label>

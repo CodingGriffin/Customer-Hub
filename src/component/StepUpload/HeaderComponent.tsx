@@ -7,7 +7,7 @@ function Header({activeTab}: HeaderProps) {
     <div className="flex justify-between items-center mb-8">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold mb-1">Partition #1</h1>
+          <h1 className="text-2xl font-bold mb-1 dark:text-white">Partition #1</h1>
           <div className="group relative">
             <button className="text-gray-400 hover:text-gray-300">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
