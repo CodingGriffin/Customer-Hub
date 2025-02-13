@@ -97,7 +97,7 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
               : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
           }`}
         >
-          Continue Setup
+          Continue
         </button>
       </div>
     </div>

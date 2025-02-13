@@ -13,7 +13,7 @@ import {
   ZoomOut,
   Loader
 } from 'lucide-react';
-import { Modal } from './components/Modal';
+import { Modal } from '../../../../component/StepProof/Modal';
 import { UserManagement } from './components/UserManagement';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
