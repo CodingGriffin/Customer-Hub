@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Modal } from '../../../../component/StepProof/Modal';
 import { UserManagement } from './UserManagement';
+import Bottom from './Bottom';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -63,7 +64,7 @@ function StepProof() {
   const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.5));
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 relative">
       {/* Main Content Area */}
       <div className="flex-1 relative">
         {/* PDF Viewer */}
@@ -199,39 +200,7 @@ function StepProof() {
       </div>
 
       {/* Bottom Panel */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg z-40">
-        <div className="container mx-auto flex justify-between items-center">
-          <button
-            onClick={() => setIsUserManagementOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors"
-            title="Open reviewer management"
-          >
-            <Users2 size={20} />
-            <span>Invite Reviewers</span>
-          </button>
-          
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsRejectModalOpen(true)}
-              className="flex items-center gap-2 px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-              disabled={!!pdfError}
-              title="Request changes to the document"
-            >
-              <ThumbsDown size={16} />
-              Request Changes
-            </button>
-            <button
-              onClick={() => setIsApproveModalOpen(true)}
-              className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-              disabled={!!pdfError}
-              title="Approve document for production"
-            >
-              <ThumbsUp size={16} />
-              Approve for Production
-            </button>
-          </div>
-        </div>
-      </div>
+      <Bottom pdfError={pdfError} setIsApproveModalOpen={setIsApproveModalOpen} setIsRejectModalOpen={setIsRejectModalOpen} setIsUserManagementOpen={setIsUserManagementOpen} />
 
       {/* Modals */}
       <Modal
