@@ -1,4 +1,8 @@
-function Header() {
+interface HeaderProps {
+  activeTab: string;
+}
+
+function Header({activeTab}: HeaderProps) {
   return (
     <div className="flex justify-between items-center mb-8">
       <div className="flex items-center gap-4">
@@ -25,6 +29,7 @@ function Header() {
       <div className="text-center">
         <button 
               className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              disabled={ activeTab !== 'advanced' }
               >
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />

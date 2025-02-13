@@ -134,13 +134,6 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex justify-between items-center mb-6">
           <h5 className="text-lg font-medium">Name & Icon</h5>
-          <button 
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            onClick={handleContinue}
-            disabled={nameIconStep === 3 && !!labelError}
-          >
-            Save and Continue
-          </button>
         </div>
 
         {/* Progress Steps */}
@@ -178,6 +171,15 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
 
       {/* Step Content */}
       {renderStepContent()}
+      <div className="flex justify-end items-center mt-6">
+        <button 
+            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            onClick={handleContinue}
+            disabled={nameIconStep === 3 && !!labelError}
+          >
+            Save and Continue
+        </button>
+      </div>
     </div>
   );
 }

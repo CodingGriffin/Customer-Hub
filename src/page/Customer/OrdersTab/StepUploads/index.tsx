@@ -37,7 +37,7 @@ function StepUpload({setSelectedStep}: StepUploadProps) {
   return (
     <div className="min-h-screen dark:bg-gray-800/50 p-3">
       {/* Header */}
-      <Header />
+      <Header activeTab={activeTab}/>
 
       {/* Top Navigation */}
       <Nav activeTab={activeTab} setActiveTab={setActiveTab} />
