@@ -18,7 +18,7 @@ import { UserManagement } from './UserManagement';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function App() {
+function StepProof() {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [scale, setScale] = useState(0.5);
@@ -304,4 +304,4 @@ function App() {
   );
 }
 
-export default App;
+export default StepProof;

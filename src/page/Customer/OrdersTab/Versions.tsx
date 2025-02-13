@@ -3,6 +3,7 @@ import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
 import StepUpload from './StepUploads';
+import StepProof from './StepProof';
 import ArtworkManagerPage from './ArtworkManager';
 
 interface VersionsProps {
@@ -64,11 +65,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsPro
         )}
 
         {selectedStep === 3 && (
-          <div className="text-center py-12">
-            <FileText className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">Review Files</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">View and approve your files</p>
-          </div>
+          <StepProof />
         )}
 
         {selectedStep === 4 && (
