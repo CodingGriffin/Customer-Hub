@@ -132,10 +132,6 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
     <div className="min-h-screen p-3">
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-8">
-        <div className="flex justify-between items-center mb-6">
-          <h5 className="text-lg font-medium dark:text-white">Name & Icon</h5>
-        </div>
-
         {/* Progress Steps */}
         <div className="flex items-center gap-2">
           {[1, 2, 3].map((stepNumber) => (

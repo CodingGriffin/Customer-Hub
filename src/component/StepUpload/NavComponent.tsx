@@ -8,7 +8,7 @@ interface TabNavProps {
 
 const Nav = React.memo(({ activeTab, setActiveTab }: TabNavProps) => {
   return (
-    <nav className="flex gap-8 mb-12 text-gray-400 border-b border-gray-700 pb-4">
+    <nav className="flex gap-8 mb-5 text-gray-400 border-b border-gray-700 pb-4">
       <button 
         onClick={() => setActiveTab('advanced')}
         className={`flex items-center gap-2 ${activeTab === 'advanced' ? 'text-[#4d9fff]' : ''}`}

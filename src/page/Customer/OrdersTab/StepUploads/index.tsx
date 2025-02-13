@@ -37,26 +37,13 @@ function StepUpload({setSelectedStep}: StepUploadProps) {
   return (
     <div className="min-h-screen dark:bg-gray-800/50 p-3">
       {/* Header */}
-      <Header activeTab={activeTab}/>
+      <Header activeTab={activeTab} continueSetup={continueSetup}/>
 
       {/* Top Navigation */}
       <Nav activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Content */}
       {renderContent()}
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={continueSetup}
-          disabled={!(nameIconStep == 3)}
-          className={`px-4 py-2 rounded-md text-white ${
-            nameIconStep == 3
-              ? 'bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600'
-              : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
-          }`}
-        >
-          Continue
-        </button>
-      </div>
     </div>
   );
 }
