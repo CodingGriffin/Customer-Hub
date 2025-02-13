@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { pdfjs } from 'react-pdf';
 import { X } from 'lucide-react';
-import { Modal } from '../../../../component/StepProof/Modal';
+import { Modal } from '../../../../component/ArtworkProofViewer/Modal';
 import { UserManagement } from './UserManagement';
 import Bottom from './Bottom';
 import PdfViewer from './PdfViewer';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function StepProof() {
+function ArtworkProofViewer() {
 
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
@@ -135,4 +135,4 @@ function StepProof() {
   );
 }
 
-export default StepProof;
+export default ArtworkProofViewer;

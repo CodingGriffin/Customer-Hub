@@ -3,7 +3,7 @@ import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
 import StepSetup from './StepSetup';
 import StepUpload from './StepUploads';
-import StepProof from './StepProof';
+import ArtworkProofViewer from './ArtworkProofViewer';
 import ArtworkManagerPage from './ArtworkManager';
 
 interface VersionsProps {
@@ -65,7 +65,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsPro
         )}
 
         {selectedStep === 3 && (
-          <StepProof />
+          <ArtworkProofViewer />
         )}
 
         {selectedStep === 4 && (
