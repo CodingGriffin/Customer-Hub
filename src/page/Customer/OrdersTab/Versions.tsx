@@ -5,6 +5,7 @@ import StepSetup from './StepSetup';
 import StepUpload from './StepUploads';
 import ArtworkProofViewer from './ArtworkProofViewer';
 import ArtworkManagerPage from './ArtworkManager';
+import DataProof from './DataProof';
 
 interface VersionsProps {
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments';
@@ -65,7 +66,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsPro
         )}
 
         {selectedStep === 3 && (
-          <ArtworkProofViewer />
+          selectedSection === 'data' ? <DataProof /> : <ArtworkProofViewer />
         )}
 
         {selectedStep === 4 && (
