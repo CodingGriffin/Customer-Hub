@@ -190,7 +190,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Welcome Modal */}
       {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
@@ -198,7 +198,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
       <Header setSelectedStep={setSelectedStep} />
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
       {/* Breadcrumb */}
-      <div className="flex items-center space-x-2 mb-4 text-sm text-gray-600 overflow-x-auto whitespace-nowrap pb-2">
+      <div className="flex items-center space-x-2 mb-4 text-sm dark:text-gray-600 overflow-x-auto whitespace-nowrap pb-2">
         {currentPath.map((item, index) => (
           <React.Fragment key={index}>
             {index > 0 && <ChevronRight className="w-4 h-4 flex-shrink-0" />}
@@ -265,7 +265,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
       </div>
 
       {/* Files and Folders Grid */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="rounded-lg shadow overflow-hidden">
           <div className="hidden sm:grid px-4 sm:px-6 py-3 border-b border-gray-200 grid-cols-8 text-xs sm:text-sm font-medium text-gray-500">
             <div className="col-span-5">Name</div>
             <div className="col-span-1">Size</div>
@@ -276,7 +276,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
           <div className="divide-y divide-gray-200">
             {items.map((item) => (
               <div key={item.id}>
-                <div className={`px-4 sm:px-6 py-3 hover:bg-gray-50 ${item.hidden ? 'opacity-50' : ''}`}>
+                <div className={`px-4 sm:px-6 py-3 hover:bg-gray-50 hover:dark:bg-gray-700 ${item.hidden ? 'opacity-50' : ''}`}>
                   <div className="sm:grid sm:grid-cols-8 sm:gap-4">
                     <div className="col-span-5">
                       <div className="flex items-center">
@@ -299,7 +299,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
                             />
                           </form>
                         ) : (
-                          <span className="ml-3 text-gray-900 text-sm">{item.name}</span>
+                          <span className="ml-3 text-gray-900 text-sm dark:text-white">{item.name}</span>
                         )}
                       </div>
                     </div>
@@ -357,7 +357,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
                       </select>
                       <button
                         onClick={() => handleCommentClick(item.id)}
-                        className="flex items-center text-gray-500 hover:text-gray-700 text-sm"
+                        className="flex items-center text-gray-500 hover:text-gray-700 text-sm hover:dark:text-gray-400"
                       >
                         <MessageSquare className="w-4 h-4 mr-1.5" />
                         <span>Tell our designers about this file...</span>
@@ -374,7 +374,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
                   </div>
                 )}
                 {item.aiRecommendation && (
-                  <div className="px-4 sm:px-6 py-2 bg-purple-50">
+                  <div className="px-4 sm:px-6 py-2 bg-purple-50 dark:bg-gray-500">
                     <div className="flex items-start">
                       <Sparkles className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
                       <div className="ml-2">

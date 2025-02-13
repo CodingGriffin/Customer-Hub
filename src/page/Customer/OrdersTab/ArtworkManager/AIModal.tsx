@@ -15,10 +15,10 @@ const AIModal = React.memo(({analysisStep, _closeAIModal }: AIModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4">
         <div className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Analyzing Partition with AI</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">Analyzing Partition with AI</h2>
             <button
               onClick={handleClose}
               className="text-gray-500 hover:text-gray-700"
@@ -30,25 +30,25 @@ const AIModal = React.memo(({analysisStep, _closeAIModal }: AIModalProps) => {
           <div className="space-y-4">
             <div className="flex items-center">
               <div className={`w-5 h-5 rounded-full ${analysisStep >= 1 ? 'bg-purple-600' : 'bg-gray-200'} mr-3`} />
-              <span className={`text-sm ${analysisStep >= 1 ? 'text-gray-900' : 'text-gray-500'}`}>
+              <span className={`text-sm ${analysisStep >= 1 ? 'text-gray-900 dark:text-gray-400' : 'text-gray-500 dark:text-white'}`}>
                 Determining Data Upload Type
               </span>
             </div>
             <div className="flex items-center">
               <div className={`w-5 h-5 rounded-full ${analysisStep >= 2 ? 'bg-purple-600' : 'bg-gray-200'} mr-3`} />
-              <span className={`text-sm ${analysisStep >= 2 ? 'text-gray-900' : 'text-gray-500'}`}>
+              <span className={`text-sm ${analysisStep >= 2 ? 'text-gray-900 dark:text-gray-400' : 'text-gray-500 dark:text-white'}`}>
                 Looking for common extraneous, unnecessary files
               </span>
             </div>
             <div className="flex items-center">
               <div className={`w-5 h-5 rounded-full ${analysisStep >= 3 ? 'bg-purple-600' : 'bg-gray-200'} mr-3`} />
-              <span className={`text-sm ${analysisStep >= 3 ? 'text-gray-900' : 'text-gray-500'}`}>
+              <span className={`text-sm ${analysisStep >= 3 ? 'text-gray-900 dark:text-gray-400' : 'text-gray-500 dark:text-white'}`}>
                 Examining file name length
               </span>
             </div>
             <div className="flex items-center">
               <div className={`w-5 h-5 rounded-full ${analysisStep >= 4 ? 'bg-purple-600' : 'bg-gray-200'} mr-3`} />
-              <span className={`text-sm ${analysisStep >= 4 ? 'text-gray-900' : 'text-gray-500'}`}>
+              <span className={`text-sm ${analysisStep >= 4 ? 'text-gray-900 dark:text-gray-400' : 'text-gray-500 dark:text-white'}`}>
                 Formulating Recommendations
               </span>
             </div>

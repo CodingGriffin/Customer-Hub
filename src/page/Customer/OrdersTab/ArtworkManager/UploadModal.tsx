@@ -53,10 +53,10 @@ const UploadModal = React.memo(({ _closeUploadModal }: UploadModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl mx-4">
         <div className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Upload Files</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">Upload Files</h2>
             <button
               // onClick={() => setShowUploadModal(false)}
               className="text-gray-500 hover:text-gray-700"
@@ -127,7 +127,7 @@ const UploadModal = React.memo(({ _closeUploadModal }: UploadModalProps) => {
           <div className="flex justify-end space-x-3 mt-6">
             <button
               onClick={_closeUploadModal}
-              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg dark:bg-gray-100 hover:dark:bg-gray-400"
             >
               Cancel
             </button>
@@ -136,7 +136,7 @@ const UploadModal = React.memo(({ _closeUploadModal }: UploadModalProps) => {
                 _closeUploadModal;
                 // setSelectedFiles([]);
               }}
-              className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 "
               disabled={selectedFiles.length === 0}
             >
               Upload {selectedFiles.length > 0 && `(${selectedFiles.length})`}
