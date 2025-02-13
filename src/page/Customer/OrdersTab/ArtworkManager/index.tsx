@@ -1,10 +1,11 @@
 import React,  { useState, useEffect, useCallback } from 'react';
 import { Folder, File, ChevronRight, Upload, Trash2, FolderPlus, MoreVertical, Pencil, Search, Sparkles, MessageSquare } from 'lucide-react';
 
-import WelcomeModal from './WelcomeModal';
 import Header from '../../../../component/ArtworkManager/HeaderComponent';
+import WelcomeModal from './WelcomeModal';
 import UploadModal from './UploadModal';
 import AIModal from './AIModal';
+import CommentModal from './CommentModal';
 import { ArtworkManagerItemType } from '../../../../types';
 
 interface ArtworkManagerProps {
@@ -173,6 +174,19 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
     setItems(prevItems => prevItems.map(item => 
       item.id === id ? { ...item, aiRecommendation: undefined } : item
     ));
+  };
+
+  const handleCommentSubmit = () => {
+    if (activeFileId) {
+      setItems(prevItems =>
+        prevItems.map(item =>
+          item.id === activeFileId ? { ...item, comment: commentText } : item
+        )
+      );
+      setShowCommentModal(false);
+      setCommentText('');
+      setActiveFileId(null);
+    }
   };
 
   return (
@@ -394,7 +408,8 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
           </div>
         </div>
       </div>
-
+      {/* Comment Modal */}
+      {showCommentModal && <CommentModal commentText={commentText} setCommentText={setCommentText} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} />}
       {/* Upload Modal */}
       {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} />}
 

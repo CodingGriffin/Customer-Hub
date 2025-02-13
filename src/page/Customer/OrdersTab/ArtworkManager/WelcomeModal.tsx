@@ -19,7 +19,7 @@ const WelcomeModal = React.memo(({ _closeWelcomeModal }: WelcomeModalProps) => {
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center">
                   <Info className="w-5 h-5 text-blue-600 mr-2" />
-                  <h2 className="text-xl font-semibold text-gray-800">Important Guidelines</h2>
+                  <h2 className="text-xl font-semibold text-gray-800">Prepare Your Artwork</h2>
                 </div>
                 <button
                   onClick={handleClose}
@@ -32,7 +32,7 @@ const WelcomeModal = React.memo(({ _closeWelcomeModal }: WelcomeModalProps) => {
               <div className="space-y-4">
                 {/* Educational Resources Section */}
                 <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                  <h3 className="text-sm font-medium text-blue-800 mb-2">Prepare Your Artwork</h3>
+                  {/* <h3 className="text-sm font-medium text-blue-800 mb-2">Prepare Your Artwork</h3> */}
                   <p className="text-sm text-blue-700 mb-3">
                     Before uploading, learn how to prepare your artwork properly:
                   </p>
