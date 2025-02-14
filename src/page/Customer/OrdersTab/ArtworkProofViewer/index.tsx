@@ -38,16 +38,16 @@ function ArtworkProofViewer() {
           isUserManagementOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full dark:bg-gray-700">
           <div className="p-4 border-b">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="text-xl font-semibold">Invite Reviewers</h2>
-                <p className="text-gray-600 mt-1">Invite others to review and approve on your behalf.</p>
+                <h2 className="text-xl font-semibold dark:text-white">Invite Reviewers</h2>
+                <p className="text-gray-600 mt-1 dark:text-gray-400">Invite others to review and approve on your behalf.</p>
               </div>
               <button
                 onClick={() => setIsUserManagementOpen(false)}
-                className="p-1 hover:bg-gray-100 rounded-full"
+                className="p-1 rounded-full dark:text-white"
                 title="Close panel"
               >
                 <X size={20} />

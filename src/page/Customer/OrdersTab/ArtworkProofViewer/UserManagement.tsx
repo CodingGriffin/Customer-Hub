@@ -130,18 +130,18 @@ export function UserManagement() {
 
         <div className="space-y-4">
           <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">Role</label>
+            <label className="text-sm font-medium text-gray-700 block mb-2 dark:text-white">Role</label>
             <div className="space-y-2">
               {ROLES.map(role => (
                 <div key={role.id} className="flex items-center group">
-                  <label className="flex items-center space-x-2 flex-1">
+                  <label className="flex items-center space-x-2 flex-1 dark:text-white">
                     <input
                       type="checkbox"
                       checked={newUser.roles.includes(role.id)}
                       onChange={() => toggleRole(role.id)}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-700">{role.name}</span>
+                    <span className="text-sm text-gray-700 dark:text-white">{role.name}</span>
                   </label>
                   <div className="relative">
                     <Info 
@@ -158,7 +158,7 @@ export function UserManagement() {
           </div>
 
           <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">User Can:</label>
+            <label className="text-sm font-medium text-gray-700 block mb-2 dark:text-white">User Can:</label>
             <div className="space-y-2">
               {PERMISSIONS.map(permission => (
                 <div key={permission.id} className="flex items-center">
@@ -170,7 +170,7 @@ export function UserManagement() {
                       disabled={permission.required}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 disabled:opacity-50"
                     />
-                    <span className="text-sm text-gray-700">{permission.name}</span>
+                    <span className="text-sm text-gray-700 dark:text-white">{permission.name}</span>
                     {permission.required && (
                       <span className="text-xs text-gray-500">(Required)</span>
                     )}

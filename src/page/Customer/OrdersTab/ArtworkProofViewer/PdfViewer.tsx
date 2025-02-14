@@ -46,7 +46,7 @@ function PdfViewer({pdfError, setPdfError}: PdfViewerProps) {
   const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.5));
   
   return (
-    <div className="flex-1 relative">
+    <div className="flex-1 relative dark:bg-gray-400">
       <div className="p-4 overflow-auto h-full">
         {isLoading && (
           <div className="flex items-center justify-center h-full">
@@ -62,24 +62,24 @@ function PdfViewer({pdfError, setPdfError}: PdfViewerProps) {
         ) : (
           <div className="flex flex-col items-center">
             {/* PDF Controls */}
-            <div className="sticky top-0 z-20 flex items-center justify-between p-4 bg-white rounded-lg shadow-sm mb-4 w-full max-w-3xl">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
+            <div className="sticky top-0 z-20 flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-4 w-full max-w-3xl">
+              <div className="flex items-center gap-4 dark:text-white">
+                <div className="flex items-center gap-2 ">
                   <button
                     onClick={previousPage}
                     disabled={currentPage <= 1}
-                    className="p-2 rounded hover:bg-gray-100 disabled:opacity-50"
+                    className="p-2 rounded hover:bg-gray-100 disabled:opacity-50 hover:dark:bg-gray-500"
                     title="Previous page"
                   >
                     <ChevronLeft size={20} />
                   </button>
-                  <span className="text-sm">
+                  <span className="text-sm ">
                     Page {currentPage} of {numPages || '?'}
                   </span>
                   <button
                     onClick={nextPage}
                     disabled={currentPage >= (numPages || 1)}
-                    className="p-2 rounded hover:bg-gray-100 disabled:opacity-50"
+                    className="p-2 rounded hover:bg-gray-100 disabled:opacity-50 hover:dark:bg-gray-500"
                     title="Next page"
                   >
                     <ChevronRight size={20} />
@@ -137,7 +137,7 @@ function PdfViewer({pdfError, setPdfError}: PdfViewerProps) {
                 className="mb-4 shadow-lg"
                 width={window.innerWidth * 0.6}
                 error={
-                  <div className="flex flex-col items-center justify-center p-4 bg-red-50 rounded-lg">
+                  <div className="flex flex-col items-center justify-center p-4 rounded-lg">
                     <AlertCircle className="text-red-600 mb-2" size={24} />
                     <p className="text-red-600">Failed to load page {currentPage}</p>
                   </div>
