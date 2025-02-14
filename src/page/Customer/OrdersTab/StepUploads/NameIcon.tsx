@@ -109,6 +109,10 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
     // Step 3 would handle final submission
   };
 
+  const handleBack = () => {
+    setNameIconStep(nameIconStep-1)
+  };
+
   const renderStepContent = () => {
     switch (nameIconStep) {
       case 1:
@@ -170,6 +174,14 @@ function NameIcon({windowsDriveLabel, macosDriveLabel, nameIconStep, setWindowsD
       <div className="flex justify-end items-center mt-6">
         <button 
             className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            onClick={handleBack}
+            disabled={nameIconStep === 1}
+          >
+            Back
+        </button>
+
+        <button 
+            className="inline-flex items-center ml-4 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             onClick={handleContinue}
             disabled={nameIconStep === 3 && !!labelError}
           >
