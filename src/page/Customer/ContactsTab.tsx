@@ -60,7 +60,7 @@ export default function ContactsTab() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium text-gray-900">Contacts</h2>
+        <h2 className="text-lg font-medium text-gray-900 dark:text-white">Contacts</h2>
         <button
           onClick={addContact}
           className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
@@ -72,23 +72,23 @@ export default function ContactsTab() {
 
       <div className="space-y-4">
         {contacts.map(contact => (
-          <div key={contact.id} className="bg-gray-50 p-4 rounded-lg">
+          <div key={contact.id} className="bg-gray-50 p-4 rounded-lg dark:bg-gray-900">
             <div className="flex justify-between items-start mb-4">
               {isEditing === contact.id ? (
                 <input
                   type="text"
                   value={contact.name}
                   onChange={(e) => updateContact(contact.id, { name: e.target.value })}
-                  className="border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   placeholder="Contact Name"
                 />
               ) : (
-                <h3 className="text-lg font-medium">{contact.name || 'Unnamed Contact'}</h3>
+                <h3 className="text-lg font-medium dark:text-white">{contact.name || 'Unnamed Contact'}</h3>
               )}
               <div className="flex space-x-2">
                 <button
                   onClick={() => setIsEditing(isEditing === contact.id ? null : contact.id)}
-                  className="text-gray-400 hover:text-gray-500"
+                  className="text-gray-400 hover:text-gray-500 dark:text-white"
                 >
                   {isEditing === contact.id ? <X className="w-5 h-5" /> : <Edit2 className="w-5 h-5" />}
                 </button>
@@ -103,7 +103,7 @@ export default function ContactsTab() {
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Email Addresses</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-2 dark:text-white">Email Addresses</h4>
                 {contact.emails.map((email, index) => (
                   <div key={email.id} className="flex items-center space-x-2 mb-2">
                     <input
@@ -115,7 +115,7 @@ export default function ContactsTab() {
                         updateContact(contact.id, { emails: newEmails });
                       }}
                       disabled={!isEditing}
-                      className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                     <button
                       onClick={() => {
@@ -134,7 +134,7 @@ export default function ContactsTab() {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Phone Numbers</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-2 dark:text-white">Phone Numbers</h4>
                 {contact.phones.map((phone, index) => (
                   <div key={phone.id} className="flex items-center space-x-2 mb-2">
                     <input
@@ -146,7 +146,7 @@ export default function ContactsTab() {
                         updateContact(contact.id, { phones: newPhones });
                       }}
                       disabled={!isEditing}
-                      className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                     <button
                       onClick={() => {
