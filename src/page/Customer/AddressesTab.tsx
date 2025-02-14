@@ -85,7 +85,7 @@ export default function AddressesTab() {
                   type="text"
                   value={address.street}
                   onChange={(e) => updateAddress(address.id, { street: e.target.value })}
-                  className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 px-2 py-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                 />
               </div>
 
@@ -95,7 +95,7 @@ export default function AddressesTab() {
                   type="text"
                   value={address.city}
                   onChange={(e) => updateAddress(address.id, { city: e.target.value })}
-                  className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 px-2 py-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                 />
               </div>
 
@@ -106,7 +106,7 @@ export default function AddressesTab() {
                     type="text"
                     value={address.state}
                     onChange={(e) => updateAddress(address.id, { state: e.target.value })}
-                    className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 px-2 py-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
@@ -115,7 +115,7 @@ export default function AddressesTab() {
                     type="text"
                     value={address.zipCode}
                     onChange={(e) => updateAddress(address.id, { zipCode: e.target.value })}
-                    className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 px-2 py-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
