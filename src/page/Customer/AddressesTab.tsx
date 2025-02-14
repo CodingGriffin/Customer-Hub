@@ -58,7 +58,7 @@ export default function AddressesTab() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium text-gray-900">Addresses</h2>
+        <h2 className="text-lg font-medium text-gray-900 dark:text-white">Addresses</h2>
         <button
           onClick={addAddress}
           className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
@@ -70,7 +70,7 @@ export default function AddressesTab() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {addresses.map(address => (
-          <div key={address.id} className="bg-gray-50 p-4 rounded-lg relative">
+          <div key={address.id} className="bg-gray-50 p-4 rounded-lg relative dark:bg-gray-900">
             <button
               onClick={() => deleteAddress(address.id)}
               className="absolute top-4 right-4 text-red-400 hover:text-red-500"
@@ -80,42 +80,42 @@ export default function AddressesTab() {
 
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Street Address</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white">Street Address</label>
                 <input
                   type="text"
                   value={address.street}
                   onChange={(e) => updateAddress(address.id, { street: e.target.value })}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">City</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white">City</label>
                 <input
                   type="text"
                   value={address.city}
                   onChange={(e) => updateAddress(address.id, { city: e.target.value })}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">State</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white">State</label>
                   <input
                     type="text"
                     value={address.state}
                     onChange={(e) => updateAddress(address.id, { state: e.target.value })}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">ZIP Code</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white">ZIP Code</label>
                   <input
                     type="text"
                     value={address.zipCode}
                     onChange={(e) => updateAddress(address.id, { zipCode: e.target.value })}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 px-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
