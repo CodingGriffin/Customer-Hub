@@ -30,6 +30,10 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
     }
   }
 
+  const returnSetup = () => {
+    setSelectedSetupOption(null);
+  }
+
   return (
     <div className="space-y-6">
       {selectedSetupOption == null && 
@@ -87,10 +91,23 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
       </div>
 
       <div className="flex justify-end">
+        {selectedSetupOption == 'version' &&
+          <button
+            onClick={returnSetup}
+            disabled={!setupOption}
+            className={`px-4 py-2 rounded-md text-white ${
+              setupOption
+                ? 'bg-red-600 dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600'
+                : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
+            }`}
+          >
+            Cancel
+          </button>
+        }
         <button
           onClick={continueSetup}
           disabled={!setupOption}
-          className={`px-4 py-2 rounded-md text-white ${
+          className={`ml-4 px-4 py-2 rounded-md text-white ${
             setupOption
               ? 'bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600'
               : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'

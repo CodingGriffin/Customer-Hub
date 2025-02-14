@@ -14,7 +14,7 @@ function VersionSetup() {
         <select
           value={selectedVersion}
           onChange={(e) => setSelectedVersion(e.target.value)}
-          className="w-full bg-[#1a1f2e] border border-gray-700 rounded px-3 py-2 text-gray-300"
+          className="w-full dark:bg-[#1a1f2e] border border-gray-700 rounded px-3 py-2 dark:text-gray-300"
         >
           <option value="">Select version...</option>
           {versions.map((version) => (
@@ -25,7 +25,7 @@ function VersionSetup() {
         </select>
       </div>
       {selectedVersion && (
-        <p className="text-gray-400 bg-[#1a1f2e] p-4 rounded">
+        <p className="bg-gray-100 dark:text-gray-400 dark:bg-[#1a1f2e] p-4 rounded">
           Note: Approval for the PAD for this version will depend on the approval for Version #{selectedVersion}
         </p>
       )}
