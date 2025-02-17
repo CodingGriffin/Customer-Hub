@@ -1,39 +1,15 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Edit2, X } from 'lucide-react';
 
-interface Contact {
-  id: string;
-  name: string;
-  emails: Array<{ id: string; email: string; disabled: boolean }>;
-  phones: Array<{ id: string; number: string; disabled: boolean }>;
+import { Contact } from '../../types';
+
+interface ContactsTabProps {
+  contacts: Contact[];
+  setContacts: (contacts: Contact[]) => void;
 }
 
-export default function ContactsTab() {
-  const [contacts, setContacts] = useState<Contact[]>([
-    {
-      id: '1',
-      name: 'John Smith',
-      emails: [
-        { id: 'e1', email: 'john.smith@example.com', disabled: false },
-        { id: 'e2', email: 'john.s.work@example.com', disabled: true }
-      ],
-      phones: [
-        { id: 'p1', number: '(555) 123-4567', disabled: false },
-        { id: 'p2', number: '(555) 987-6543', disabled: true }
-      ]
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      emails: [
-        { id: 'e3', email: 'sarah.j@example.com', disabled: false },
-        { id: 'e4', email: 'sjohnson@example.com', disabled: false }
-      ],
-      phones: [
-        { id: 'p3', number: '(555) 234-5678', disabled: false }
-      ]
-    }
-  ]);
+export default function ContactsTab({contacts, setContacts}: ContactsTabProps) {
+
   const [isEditing, setIsEditing] = useState<string | null>(null);
 
   const addContact = () => {

@@ -3,7 +3,7 @@ import FileManagerContainer from './container/FileManager';
 import HubPage from './page';
 import OrdersList from './container/Customer/Orders';
 import OrdersDetail from './page/Customer/OrdersTab/OrdersDetail';
-import ContactsTab from './page/Customer/ContactsTab';
+import ContactsList from './container/Customer/Contacts';
 import AddressesTab from './page/Customer/AddressesTab';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
 import Shipments from './page/Customer/OrdersTab/Shipments';
@@ -28,7 +28,7 @@ export default function App() {
               <Route path="shipments" element={<Shipments />} />
             </Route>
           </Route>
-          <Route path="contacts" element={<ContactsTab />} />
+          <Route path="contacts" element={<ContactsList />} />
           <Route path="addresses" element={<AddressesTab />} />
       </Route>
       <Route path="/file_manager" element={<FileManagerContainer />} />

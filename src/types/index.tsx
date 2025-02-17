@@ -49,3 +49,10 @@ export type ArtworkManagerItemType = {
     newName?: string;
   };
 };
+
+export type Contact = {
+  id: string;
+  name: string;
+  emails: Array<{ id: string; email: string; disabled: boolean }>;
+  phones: Array<{ id: string; number: string; disabled: boolean }>;
+}
