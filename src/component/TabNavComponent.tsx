@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Users, MapPin, ShoppingCart } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { TabType } from '../types';
+const TabNav = React.memo(() => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname.split('/').pop();
 
-interface TabNavProps {
-  activeTab: TabType;
-  setActiveTab: (status: TabType) => void;
-}
+  const getActiveTab = () => {
+    switch (path) {
+      case 'contacts':
+        return 'contacts';
+      case 'addresses':
+        return 'addresses';
+      default:
+        return 'orders';
+    }
+  };
 
-const TabNav = React.memo(({ activeTab, setActiveTab }: TabNavProps) => {
+  const activeTab = getActiveTab();
+
   return (
     <div className="border-b border-gray-200 dark:border-gray-700">
       <nav className="flex -mb-px">
         <button
-          onClick={() => setActiveTab('orders')}
+          onClick={() => navigate('/orders')}
           className={`${
             activeTab === 'orders'
               ? 'border-blue-500 text-blue-600 dark:text-blue-400'
@@ -24,7 +35,7 @@ const TabNav = React.memo(({ activeTab, setActiveTab }: TabNavProps) => {
           Orders
         </button>
         <button
-          onClick={() => setActiveTab('contacts')}
+          onClick={() => navigate('/contacts')}
           className={`${
             activeTab === 'contacts'
               ? 'border-blue-500 text-blue-600 dark:text-blue-400'
@@ -35,7 +46,7 @@ const TabNav = React.memo(({ activeTab, setActiveTab }: TabNavProps) => {
           Contacts
         </button>
         <button
-          onClick={() => setActiveTab('addresses')}
+          onClick={() => navigate('/addresses')}
           className={`${
             activeTab === 'addresses'
               ? 'border-blue-500 text-blue-600 dark:text-blue-400'
@@ -47,7 +58,6 @@ const TabNav = React.memo(({ activeTab, setActiveTab }: TabNavProps) => {
         </button>
       </nav>
     </div>
-
   );
 });
 

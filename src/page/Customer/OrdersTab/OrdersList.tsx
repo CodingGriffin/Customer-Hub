@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Clock } from 'lucide-react';
+import { Order } from '../../../types';
 
 interface OrdersListProps {
-  orders: any;
+  orders: Order[];
   setSelectedOrder: (id: string) => void;
 }
 

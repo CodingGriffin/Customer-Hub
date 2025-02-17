@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
 import OrdersList from './OrdersList';
-import OrdersDetail from './OrdersDetail';
+import { useNavigate } from 'react-router-dom';
 import { Order } from '../../../types';
 
 export default function OrdersTab() {
-
+  const navigate = useNavigate();
   const [orders] = useState<Order[]>([
     {
       id: '1',
@@ -33,14 +32,9 @@ export default function OrdersTab() {
     }
   ]);
 
-  const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
+  const setSelectedOrder = (id: string) => {
+    navigate(`/orders/${id}`);
+  };
 
-
-  const selectedOrderData = orders.find(o => o.id === selectedOrder);
-
-  return (
-    <>
-      {selectedOrder == null ? <OrdersList orders={orders} setSelectedOrder={setSelectedOrder} /> : <OrdersDetail selectedOrderData={selectedOrderData} setSelectedOrder={setSelectedOrder} />}
-    </>
-  )
+  return <OrdersList orders={orders} setSelectedOrder={setSelectedOrder} />;
 }
