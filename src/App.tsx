@@ -4,7 +4,7 @@ import HubPage from './page';
 import OrdersList from './container/Customer/Orders';
 import OrdersDetail from './page/Customer/OrdersTab/OrdersDetail';
 import ContactsList from './container/Customer/Contacts';
-import AddressesTab from './page/Customer/AddressesTab';
+import AddressesList from './container/Customer/Addresses';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
 import Shipments from './page/Customer/OrdersTab/Shipments';
 import StepSetupWrapper from './page/Customer/OrdersTab/StepSetupWrapper';
@@ -15,21 +15,21 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<HubPage />}>
-          <Route index element={<Navigate to="/orders" replace />} />
-          <Route path="orders">
-            <Route index element={<OrdersList />} />
-            <Route path=":orderId" element={<OrdersDetail />}>
-              <Route index element={<div>Select a section to begin</div>} />
-              <Route path=":section" element={<VersionsWrapper />}>
-                <Route path="setup" element={<StepSetupWrapper />} />
-                <Route path="upload" element={<StepUploadWrapper />} />
-                <Route path="proof" element={<ArtworkProofViewer />} />
-              </Route>
-              <Route path="shipments" element={<Shipments />} />
+        <Route index element={<Navigate to="/orders" replace />} />
+        <Route path="orders">
+          <Route index element={<OrdersList />} />
+          <Route path=":orderId" element={<OrdersDetail />}>
+            <Route index element={<div>Select a section to begin</div>} />
+            <Route path=":section" element={<VersionsWrapper />}>
+              <Route path="setup" element={<StepSetupWrapper />} />
+              <Route path="upload" element={<StepUploadWrapper />} />
+              <Route path="proof" element={<ArtworkProofViewer />} />
             </Route>
+            <Route path="shipments" element={<Shipments />} />
           </Route>
-          <Route path="contacts" element={<ContactsList />} />
-          <Route path="addresses" element={<AddressesTab />} />
+        </Route>
+        <Route path="contacts" element={<ContactsList />} />
+        <Route path="addresses" element={<AddressesList />} />
       </Route>
       <Route path="/file_manager" element={<FileManagerContainer />} />
     </Routes>

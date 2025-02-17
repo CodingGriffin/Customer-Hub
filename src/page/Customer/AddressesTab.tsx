@@ -1,38 +1,14 @@
 import React, { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 
-interface Address {
-  id: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
+import { Address } from '../../types';
+
+interface AddressesProps {
+  addresses: Address[];
+  setAddresses: (addresses: Address[]) => void;
 }
 
-export default function AddressesTab() {
-  const [addresses, setAddresses] = useState<Address[]>([
-    {
-      id: '1',
-      street: '123 Main Street',
-      city: 'San Francisco',
-      state: 'CA',
-      zipCode: '94105'
-    },
-    {
-      id: '2',
-      street: '456 Market Street, Suite 200',
-      city: 'San Francisco',
-      state: 'CA',
-      zipCode: '94103'
-    },
-    {
-      id: '3',
-      street: '789 Howard Street',
-      city: 'San Francisco',
-      state: 'CA',
-      zipCode: '94107'
-    }
-  ]);
+export default function AddressesTab({addresses, setAddresses}: AddressesProps) {
 
   const addAddress = () => {
     const newAddress: Address = {

@@ -56,3 +56,11 @@ export type Contact = {
   emails: Array<{ id: string; email: string; disabled: boolean }>;
   phones: Array<{ id: string; number: string; disabled: boolean }>;
 }
+
+export type Address = {
+  id: string;
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
