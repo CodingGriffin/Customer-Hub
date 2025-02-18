@@ -123,7 +123,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <Outlet context={{ selectedOrderData, selectedSection }} />
+        <Outlet context={{ selectedOrderData, selectedSection, selectedStep, setSelectedStep }} />
       </div>
     </div>
   );

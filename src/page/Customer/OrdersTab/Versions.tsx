@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
+import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
+  selectedStep: number
+  setSelectedStep: (step: number) => void;
 }
 
-function Versions({selectedSection }: VersionsProps) {
-  const [selectedStep, setSelectedStep] = useState(1);
+function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProps) {
+  const navigate = useNavigate();
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
@@ -17,6 +20,39 @@ function Versions({selectedSection }: VersionsProps) {
     { number: 4, title: 'Photo Sample', icon: <Camera className="w-5 h-5" /> },
     { number: 5, title: 'Live Sample', icon: <Camera className="w-5 h-5" /> }
   ];
+
+  const setStep = async (step: number) => {
+    await setSelectedStep(step)
+    switch (selectedSection) {
+      case 'data':
+        if (step ==1) {
+          navigate(`../${selectedSection}/setup`);
+        } else if (step == 2) {
+          navigate(`../${selectedSection}/data-upload`);
+        } else if (step == 3) {
+          navigate(`../${selectedSection}/data-proof`);
+        }
+        break;
+      case 'artwork':
+        if (step ==1) {
+          navigate(`../${selectedSection}/setup`);
+        } else if (step == 2) {
+          navigate(`../${selectedSection}/artwork-upload`);
+        } else if (step == 3) {
+          navigate(`../${selectedSection}/artwork-proof`);
+        }
+        break;
+      default:
+        if (step ==1) {
+          navigate(`../${selectedSection}/setup`);
+        } else if (step == 2) {
+          navigate(`../${selectedSection}/artwork-upload`);
+        } else if (step == 3) {
+          navigate(`../${selectedSection}/artwork-proof`);
+        }
+        break;
+    }
+  };
 
   return (
     <>
@@ -28,7 +64,7 @@ function Versions({selectedSection }: VersionsProps) {
           {steps.map((step) => (
             <button
               key={step.number}
-              onClick={() => setSelectedStep(step.number)}
+              onClick={() => setStep(step.number)}
               className={`flex items-center ${
                 selectedStep === step.number
                   ? 'text-blue-600 dark:text-blue-400'
