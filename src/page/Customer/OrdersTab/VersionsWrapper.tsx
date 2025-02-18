@@ -5,17 +5,15 @@ import Versions from './Versions';
 
 interface OrderContext {
   selectedOrderData: Order;
+  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
 }
 
 export default function VersionsWrapper() {
-  const { selectedOrderData } = useOutletContext<OrderContext>();
-  const [selectedStep, setSelectedStep] = useState(1);
+  const { selectedOrderData, selectedSection } = useOutletContext<OrderContext>();
 
   return (
     <Versions 
-      selectedSection={section as 'packaging' | 'artwork' | 'data' | 'shipments'}
-      selectedStep={selectedStep}
-      setSelectedStep={setSelectedStep}
+      selectedSection={selectedSection}
     />
   );
 }

@@ -64,3 +64,8 @@ export type Address = {
   state: string;
   zipCode: string;
 }
+
+export interface VersionsContext {
+  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
+  setSelectedStep: (step: number) => void;
+}

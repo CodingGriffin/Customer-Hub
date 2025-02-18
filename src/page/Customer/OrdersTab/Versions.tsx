@@ -6,14 +6,14 @@ import StepUpload from './StepUploads';
 import ArtworkProofViewer from './ArtworkProofViewer';
 import ArtworkManagerPage from './ArtworkManager';
 import DataProof from './DataProof';
+import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
-  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments';
-  selectedStep: number;
-  setSelectedStep: (step: number) => void;
+  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
 }
 
-function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsProps) {
+function Versions({selectedSection }: VersionsProps) {
+  const [selectedStep, setSelectedStep] = useState(1);
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
@@ -57,33 +57,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep }: VersionsPro
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        {selectedStep === 1 && (
-          <StepSetup setSelectedStep = {setSelectedStep} />
-        )}
-
-        {selectedStep === 2 && (
-          selectedSection === 'data' ? <StepUpload setSelectedStep = {setSelectedStep} /> : <ArtworkManagerPage setSelectedStep = {setSelectedStep} />
-        )}
-
-        {selectedStep === 3 && (
-          selectedSection === 'data' ? <DataProof /> : <ArtworkProofViewer />
-        )}
-
-        {selectedStep === 4 && (
-          <div className="text-center py-12">
-            <Camera className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">Sample Photos</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Review sample photos before production</p>
-          </div>
-        )}
-
-        {selectedStep === 5 && (
-          <div className="text-center py-12">
-            <Camera className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">Live Sample</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Review and approve live sample</p>
-          </div>
-        )}
+        <Outlet context={{ selectedSection, setSelectedStep }} />
       </div>
     </>
   )

@@ -9,6 +9,8 @@ import ShipmentsList from './container/Customer/Orders/Shipments';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
 import StepSetupWrapper from './page/Customer/OrdersTab/StepSetupWrapper';
 import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
+import DataProof from './page/Customer/OrdersTab/DataProof';
+import ArtworkManagerWrapper from './page/Customer/OrdersTab/ArtworkManagerWrapper';
 import ArtworkProofViewer from './page/Customer/OrdersTab/ArtworkProofViewer';
 
 export default function App() {
@@ -22,8 +24,10 @@ export default function App() {
             <Route index element={<div>Select a section to begin</div>} />
             <Route path=":section" element={<VersionsWrapper />}>
               <Route path="setup" element={<StepSetupWrapper />} />
-              <Route path="upload" element={<StepUploadWrapper />} />
-              <Route path="proof" element={<ArtworkProofViewer />} />
+              <Route path="data-upload" element={<StepUploadWrapper />} />
+              <Route path="data-proof" element={<DataProof />} />
+              <Route path="artwork-upload" element={<ArtworkManagerWrapper />} />
+              <Route path="artwork-proof" element={<ArtworkProofViewer />} />
             </Route>
             <Route path="shipments" element={<ShipmentsList />} />
           </Route>

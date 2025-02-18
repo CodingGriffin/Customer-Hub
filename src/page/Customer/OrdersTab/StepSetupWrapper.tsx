@@ -1,15 +1,22 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+
 import StepSetup from './StepSetup';
+import { VersionsContext } from '../../../types';
 
 export default function StepSetupWrapper() {
   const navigate = useNavigate();
-  
-  const setSelectedStep = (step: number) => {
+  const { selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
+  const setStep = async (step: number) => {
+    await setSelectedStep(step)
     if (step === 2) {
-      navigate('../upload');
+      if (selectedSection === 'artwork') {
+        navigate('../artwork-upload');
+      } else if (selectedSection === 'data') {
+        navigate('../data-upload');
+      }
     }
   };
 
-  return <StepSetup setSelectedStep={setSelectedStep} />;
+  return <StepSetup setSelectedStep={setStep} />;
 }

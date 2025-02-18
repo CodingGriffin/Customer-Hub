@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
-import StepUpload from './StepUploads';
+import ArtworkManagerPage from './ArtworkManager';
 import { VersionsContext } from '../../../types';
 
-export default function StepUploadWrapper() {
+export default function ArtworkManagerWrapper() {
   const navigate = useNavigate();
   const { selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
   
@@ -19,5 +19,5 @@ export default function StepUploadWrapper() {
     }
   };
 
-  return <StepUpload setSelectedStep={setStep} />;
+  return <ArtworkManagerPage setSelectedStep={setStep} />;
 }
