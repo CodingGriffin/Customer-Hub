@@ -10,10 +10,10 @@ export default function StepSetupWrapper() {
   const setStep = async (step: number) => {
     await setSelectedStep(step)
     if (step === 2) {
-      if (selectedSection === 'artwork') {
-        navigate('../artwork-upload');
-      } else if (selectedSection === 'data') {
+      if (selectedSection === 'data') {
         navigate('../data-upload');
+      } else {
+        navigate('../artwork-upload');
       }
     }
   };

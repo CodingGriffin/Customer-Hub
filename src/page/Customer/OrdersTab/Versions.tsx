@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
-import StepSetup from './StepSetup';
-import StepUpload from './StepUploads';
-import ArtworkProofViewer from './ArtworkProofViewer';
-import ArtworkManagerPage from './ArtworkManager';
-import DataProof from './DataProof';
 import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
