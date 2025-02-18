@@ -5,8 +5,8 @@ import OrdersList from './container/Customer/Orders';
 import OrderDetail from './container/Customer/Orders/detail';
 import ContactsList from './container/Customer/Contacts';
 import AddressesList from './container/Customer/Addresses';
+import ShipmentsList from './container/Customer/Orders/Shipments';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
-import Shipments from './page/Customer/OrdersTab/Shipments';
 import StepSetupWrapper from './page/Customer/OrdersTab/StepSetupWrapper';
 import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
 import ArtworkProofViewer from './page/Customer/OrdersTab/ArtworkProofViewer';
@@ -25,7 +25,7 @@ export default function App() {
               <Route path="upload" element={<StepUploadWrapper />} />
               <Route path="proof" element={<ArtworkProofViewer />} />
             </Route>
-            <Route path="shipments" element={<Shipments />} />
+            <Route path="shipments" element={<ShipmentsList />} />
           </Route>
         </Route>
         <Route path="contacts" element={<ContactsList />} />
