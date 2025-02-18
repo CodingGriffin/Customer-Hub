@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
+import { Order } from '../../../types';
 import Versions from './Versions';
 
+interface OrderContext {
+  selectedOrderData: Order;
+}
+
 export default function VersionsWrapper() {
-  const { section } = useParams();
+  const { selectedOrderData } = useOutletContext<OrderContext>();
   const [selectedStep, setSelectedStep] = useState(1);
 
   return (

@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import FileManagerContainer from './container/FileManager';
 import HubPage from './page';
 import OrdersList from './container/Customer/Orders';
-import OrdersDetail from './page/Customer/OrdersTab/OrdersDetail';
+import OrderDetail from './container/Customer/Orders/detail';
 import ContactsList from './container/Customer/Contacts';
 import AddressesList from './container/Customer/Addresses';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
@@ -18,7 +18,7 @@ export default function App() {
         <Route index element={<Navigate to="/orders" replace />} />
         <Route path="orders">
           <Route index element={<OrdersList />} />
-          <Route path=":orderId" element={<OrdersDetail />}>
+          <Route path=":orderId" element={<OrderDetail />}>
             <Route index element={<div>Select a section to begin</div>} />
             <Route path=":section" element={<VersionsWrapper />}>
               <Route path="setup" element={<StepSetupWrapper />} />

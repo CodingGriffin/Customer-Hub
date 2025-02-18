@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, ArrowLeft, Plus, Truck, Package, Palette, Database, ChevronDown, ChevronRight, HardDrive } from 'lucide-react';
+import { useNavigate, useParams, Outlet } from 'react-router-dom';
 
 import Shipments from './Shipments';
 import Versions from './Versions';
+import { Order } from '../../../types';
 
 interface OrdersDetailProps {
-  selectedOrderData: any;
-  setSelectedOrder: (id: any) => void;
+  selectedOrderData: Order | null;
 }
 
-function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps) {
+function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
+  const navigate = useNavigate();
+  
   const [expandedVersions, setExpandedVersions] = useState<Record<string, boolean>>({});
   const [selectedSection, setSelectedSection] = useState<'packaging' | 'artwork' | 'data' | 'shipments' | null>(null);
   const [selectedStep, setSelectedStep] = useState<number>(1);
 
+  // Simulating data fetch - replace with actual API call
+
+
   const resetView = () => {
-    setSelectedOrder(null);
-    setSelectedSection(null);
-    setSelectedStep(1);
+    navigate('/orders');
   };
 
   const toggleVersion = (version: number) => {
@@ -31,9 +35,14 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
   };
 
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null) => {
-    await setSelectedStep(1);
-    await setSelectedSection(section);
-  }
+    if (section === 'shipments') {
+      navigate(`/orders/${selectedOrderData?.id}/shipments`);
+    } else if (section) {
+      navigate(`/orders/${selectedOrderData?.id}/${section}/setup`);
+    }
+    setSelectedSection(section);
+    setSelectedStep(1);
+  };
 
   const getSectionIcon = (section: string) => {
     switch (section) {
@@ -44,6 +53,10 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
       default: return null;
     }
   };
+
+  if (!selectedOrderData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex h-[calc(100vh-8rem)]">
@@ -64,7 +77,7 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
         <div className="py-2 space-y-2">
           {!Object.values(expandedVersions).some(Boolean) && (
             <button
-              onClick={() => setSelectedSection('shipments')}
+              onClick={() => chooseSection('shipments')}
               className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
                 selectedSection === 'shipments'
                   ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
@@ -93,7 +106,7 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
               {['packaging', 'artwork', 'data'].map((section) => (
                 <button
                   key={section}
-                  onClick={() => chooseSection(section as any)}
+                  onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data')}
                   className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
                     selectedSection === section
                       ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
@@ -110,35 +123,7 @@ function OrdersDetail({selectedOrderData, setSelectedOrder} : OrdersDetailProps)
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {selectedSection ? (
-          <div className="p-6 space-y-8">
-            {expandedVersions[1] && selectedOrderData?.productImage && (
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={selectedOrderData.productImage}
-                    alt={selectedOrderData.productName}
-                    className="w-[50px] h-[50px] object-cover rounded-lg"
-                  />
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">{selectedOrderData.productName}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{selectedOrderData.productConfig}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {selectedSection === 'shipments' ? (
-              <Shipments /> 
-            ) : (
-              <Versions selectedSection={selectedSection} selectedStep={selectedStep} setSelectedStep={setSelectedStep} />
-            )}
-          </div>
-        ) : (
-          <div className="flex items-center justify-center h-full text-gray-500 dark:text-gray-400">
-            Select a section to view details
-          </div>
-        )}
+        <Outlet context={{ selectedOrderData }} />
       </div>
     </div>
   );
