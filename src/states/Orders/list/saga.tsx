@@ -6,11 +6,12 @@ import {
   postRequest,
   putRequest,
   deleteRequest,
+  postRequestNoTokenXWWW,
 } from "../../../utils/axios-client.ts";
 
 function* getOrders() {
   try {
-    const response: any = yield* callApi(getRequest, "/orders");
+    const response: any = yield* callApi(postRequestNoTokenXWWW, "inc/class/class.joblist.php");
     yield put({ type: actions.GET_ORDERS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.GET_ORDERS_FAILURE, payload: error });

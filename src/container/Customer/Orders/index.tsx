@@ -1,34 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import actions from "../../../states/Orders/list/actions";
+
 import OrdersTab from "../../../page/Customer/OrdersTab"
 import { Order } from '../../../types';
 
 function OrdersList() {
-  const [orders] = useState<Order[]>([
-    {
-      id: '1',
-      orderNumber: '12345',
-      status: 'active',
-      createdAt: '2024-03-15',
-      jobs: [],
-      productName: 'Custom USB Drive',
-      productConfig: '32GB Metal Swivel, Brushed Silver',
-      productImage: 'https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=50&h=50&q=80'
-    },
-    {
-      id: '2',
-      orderNumber: '12346',
-      status: 'completed',
-      createdAt: '2024-03-14',
-      jobs: []
-    },
-    {
-      id: '3',
-      orderNumber: '12347',
-      status: 'on-hold',
-      createdAt: '2024-03-13',
-      jobs: []
-    }
-  ]);
+
+  const dispatch = useDispatch();
+  
+  const {
+    orders,
+    loading,
+    error,
+  } = useSelector((state: any) => state.orders);
+
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_ORDERS,
+      payload: {
+        sortby: "InHandsDate",
+        order: "ASC",
+        joblimit: 25,
+        p: 1,
+        d: 1,
+      }
+    });
+  }, [dispatch]);
   
   return (
     <OrdersTab orders={orders} />

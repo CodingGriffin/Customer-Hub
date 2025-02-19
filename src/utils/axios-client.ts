@@ -1,8 +1,9 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import qs from "qs"
 
 const axiosClient = axios.create();
 
-axiosClient.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL;
+axiosClient.defaults.baseURL = import.meta.env.VITE_SERVER_BASE_URL;
 axiosClient.defaults.headers.common = {
   "Content-Type": "application/json",
   Accept: "application/json",
@@ -15,6 +16,13 @@ const setTokenHeader = (): void => {
     "Content-Type": "application/json",
     Accept: "application/json",
     authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).accessToken : '',
+  };
+};
+
+const setNoTokenXWWWFormUrlencodedHeader = (): void => {
+  axiosClient.defaults.headers.common = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Accept: "application/json",
   };
 };
 
@@ -48,7 +56,7 @@ export async function getRequest(URL: string, options: AxiosRequestConfig = {}):
 
 export async function getFileDownload(URL: string): Promise<AxiosResponse> {
   return await axios.get(
-    process.env.REACT_APP_SERVER_BASE_URL + `/${URL}`,
+    import.meta.env.VITE_SERVER_BASE_URL + `/${URL}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -58,6 +66,17 @@ export async function getFileDownload(URL: string): Promise<AxiosResponse> {
       responseType: "blob",
     }
   );
+}
+
+export async function postRequestNoTokenXWWW(URL: string, payload: any, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+  setNoTokenXWWWFormUrlencodedHeader();
+  return await axiosClient.post(URL, qs.stringify(payload), {
+    ...config,
+    headers: {
+      ...config.headers,
+      'Access-Control-Allow-Origin': '*',
+    }
+  });
 }
 
 export async function postRequestNoToken(URL: string, payload: any, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
