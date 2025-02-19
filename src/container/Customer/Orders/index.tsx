@@ -25,13 +25,17 @@ function OrdersList() {
         joblimit: 25,
         p: 1,
         d: 1,
-        e_n: "Mario Joel Rojas Cruz"
+        e_n: "PrairieIT"
       }
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("orders", orders);
+  }, [orders]);
   
   return (
-    <OrdersTab orders={orders} />
+    <OrdersTab orders={orders.jobs} />
   )
 }
 
