@@ -1,0 +1,104 @@
+import { all, call, put } from "redux-saga/effects";
+// import { notification } from "antd";
+
+// Here you can include all the saga which you write for components
+export default function* rootSaga() {
+  yield all([
+
+  ]);
+}
+
+// export function* callApi(apiFunction, ...args) {
+//   try {
+//     // yield call(() => getCustomRequest('sanctum/csrf-cookie'));
+//     const response = yield call(apiFunction, ...args);
+//     handleSuccessfulResponse(response);
+//     return response.data;
+//   } catch (error) {
+//     if (error.response.status === 401) yield put({ type: actions.LOGOUT });
+//     if (error.response.data.error.includes("createdBy"))
+//       yield put({ type: actions.LOGOUT });
+//     if (error.response.data.error.includes("domainId"))
+//       yield put({ type: actions.LOGOUT });
+//     handleError(error);
+//     throw error;
+//   }
+// }
+
+// function handleSuccessfulResponse(response) {
+//   if ((response.status === 201 || response.status === 200) && response.data.message) {
+//     showNotification("success", "Success!", response.data.message);
+//   }
+// }
+
+// function handleError(error) {
+//   if (error.response) {
+//     const errorHandlerMapping = {
+//       401: () =>
+//         showNotification(
+//           "error",
+//           "No Authorization",
+//           "You did not authorizate"
+//         ),
+//       404: () => {
+//         // const errorMessages = error.response.data.message;
+//         // showNotification(
+//         //   'warning',
+//         //   '404 feil',
+//         //   `Det er ingen gyldige data. Opprett nye data.`
+//         // );
+//       },
+//       403: () => {
+//         // const errorMessages = error.response.data.message;
+//         // showNotification(
+//         //   'warning',
+//         //   '403 feil',
+//         //   `Det er ingen gyldige data. Opprett nye data.`
+//         // );
+//       },
+//       500: () => {
+//         console.log("error message", error.response.data.error);
+//         if (error.response.data.error.includes("createdBy")) {
+//           showNotification(
+//             "error",
+//             "No Authorization",
+//             "You did not authorizate"
+//           );
+//         } else {
+//           showNotification(
+//             "error",
+//             "Midlertidig serverproblem",
+//             "Vi opplever for øyeblikket noen tekniske problemer. Våre ingeniører jobber med saken, og vi håper å ha det løst snart. Vennligst prøv igjen senere."
+//           );
+//         }
+//       },
+//       422: () => {
+//         const validationErrors = error.response.data.message;
+//         const errorMessages = Object.values(validationErrors).flat().join("\n");
+
+//         showNotification(
+//           "error",
+//           "Validering mislyktes",
+//           `Det ser ut til at det var et problem med informasjonen som ble gitt: ${errorMessages} Vennligst sjekk og prøv igjen.`
+//         );
+//       },
+//     };
+//     const errorHandler =
+//       errorHandlerMapping[error.response.status] ||
+//       (() =>
+//         showNotification(
+//           "error",
+//           "Uventet feil",
+//           `Oops, noe gikk galt: ${error.response.data.message}. Vennligst prøv igjen, eller kontakt support hvis problemet vedvarer.`
+//         ));
+//     errorHandler();
+//   }
+// }
+
+// function showNotification(type, title, message) {
+//   notification[type]({
+//     duration: 5,
+//     message: title,
+//     description: message,
+//   });
+// }
