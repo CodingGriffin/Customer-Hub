@@ -35,7 +35,7 @@ function OrdersList() {
   }, [orders]);
   
   return (
-    <OrdersTab orders={orders.jobs} />
+    <OrdersTab orders={orders.jobs ? orders.jobs : []} />
   )
 }
 

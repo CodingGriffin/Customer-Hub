@@ -47,13 +47,13 @@ function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                   <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                    order.d < currentDate
+                    order.job_status  === 'completed'
                       ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-                      : order.d > currentDate
+                      : order.job_status === 'on-hold'
                       ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
                       : 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
                   }`}>
-                    {order.d.charAt(0).toUpperCase() + order.d.slice(1)}
+                    {order.job_status.charAt(0).toUpperCase() + order.job_status.slice(1)}
                   </span>
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
