@@ -19,7 +19,7 @@ function Reducer(state = initialState, action: any) {
       return {
         ...state,
         loading: false,
-        CONTACTS: action.payload,
+        contacts: action.payload,
       };
     case actions.GET_CONTACTS_FAILURE:
       return {

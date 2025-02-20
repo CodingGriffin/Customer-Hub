@@ -19,19 +19,15 @@ function ContactsList() {
   useEffect(() => {
     dispatch({
       type: actions.GET_CONTACTS,
-      // payload: {
-      //   sortby: "InHandsDate",
-      //   order: "ASC",
-      //   joblimit: 25,
-      //   p: 1,
-      //   d: 1,
-      //   e_n: "PrairieIT"
-      // }
+      payload: {
+        mode: "getcontact",
+        entities_id: 266
+      }
     });
   }, [dispatch]);
   
   return (
-    <ContactsTab contacts={contacts} />
+    <ContactsTab contacts={contacts.data ? contacts.data : []} />
   )
 }
 
