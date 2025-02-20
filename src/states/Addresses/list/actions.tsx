@@ -1,0 +1,7 @@
+export const actions = {
+  GET_ADDRESSES: "GET_ADDRESSES",
+  GET_ADDRESSES_SUCCESS: "GET_ADDRESSES_SUCCESS",
+  GET_ADDRESSES_FAILURE: "GET_ADDRESSES_FAILURE",
+};
+
+export default actions;
