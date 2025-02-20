@@ -1,6 +1,6 @@
 import { all, put, takeLatest } from "redux-saga/effects";
-import actions from "../actions.tsx";
-import { callApi } from "../../saga";
+import actions from "./actions.tsx";
+import { callApi } from "../saga";
 import {
   getRequest,
   postRequest,
@@ -8,7 +8,7 @@ import {
   deleteRequest,
   postRequestNoToken,
   postRequestNoTokenXWWW,
-} from "../../../utils/axios-client.ts";
+} from "../../utils/axios-client.ts";
 
 function* getContacts(action: any) {
   try {
