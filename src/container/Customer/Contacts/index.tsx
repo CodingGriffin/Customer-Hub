@@ -38,9 +38,18 @@ function ContactsList() {
 
     getContacts();
   }
+
+  const editContact = (payload: any) => {
+    dispatch({
+      type: actions.EDIT_CONTACT,
+      payload
+    });
+
+    getContacts();
+  }
   
   return (
-    <ContactsTab contacts={contacts.data ? contacts.data : []} addContact={addContact} />
+    <ContactsTab contacts={contacts.data ? contacts.data : []} addContact={addContact} editContact={editContact} />
   )
 }
 

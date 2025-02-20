@@ -7,9 +7,10 @@ import ContactForm from './ContactForm';
 interface ContactsTabProps {
   contacts: Contact[];
   addContact: (payload: any) => void;
+  editContact: (payload: any) => void;
 }
 
-export default function ContactsTab({contacts, addContact}: ContactsTabProps) {
+export default function ContactsTab({contacts, addContact, editContact}: ContactsTabProps) {
 
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
@@ -42,41 +43,31 @@ export default function ContactsTab({contacts, addContact}: ContactsTabProps) {
       phone_types_id: dataParam.phone_types_id,
       phone_number: dataParam.phone_number
     }
-    const baseUrl = `${window.location.protocol}//${window.location.host}/`;
     try{
       addContact(data);
-      // console.log(response);
       setIsAddingContact(false);
-      // getAllContacts();
     } catch (error) {
       console.log('ajax call error:', error);
     }
   }
 
   const handleSubmit2Edit = async(dataParam:any) => {
-    // const data = {
-    //   mode:'edit',
-    //   entities_id:entityId,
-    //   contacts_id:editingContact?.contact_id,
-    //   contact_name:dataParam.contact_name,
-    //   contact_acl:dataParam.contact_acl,
-    //   email:dataParam.email,
-    //   phone_types_id:dataParam.phone_types_id,
-    //   phone_number:dataParam.phone_number
-    // }
-    // const baseUrl = `${window.location.protocol}//${window.location.host}/`;
-    // try{
-    //   const response = await axios.post(baseUrl + '/j/inc/class/class.contacts.php', qs.stringify(data), {
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     }
-    //   });
-    //   console.log(response);
-    //   setEditingContact(null);
-    //   getAllContacts();
-    // } catch (error) {
-    //   console.log('ajax call error:', error);
-    // }
+    const data = {
+      mode: 'edit',
+      entities_id: 266,
+      contacts_id: editingContact?.contact_id,
+      contact_name: dataParam.contact_name,
+      contact_acl: dataParam.contact_acl,
+      email: dataParam.email,
+      phone_types_id: dataParam.phone_types_id,
+      phone_number: dataParam.phone_number
+    }
+    try{
+      editContact(data)
+      setEditingContact(null);
+    } catch (error) {
+      console.log('ajax call error:', error);
+    }
   }
 
   return (

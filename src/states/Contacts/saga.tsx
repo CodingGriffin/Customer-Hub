@@ -28,7 +28,17 @@ function* addContact(action: any) {
   }
 }
 
+function* editContact(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.contacts.php", {...action.payload});
+    yield put({ type: actions.EDIT_CONTACT_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.EDIT_CONTACT_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_CONTACTS, getContacts)]);
   yield all([takeLatest(actions.ADD_CONTACT, addContact)]);
+  yield all([takeLatest(actions.EDIT_CONTACT, editContact)]);
 }
