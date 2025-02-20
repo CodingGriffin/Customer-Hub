@@ -1,27 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import ContactsTab from "../../../page/Customer/ContactsTab/ContactsTab"
 import { Contact } from '../../../types';
 
+import actions from "../../../states/Contacts/list/actions";
+
 function ContactsList() {
-  const [contacts, setContacts] = useState<Contact[]>([
-    {
-      contact_id: 1,
-      contact_name: "John Doe",
-      emails: "john@example.com",
-      phone_numbers: "(555) 123-4567",
-      enabled: true
-    },
-    {
-      contact_id: 2,
-      contact_name: "John Doe",
-      emails: "john@example.com",
-      phone_numbers: "(555) 123-4567",
-      enabled: true
-    }
-  ]);
+
+  const dispatch = useDispatch();
+  
+  const {
+    contacts,
+    loading,
+    error,
+  } = useSelector((state: any) => state.contacts);
+  
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_CONTACTS,
+      // payload: {
+      //   sortby: "InHandsDate",
+      //   order: "ASC",
+      //   joblimit: 25,
+      //   p: 1,
+      //   d: 1,
+      //   e_n: "PrairieIT"
+      // }
+    });
+  }, [dispatch]);
   
   return (
-    <ContactsTab contacts={contacts} setContacts={setContacts} />
+    <ContactsTab contacts={contacts} />
   )
 }
 

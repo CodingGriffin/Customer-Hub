@@ -6,23 +6,12 @@ import ContactForm from './ContactForm';
 
 interface ContactsTabProps {
   contacts: Contact[];
-  setContacts: (contacts: Contact[]) => void;
 }
 
-export default function ContactsTab({contacts, setContacts}: ContactsTabProps) {
+export default function ContactsTab({contacts}: ContactsTabProps) {
 
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
-  const addContact = () => {
-    // const newContact: Contact = {
-    //   id: Math.random().toString(36).substr(2, 9),
-    //   name: '',
-    //   emails: [{ id: Math.random().toString(36).substr(2, 9), email: '', disabled: false }],
-    //   phones: [{ id: Math.random().toString(36).substr(2, 9), number: '', disabled: false }],
-    // };
-    // setContacts([...contacts, newContact]);
-    // setIsEditing(newContact.id);
-  };
 
   const handleAddContact = () => {
     setIsAddingContact(true);
