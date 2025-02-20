@@ -65,6 +65,24 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.DELETE_CONTACT:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.DELETE_CONTACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // contacts: state.contacts.filter(contact => contact.id !== action.payload.id),
+      };
+    case actions.DELETE_CONTACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }

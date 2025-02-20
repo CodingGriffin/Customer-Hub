@@ -47,9 +47,18 @@ function ContactsList() {
 
     getContacts();
   }
+
+  const deleteContact = (payload: any) => {
+    dispatch({
+      type: actions.DELETE_CONTACT,
+      payload
+    });
+
+    getContacts();
+  }
   
   return (
-    <ContactsTab contacts={contacts.data ? contacts.data : []} addContact={addContact} editContact={editContact} />
+    <ContactsTab contacts={contacts.data ? contacts.data : []} addContact={addContact} editContact={editContact} deleteContact={deleteContact} />
   )
 }
 

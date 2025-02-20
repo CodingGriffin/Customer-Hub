@@ -3,14 +3,16 @@ import { Plus, Trash2, Edit2, X, Mail, Phone } from 'lucide-react';
 
 import { Contact } from '../../../types';
 import ContactForm from './ContactForm';
+import confirm from 'antd/es/modal/confirm';
 
 interface ContactsTabProps {
   contacts: Contact[];
   addContact: (payload: any) => void;
   editContact: (payload: any) => void;
+  deleteContact: (payload: any) => void;
 }
 
-export default function ContactsTab({contacts, addContact, editContact}: ContactsTabProps) {
+export default function ContactsTab({contacts, addContact, editContact, deleteContact}: ContactsTabProps) {
 
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
@@ -24,8 +26,20 @@ export default function ContactsTab({contacts, addContact, editContact}: Contact
   };
 
   const handleDeleteContact = async (contactId: number) => {
-    // Implement delete functionality
-    console.log('Delete contact:', contactId);
+    confirm({
+      title: 'Are you sure you want to delete this contact?',
+      okText: 'Yes, Delete',
+      cancelText: 'No, Cancel',
+      okButtonProps: {
+        className: 'bg-red-600 hover:bg-red-700',
+      },
+      onOk() {
+        deleteContact({mode: 'delete', contact_id: contactId});
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
   };
 
   const handleCancel = () => {
@@ -113,7 +127,7 @@ export default function ContactsTab({contacts, addContact, editContact}: Contact
                 onClick={() => handleDeleteContact(contact.contact_id)}
                 className="text-gray-400 hover:text-red-500"
               >
-                <Trash2 className="h-5 w-5" />
+                <Trash2 className="h-5 w-5 text-red-500" />
               </button>
             </div>
           </div>
