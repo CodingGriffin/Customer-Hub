@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Edit2, X, Mail, Phone } from 'lucide-react';
 
-import { Contact } from '../../../types';
 import ContactForm from './ContactForm';
 import confirm from 'antd/es/modal/confirm';
+import { Contact } from '../../../types';
 
 interface ContactsTabProps {
   contacts: Contact[];

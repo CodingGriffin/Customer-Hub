@@ -2,38 +2,38 @@ import React, { useState } from 'react';
 import { MapPin, Plus, Trash2 } from 'lucide-react';
 
 import AddressForm from './AddressForm';
+import confirm from 'antd/es/modal/confirm';
 import { Address } from '../../../types';
 
 interface AddressesProps {
   addresses: Address[];
+  addAddress: (payload: any) => void;
+  editAddress: (payload: any) => void;
+  deleteAddress: (payload: any) => void;
 }
 
-export default function AddressesTab({addresses}: AddressesProps) {
+export default function AddressesTab({addresses, addAddress, editAddress, deleteAddress}: AddressesProps) {
   const [isAddingAddress, setIsAddingAddress] = useState(false);
   const handleAddAddress = () => {
     setIsAddingAddress(true);
   };
 
   const handleDeleteAddress = async (addressId: number) => {
-    // // Implement delete functionality
-    // console.log('Delete address:', addressId);
-
-    // const data = {
-    //   mode:'delete',
-    //   address_id:addressId,
-    // }
-    // const baseUrl = `${window.location.protocol}//${window.location.host}/`;
-    // try{
-    //   const response = await axios.post(baseUrl + '/j/inc/class/class.addresses.php', qs.stringify(data), {
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     }
-    //   });
-    //   console.log(response);
-    //   getAllAddresses();
-    // } catch (error) {
-    //   console.log('ajax call error:', error);
-    // }
+    // Implement delete functionality
+    confirm({
+      title: 'Are you sure you want to delete this address?',
+      okText: 'Yes, Delete',
+      cancelText: 'No, Cancel',
+      okButtonProps: {
+        className: 'bg-red-600 hover:bg-red-700',
+      },
+      onOk() {
+        deleteAddress({mode: 'delete', address_id: addressId});
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
   };
 
   const handleCancel = () => {
@@ -41,30 +41,26 @@ export default function AddressesTab({addresses}: AddressesProps) {
   };
 
   const handleSubmit = async(dataParam:any) => {
-    // const data = {
-    //   mode:'insert',
-    //   entities_id:entityId,
-    //   address_street1:dataParam.address_street1,
-    //   address_street2:dataParam.address_street2,
-    //   address_street3:dataParam.address_street3,
-    //   address_city:dataParam.address_city,
-    //   address_state:dataParam.address_state,
-    //   address_code:dataParam.address_code,
-    //   address_country:dataParam.address_country
-    // }
-    // const baseUrl = `${window.location.protocol}//${window.location.host}/`;
-    // try{
-    //   const response = await axios.post(baseUrl + '/j/inc/class/class.addresses.php', qs.stringify(data), {
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     }
-    //   });
-    //   console.log(response);
-    //   setIsAddingAddress(false);
-    //   getAllAddresses();
-    // } catch (error) {
-    //   console.log('ajax call error:', error);
-    // }
+    const data = {
+      mode:'insert',
+      entities_id: 266,
+      address_street1: dataParam.address_street1,
+      address_street2: dataParam.address_street2,
+      address_street3: dataParam.address_street3,
+      address_city: dataParam.address_city,
+      address_state: dataParam.address_state,
+      address_code: dataParam.address_code,
+      address_country: dataParam.address_country
+    }
+    const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+    try{
+      addAddress(data);
+      // console.log(response);
+      setIsAddingAddress(false);
+      // getAllAddresses();
+    } catch (error) {
+      console.log('ajax call error:', error);
+    }
   }
 
   return (
@@ -100,7 +96,7 @@ export default function AddressesTab({addresses}: AddressesProps) {
                 onClick={() => handleDeleteAddress(address.address_id)}
                 className="text-gray-400 hover:text-red-500"
               >
-                <Trash2 className="h-5 w-5" />
+                <Trash2 className="h-5 w-5 text-red-500" />
               </button>
             </div>
           </div>

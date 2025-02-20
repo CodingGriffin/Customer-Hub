@@ -19,6 +19,36 @@ function* getAddresses(action: any) {
   }
 }
 
+function* addAddress(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    yield put({ type: actions.ADD_ADDRESS_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.ADD_ADDRESS_FAILURE, payload: error });
+  }
+}
+
+function* editAddress(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    yield put({ type: actions.EDIT_ADDRESS_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.EDIT_ADDRESS_FAILURE, payload: error });
+  }
+}
+
+function* deleteAddress(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    yield put({ type: actions.EDIT_ADDRESS_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.EDIT_ADDRESS_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_ADDRESSES, getAddresses)]);
+    yield all([takeLatest(actions.ADD_ADDRESS, addAddress)]);
+    yield all([takeLatest(actions.EDIT_ADDRESS, editAddress)]);
+    yield all([takeLatest(actions.DELETE_ADDRESS, deleteAddress)]);
 }

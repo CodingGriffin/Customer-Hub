@@ -17,6 +17,10 @@ function AddressesList() {
   } = useSelector((state: any) => state.addresses);
   
   useEffect(() => {
+    getAddresses();
+  }, [dispatch]);
+
+  const getAddresses = () => {
     dispatch({
       type: actions.GET_ADDRESSES,
       payload: {
@@ -24,10 +28,37 @@ function AddressesList() {
         entities_id: 266
       }
     });
-  }, [dispatch]);
+  }
+
+  const addAddress = (payload: any) => {
+    dispatch({
+      type: actions.ADD_ADDRESS,
+      payload
+    });
+
+    getAddresses();
+  }
+
+  const editAddress = (payload: any) => {
+    dispatch({
+      type: actions.EDIT_ADDRESS,
+      payload
+    });
+
+    getAddresses();
+  }
+
+  const deleteAddress = (payload: any) => {
+    dispatch({
+      type: actions.DELETE_ADDRESS,
+      payload
+    });
+
+    getAddresses();
+  }
   
   return (
-    <AddressesTab addresses={addresses.data ? addresses.data : []} />
+    <AddressesTab addresses={addresses.data ? addresses.data : []} addAddress={addAddress} editAddress={editAddress} deleteAddress={deleteAddress} />
   )
 }
 
