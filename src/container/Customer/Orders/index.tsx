@@ -29,10 +29,6 @@ function OrdersList() {
       }
     });
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log("orders", orders);
-  }, [orders]);
   
   return (
     <OrdersTab orders={orders.jobs ? orders.jobs : []} />

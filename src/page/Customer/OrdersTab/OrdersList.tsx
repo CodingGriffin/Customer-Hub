@@ -59,7 +59,7 @@ function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center">
                     <Clock className="h-4 w-4 mr-1" />
-                    {new Date(order.d).toLocaleDateString()}
+                    {new Date(order.created_at).toLocaleDateString()}
                   </div>
                 </td>
                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
