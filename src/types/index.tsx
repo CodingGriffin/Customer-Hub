@@ -59,11 +59,11 @@ export type Contact = {
 }
 
 export type Address = {
-  id: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
+  address_id: number;
+  address_street1: string;
+  address_city: string;
+  address_state: string;
+  address_code: string;
 }
 
 export interface VersionsContext {
