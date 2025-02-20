@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddressesTab from "../../../page/Customer/AddressesTab/AddressesTab";
 import { Address } from '../../../types';
 
-import actions from "../../../states/Addresses/list/actions";
+import actions from "../../../states/Addresses/actions";
 
 function AddressesList() {
 

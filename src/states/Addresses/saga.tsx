@@ -1,5 +1,5 @@
 import { all, put, takeLatest } from "redux-saga/effects";
-import actions from "./actions";
+import actions from "../actions.tsx";
 import { callApi } from "../../saga";
 import {
   getRequest,

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ContactsTab from "../../../page/Customer/ContactsTab/ContactsTab"
 import { Contact } from '../../../types';
 
-import actions from "../../../states/Contacts/list/actions";
+import actions from "../../../states/Contacts/actions";
 
 function ContactsList() {
 
