@@ -51,10 +51,11 @@ export type ArtworkManagerItemType = {
 };
 
 export type Contact = {
-  id: string;
-  name: string;
-  emails: Array<{ id: string; email: string; disabled: boolean }>;
-  phones: Array<{ id: string; number: string; disabled: boolean }>;
+  contact_id: number;
+  contact_name: string;
+  emails: string;
+  phone_numbers: string;
+  enabled: boolean;
 }
 
 export type Address = {
