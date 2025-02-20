@@ -144,7 +144,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, onCancel, initialDa
         </button>
       </div>
 
-      {/* <div>
+      <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Access Control</label>
         <div className="space-y-2">
           {[
@@ -168,7 +168,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, onCancel, initialDa
             </div>
           ))}
         </div>
-      </div> */}
+      </div>
 
       <div className="flex justify-end space-x-3">
         <button
