@@ -17,6 +17,10 @@ function ContactsList() {
   } = useSelector((state: any) => state.contacts);
   
   useEffect(() => {
+    getContacts();
+  }, [dispatch]);
+
+  const getContacts = () => {
     dispatch({
       type: actions.GET_CONTACTS,
       payload: {
@@ -24,10 +28,19 @@ function ContactsList() {
         entities_id: 266
       }
     });
-  }, [dispatch]);
+  }
+
+  const addContact = (payload: any) => {
+    dispatch({
+      type: actions.ADD_CONTACT,
+      payload
+    });
+
+    getContacts();
+  }
   
   return (
-    <ContactsTab contacts={contacts.data ? contacts.data : []} />
+    <ContactsTab contacts={contacts.data ? contacts.data : []} addContact={addContact} />
   )
 }
 

@@ -6,9 +6,10 @@ import ContactForm from './ContactForm';
 
 interface ContactsTabProps {
   contacts: Contact[];
+  addContact: (payload: any) => void;
 }
 
-export default function ContactsTab({contacts}: ContactsTabProps) {
+export default function ContactsTab({contacts, addContact}: ContactsTabProps) {
 
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
@@ -32,28 +33,24 @@ export default function ContactsTab({contacts}: ContactsTabProps) {
   };
 
   const handleSubmit = async(dataParam:any) => {
-    // const data = {
-    //   mode:'insert',
-    //   entities_id:entityId,
-    //   contact_name:dataParam.contact_name,
-    //   contact_acl:dataParam.contact_acl,
-    //   email:dataParam.email,
-    //   phone_types_id:dataParam.phone_types_id,
-    //   phone_number:dataParam.phone_number
-    // }
-    // const baseUrl = `${window.location.protocol}//${window.location.host}/`;
-    // try{
-    //   const response = await axios.post(baseUrl + '/j/inc/class/class.contacts.php', qs.stringify(data), {
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     }
-    //   });
-    //   console.log(response);
-    //   setIsAddingContact(false);
-    //   getAllContacts();
-    // } catch (error) {
-    //   console.log('ajax call error:', error);
-    // }
+    const data = {
+      mode: 'insert',
+      entities_id: 266,
+      contact_name: dataParam.contact_name,
+      contact_acl: dataParam.contact_acl,
+      email: dataParam.email,
+      phone_types_id: dataParam.phone_types_id,
+      phone_number: dataParam.phone_number
+    }
+    const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+    try{
+      addContact(data);
+      // console.log(response);
+      setIsAddingContact(false);
+      // getAllContacts();
+    } catch (error) {
+      console.log('ajax call error:', error);
+    }
   }
 
   const handleSubmit2Edit = async(dataParam:any) => {

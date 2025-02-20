@@ -27,6 +27,24 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.ADD_CONTACT:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.ADD_CONTACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // contacts: [...state.contacts, action.payload],
+      };
+    case actions.ADD_CONTACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }
