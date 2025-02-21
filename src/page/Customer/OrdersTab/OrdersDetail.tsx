@@ -70,7 +70,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
             Back to Orders
           </button>
           <h2 className="text-xl font-medium text-gray-900 dark:text-white">
-            Order #{selectedOrderData?.orderNumber}
+            Order #{selectedOrderData?.job_number}
           </h2>
         </div>
 

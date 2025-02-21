@@ -19,6 +19,16 @@ function* getOrders(action: any) {
   }
 }
 
+function* getOrder(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.getJob.php", {...action.payload});
+    yield put({ type: actions.GET_ORDER_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.GET_ORDER_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_ORDERS, getOrders)]);
+  yield all([takeLatest(actions.GET_ORDER, getOrder)]);
 }

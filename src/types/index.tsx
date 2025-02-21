@@ -26,7 +26,7 @@ export interface OrderJob {
 
 export interface Order {
   id: string;
-  orderNumber: string;
+  job_number: string;
   status: 'active' | 'completed' | 'on-hold';
   createdAt: string;
   jobs: OrderJob[];
