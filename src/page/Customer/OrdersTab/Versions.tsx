@@ -60,7 +60,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProp
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-gray-200 dark:border-gray-700" />
         </div>
-        <div className="relative flex justify-between">
+        <div className="ml-3 mb-4 relative flex justify-between">
           {steps.map((step) => (
             <button
               key={step.number}
@@ -87,7 +87,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProp
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 ml-3">
         <Outlet context={{ selectedSection, setSelectedStep }} />
       </div>
     </>
