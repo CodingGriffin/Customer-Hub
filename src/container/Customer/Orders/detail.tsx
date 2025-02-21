@@ -29,8 +29,6 @@ function OrderDetail() {
         job_number: orderId
       }
     });
-
-    console.log("order ==============> ", order);
   }
   
   return (
