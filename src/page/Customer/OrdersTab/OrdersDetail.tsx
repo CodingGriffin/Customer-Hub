@@ -7,7 +7,7 @@ import Versions from './Versions';
 import { Order } from '../../../types';
 
 interface OrdersDetailProps {
-  selectedOrderData: Order | null;
+  selectedOrderData: any | null;
 }
 
 function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
@@ -36,9 +36,9 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
 
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null) => {
     if (section === 'shipments') {
-      navigate(`/orders/${selectedOrderData?.id}/shipments`);
+      navigate(`/orders/${selectedOrderData?.job?.job_number}/shipments`);
     } else if (section) {
-      navigate(`/orders/${selectedOrderData?.id}/${section}/setup`);
+      navigate(`/orders/${selectedOrderData?.job?.job_number}/${section}/setup`);
     }
     setSelectedSection(section);
     setSelectedStep(1);
@@ -70,7 +70,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
             Back to Orders
           </button>
           <h2 className="text-xl font-medium text-gray-900 dark:text-white">
-            Order #{selectedOrderData?.job_number}
+            Order #{selectedOrderData?.job?.job_number}
           </h2>
         </div>
 

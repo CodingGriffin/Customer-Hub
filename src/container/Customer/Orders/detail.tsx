@@ -32,7 +32,7 @@ function OrderDetail() {
   }
   
   return (
-    <OrdersDetail selectedOrderData={order.data ? order.data.job : null} />
+    <OrdersDetail selectedOrderData={order.data ? order.data : null} />
   )
 
 }
