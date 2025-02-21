@@ -101,7 +101,7 @@ export default function ContactsTab({contacts, addContact, editContact, deleteCo
         {contacts.map((contact) => (
           <div
             key={contact.contact_id}
-            className="bg-gray-50 rounded-lg p-4 flex justify-between items-start"
+            className="bg-gray-50 rounded-lg p-4 flex justify-between items-start dark:bg-gray-900 dark:text-white"
           >
             <div>
               <h4 className="font-medium">{contact.contact_name}</h4>

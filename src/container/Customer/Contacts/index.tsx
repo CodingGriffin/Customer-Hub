@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ContactsTab from "../../../page/Customer/ContactsTab/ContactsTab"
+import ContactsTab from "../../../page/Customer/ContactsTab"
 import { Contact } from '../../../types';
 
 import actions from "../../../states/Contacts/actions";

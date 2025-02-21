@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import AddressesTab from "../../../page/Customer/AddressesTab/AddressesTab";
+import AddressesTab from "../../../page/Customer/AddressesTab";
 import { Address } from '../../../types';
 
 import actions from "../../../states/Addresses/actions";

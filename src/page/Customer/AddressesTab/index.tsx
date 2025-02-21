@@ -80,7 +80,7 @@ export default function AddressesTab({addresses, addAddress, editAddress, delete
         {addresses && addresses.map((address) => (
           <div
             key={address.address_id}
-            className="bg-gray-50 rounded-lg p-4 flex justify-between items-start"
+            className="bg-gray-50 rounded-lg p-4 flex justify-between items-start dark:bg-gray-900 dark:text-white"
           >
             <div>
               <div className="flex items-center">
