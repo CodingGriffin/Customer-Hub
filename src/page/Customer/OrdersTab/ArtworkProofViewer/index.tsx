@@ -84,7 +84,7 @@ function ArtworkProofViewer() {
               onChange={(e) => setSkipSample(e.target.checked)}
               className="rounded border-gray-300 text-green-600 focus:ring-green-500"
             />
-            <span>Start production without seeing a photo sample</span>
+            <span>Show me a photo sample before mass production.</span>
           </label>
           <div className="flex justify-end gap-2">
             <button

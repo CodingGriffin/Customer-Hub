@@ -76,19 +76,6 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
       {selectedSetupOption == 'version' &&
         <VersionSetup /> 
       }
-      <div className="mt-6 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-        <label className="flex items-center space-x-3">
-          <input
-            type="checkbox"
-            checked={wantsSamplePhotos}
-            onChange={(e) => setWantsSamplePhotos(e.target.checked)}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
-          />
-          <span className="text-sm text-gray-700 dark:text-gray-300">
-            I would like to see photos of a sample before moving to production
-          </span>
-        </label>
-      </div>
 
       <div className="flex justify-end">
         {selectedSetupOption == 'version' &&
