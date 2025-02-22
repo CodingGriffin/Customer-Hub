@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface AddressFormProps {
   onSubmit: (data: any) => void;
   onCancel: () => void;
   initialData?: any;
+  countries: any[];
 }
 
-const AddressForm: React.FC<AddressFormProps> = ({ onSubmit, onCancel, initialData }) => {
+const AddressForm: React.FC<AddressFormProps> = ({ onSubmit, onCancel, initialData, countries }) => {
   const [formData, setFormData] = useState({
     address_street1: initialData?.address_street1 || '',
     address_street2: initialData?.address_street2 || '',
@@ -14,8 +15,18 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit, onCancel, initialDa
     address_city: initialData?.address_city || '',
     address_state: initialData?.address_state || '',
     address_code: initialData?.address_code || '',
-    address_country: initialData?.address_country || 'USA'
+    address_country: initialData?.address_country || 'US' // Changed from 'USA' to 'US' to match country code
   });
+
+  // Find US in countries array on component mount
+  useEffect(() => {
+    if (!initialData && !formData.address_country && countries.length > 0) {
+      const usCountry = countries.find(country => country.code === 'US');
+      if (usCountry) {
+        setFormData(prev => ({ ...prev, address_country: usCountry.code }));
+      }
+    }
+  }, [countries, initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,13 +105,22 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit, onCancel, initialDa
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Country</label>
-          <input
-            type="text"
-            required
+          <select
+            id="country"
             value={formData.address_country}
             onChange={e => setFormData(prev => ({ ...prev, address_country: e.target.value }))}
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-          />
+          >
+            <option value="">--Select a country--</option>
+            {countries.map((country: any) => (
+              <option 
+                key={country.code} 
+                value={country.code}
+              >
+                {country.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

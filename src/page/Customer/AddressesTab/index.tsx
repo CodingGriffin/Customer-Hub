@@ -6,13 +6,14 @@ import confirm from 'antd/es/modal/confirm';
 import { Address } from '../../../types';
 
 interface AddressesProps {
+  countries: any[];
   addresses: Address[];
   addAddress: (payload: any) => void;
   editAddress: (payload: any) => void;
   deleteAddress: (payload: any) => void;
 }
 
-export default function AddressesTab({addresses, addAddress, editAddress, deleteAddress}: AddressesProps) {
+export default function AddressesTab({addresses, countries, addAddress, editAddress, deleteAddress}: AddressesProps) {
   const [isAddingAddress, setIsAddingAddress] = useState(false);
   const handleAddAddress = () => {
     setIsAddingAddress(true);
@@ -107,6 +108,7 @@ export default function AddressesTab({addresses, addAddress, editAddress, delete
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <AddressForm
+              countries={countries}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
             />
