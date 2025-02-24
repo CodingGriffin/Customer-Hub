@@ -15,13 +15,16 @@ function Shipments({shipments}: ShipmentsProps) {
               Quantity
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Version
+              Job/Version
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
               Shipping Address
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
               In-Hands Date
+            </th>
+            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
+              Tracking Number
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
               Status
@@ -40,7 +43,7 @@ function Shipments({shipments}: ShipmentsProps) {
                   </div>
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                  {shipment_version.name}
+                {shipment_version.jobnum}{shipment_version.name}
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
                   <div className="flex items-start">
@@ -55,6 +58,18 @@ function Shipments({shipments}: ShipmentsProps) {
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
                   {shipment.inHandsDate}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
+                  {shipment.tracking_number && (
+                    <a
+                      href={`https://www.fedex.com/wtrk/track/?trknbr=${shipment.tracking_number}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                    >
+                      {shipment.tracking_number}
+                    </a>
+                  )}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                   <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">
