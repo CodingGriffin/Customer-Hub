@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, ArrowLeft, Plus, Truck, Package, Palette, Database, ChevronDown, ChevronRight, HardDrive } from 'lucide-react';
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
 
-import Shipments from './Shipments';
-import Versions from './Versions';
-import { Order } from '../../../types';
-
 interface OrdersDetailProps {
   selectedOrderData: any | null;
 }

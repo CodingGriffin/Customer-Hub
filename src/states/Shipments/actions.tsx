@@ -1,0 +1,7 @@
+export const actions = {
+  GET_SHIPMENTS: "GET_SHIPMENTS",
+  GET_SHIPMENTS_SUCCESS: "GET_SHIPMENTS_SUCCESS",
+  GET_SHIPMENTS_FAILURE: "GET_SHIPMENTS_FAILURE",
+};
+
+export default actions;

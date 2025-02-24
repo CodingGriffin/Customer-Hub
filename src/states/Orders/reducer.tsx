@@ -2,7 +2,9 @@ import actions from "./actions";
 
 const initialState = {
   orders: [],
-  order: {},
+  order: {
+    data: null
+  },
   loading: false,
   error: null,
 };

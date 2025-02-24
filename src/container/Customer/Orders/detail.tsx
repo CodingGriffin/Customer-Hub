@@ -18,8 +18,10 @@ function OrderDetail() {
   } = useSelector((state: any) => state.orders);
 
   useEffect(() => {
-    getOrder();
-  }, [dispatch]);
+    if (!order.data || order.data?.job?.job_number !== orderId) {
+      getOrder();
+    }
+  }, [orderId]);
 
   const getOrder = () => {
     dispatch({

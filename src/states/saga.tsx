@@ -4,6 +4,7 @@ import { notification } from "antd";
 import ordersSaga from "./Orders/saga";
 import contactsSaga from "./Contacts/saga";
 import addressesSaga from "./Addresses/saga";
+import shipmentSaga from "./Shipments/saga";
 
 // Here you can include all the saga which you write for components
 export default function* rootSaga() {
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     ordersSaga(),
     contactsSaga(),
     addressesSaga(),
+    shipmentSaga(),
   ]);
 }
 
