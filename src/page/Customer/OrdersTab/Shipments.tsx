@@ -33,7 +33,6 @@ function Shipments({shipments}: ShipmentsProps) {
         </thead>
         <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
           {shipments.map((shipment) => (
-            shipment.tracking_status &&
             shipment.shipment_versions.map((shipment_version: any) => (
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 dark:text-gray-100">
@@ -73,7 +72,7 @@ function Shipments({shipments}: ShipmentsProps) {
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                   <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">
-                  {shipment.tracking_status}
+                  {shipment.tracking_status ? shipment.tracking_status : "Pending"}
                   </span>
                 </td>
               </tr>
