@@ -71,19 +71,17 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
         </div>
 
         <div className="py-2 space-y-2">
-          {/* {!Object.values(expandedVersions).some(Boolean) && (
-            <button
-              onClick={() => chooseSection('shipments')}
-              className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
-                selectedSection === 'shipments'
-                  ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
-                  : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
-              }`}
-            >
-              <Truck className="w-5 h-5" />
-              <span>Shipments</span>
-            </button>
-          )} */}
+          <button
+            onClick={() => chooseSection('shipments')}
+            className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
+              selectedSection === 'shipments'
+                ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
+                : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            <Truck className="w-5 h-5" />
+            <span>Shipments</span>
+          </button>
 
           {selectedOrderData?.versions?.map((version: any, index: number) => (
           <>

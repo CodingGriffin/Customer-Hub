@@ -59,7 +59,7 @@ const TabNav = React.memo(() => {
           <MapPin className="w-5 h-5 mr-2" />
           Addresses
         </button>
-        {location.pathname.includes('/orders/') && (
+        {/* {location.pathname.includes('/orders/') && (
           <button
             onClick={() => navigate(`/orders/${jobNumber}/shipments`)}
             className={`${
@@ -71,7 +71,7 @@ const TabNav = React.memo(() => {
             <Truck className="w-5 h-5 mr-2" />
             Shipments
           </button>
-        )}
+        )} */}
       </nav>
     </div>
   );
