@@ -75,7 +75,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
         </div>
 
         <div className="py-2 space-y-2">
-          {!Object.values(expandedVersions).some(Boolean) && (
+          {/* {!Object.values(expandedVersions).some(Boolean) && (
             <button
               onClick={() => chooseSection('shipments')}
               className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
@@ -87,7 +87,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
               <Truck className="w-5 h-5" />
               <span>Shipments</span>
             </button>
-          )}
+          )} */}
 
           {selectedOrderData?.versions?.map((version: any, index: number) => (
           <>
