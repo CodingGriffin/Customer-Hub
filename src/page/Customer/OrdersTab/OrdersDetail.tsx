@@ -13,6 +13,22 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   const [selectedSection, setSelectedSection] = useState<'packaging' | 'artwork' | 'data' | 'shipments' | null>(null);
   const [selectedStep, setSelectedStep] = useState<number>(1);
 
+  // Helper function to check if section exists for a version
+  const sectionExistsForVersion = (versionId: number, sectionType: string) => {
+    return selectedOrderData.pad_line_items.some(
+      (item: any) => 
+        item.versions_id === versionId && 
+        item.pad_abbreviation === sectionType
+    );
+  };
+
+  // Map section names to pad_abbreviation values
+  const sectionToPadMap = {
+    'packaging': 'pack',
+    'artwork': 'artw',
+    'data': 'data'
+  };
+
   // Simulating data fetch - replace with actual API call
 
 
@@ -102,20 +118,28 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
 
             {expandedVersions[index] && (
               <div className="pl-4">
-                {['packaging', 'artwork', 'data'].map((section) => (
-                  <button
-                    key={section}
-                    onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data')}
-                    className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
-                      selectedSection === section
-                        ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
-                        : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
-                    }`}
-                  >
-                    {getSectionIcon(section)}
-                    <span className="capitalize">{section}</span>
-                  </button>
-                ))}
+                {['packaging', 'artwork', 'data'].map((section) => {
+                  const padAbbreviation = sectionToPadMap[section as keyof typeof sectionToPadMap];
+                  
+                  // Only render the section button if it exists in pad_line_items
+                  if (sectionExistsForVersion(version.version_id, padAbbreviation)) {
+                    return (
+                      <button
+                        key={`${version.version_id}-${section}`}
+                        onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data')}
+                        className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
+                          selectedSection === section
+                            ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
+                            : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        {getSectionIcon(section)}
+                        <span className="capitalize">{section}</span>
+                      </button>
+                    );
+                  }
+                  return null;
+                })}
               </div>
             )}
           </>
