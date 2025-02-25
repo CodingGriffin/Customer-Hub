@@ -46,15 +46,15 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
     });
   };
 
-  const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null) => {
-    if (section === 'shipments') {
-      navigate(`/orders/${selectedOrderData?.job?.job_number}/shipments`);
-    } else if (section) {
-      navigate(`/orders/${selectedOrderData?.job?.job_number}/${section}/setup`);
-    }
+  const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null, version_id: number) => {
+    navigate(`/orders/${selectedOrderData?.job?.job_number}/${section}/${version_id}/setup`);
     setSelectedSection(section);
     setSelectedStep(1);
   };
+
+  const shipments = async () => {
+    navigate(`/orders/${selectedOrderData?.job?.job_number}/shipments`);
+  }
 
   const getSectionIcon = (section: string) => {
     switch (section) {
@@ -88,7 +88,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
 
         <div className="py-2 space-y-2">
           <button
-            onClick={() => chooseSection('shipments')}
+            onClick={() => shipments()}
             className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
               selectedSection === 'shipments'
                 ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
@@ -102,6 +102,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
           {selectedOrderData?.versions?.map((version: any, index: number) => (
           <>
             <button
+              key={`${version.version_id}`}
               onClick={() => toggleVersion(index)}
               className="w-full text-left px-4 py-2 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
             >
@@ -126,7 +127,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
                     return (
                       <button
                         key={`${version.version_id}-${section}`}
-                        onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data')}
+                        onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data', version.version_id)}
                         className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
                           selectedSection === section
                             ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'

@@ -1,10 +1,11 @@
 import React from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
 import StepUpload from './StepUploads';
 import { VersionsContext } from '../../../types';
 
 export default function StepUploadWrapper() {
+  const { version_id } = useParams();
   const navigate = useNavigate();
   const { selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
   
@@ -12,9 +13,9 @@ export default function StepUploadWrapper() {
     await setSelectedStep(step)
     if (step === 3) {
       if (selectedSection === 'data') {
-        navigate('../data-proof');
+        navigate(`../${version_id}/data-proof`);
       } else {
-        navigate('../artwork-proof');
+        navigate(`../${version_id}/artwork-proof`);
       }
     }
   };

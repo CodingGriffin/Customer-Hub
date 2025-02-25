@@ -5,7 +5,7 @@ import OrdersList from './container/Customer/Orders';
 import OrderDetail from './container/Customer/Orders/detail';
 import ContactsList from './container/Customer/Contacts';
 import AddressesList from './container/Customer/Addresses';
-import ShipmentsList from './container/Customer/Orders/Shipments';
+import ShipmentsList from './container/Customer/Orders/shipments';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
 import StepSetupWrapper from './page/Customer/OrdersTab/StepSetupWrapper';
 import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
@@ -23,11 +23,11 @@ export default function App() {
           <Route path=":orderId" element={<OrderDetail />}>
             <Route index element={<div>Select a section to begin</div>} />
             <Route path=":section" element={<VersionsWrapper />}>
-              <Route path="setup" element={<StepSetupWrapper />} />
-              <Route path="data-upload" element={<StepUploadWrapper />} />
-              <Route path="data-proof" element={<DataProof />} />
-              <Route path="artwork-upload" element={<ArtworkManagerWrapper />} />
-              <Route path="artwork-proof" element={<ArtworkProofViewer />} />
+              <Route path=":version_id/setup" element={<StepSetupWrapper />} />
+              <Route path=":version_id/data-upload" element={<StepUploadWrapper />} />
+              <Route path=":version_id/data-proof" element={<DataProof />} />
+              <Route path=":version_id/artwork-upload" element={<ArtworkManagerWrapper />} />
+              <Route path=":version_id/artwork-proof" element={<ArtworkProofViewer />} />
             </Route>
             <Route path="shipments" element={<ShipmentsList />} />
           </Route>
