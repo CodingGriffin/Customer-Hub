@@ -226,15 +226,11 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
               <Upload className="w-4 h-4 mr-1.5" />
               <span>Upload</span>
             </button>
-            <button className="flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-              <FolderPlus className="w-4 h-4 mr-1.5" />
-              <span>New Folder</span>
-            </button>
           </div>
         </div>
 
         {/* Right side - Drag target area */}
-        <div
+        {/* <div
           className={`flex-1 border-2 border-dashed rounded-lg p-3 flex items-center justify-center ${
             dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
           }`}
@@ -247,7 +243,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
             <Upload className="w-4 h-4 mr-2 text-gray-400" />
             <span>Drag files here to upload into the current folder</span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Search Bar */}
