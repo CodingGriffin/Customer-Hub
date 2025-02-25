@@ -25,7 +25,7 @@ function OrdersList() {
         joblimit: 25,
         p: 1,
         d: 1,
-        e_n: "Well Assembled Meetings"
+        e_n: "Lumenis Be, Inc."
       }
     });
   }, [dispatch]);
