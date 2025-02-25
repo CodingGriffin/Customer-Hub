@@ -14,11 +14,13 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   const [selectedStep, setSelectedStep] = useState<number>(1);
 
   // Helper function to check if section exists for a version
-  const sectionExistsForVersion = (versionId: number, sectionType: string) => {
+  const sectionExistsForVersion = (version: any, sectionType: string) => {
     return selectedOrderData.pad_line_items.some(
       (item: any) => 
-        item.versions_id === versionId && 
+        item.versions_id === version.version_id && 
         item.pad_abbreviation === sectionType
+    ) || version.ref_pad_line_items?.some(
+      (item: any) => item.pad_abbreviation === sectionType
     );
   };
 
@@ -123,7 +125,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
                   const padAbbreviation = sectionToPadMap[section as keyof typeof sectionToPadMap];
                   
                   // Only render the section button if it exists in pad_line_items
-                  if (sectionExistsForVersion(version.version_id, padAbbreviation)) {
+                  if (sectionExistsForVersion(version, padAbbreviation)) {
                     return (
                       <button
                         key={`${version.version_id}-${section}`}
