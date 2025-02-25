@@ -42,7 +42,7 @@ function Shipments({shipments}: ShipmentsProps) {
                   </div>
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                {shipment_version.jobnum}{shipment_version.name}
+                {shipment_version.isWareHousing ? shipment_version.ref_jobNumber : shipment_version.jobnum}{shipment_version.name}
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
                   <div className="flex items-start">
