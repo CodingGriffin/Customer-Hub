@@ -15,6 +15,7 @@ export default function VersionsWrapper() {
 
   return (
     <Versions 
+      selectedOrderData={selectedOrderData}
       selectedSection={selectedSection}
       selectedStep={selectedStep}
       setSelectedStep={setSelectedStep}

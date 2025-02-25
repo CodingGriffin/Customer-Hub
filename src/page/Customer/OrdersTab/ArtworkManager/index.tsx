@@ -7,14 +7,22 @@ import UploadModal from './UploadModal';
 import AIModal from './AIModal';
 import CommentModal from './CommentModal';
 import { ArtworkManagerItemType } from '../../../../types';
+import { useParams } from 'react-router-dom';
 
 interface ArtworkManagerProps {
   setSelectedStep: (id: number) => void;
+  selectedOrderData: any
 }
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
+const ArtworkManagerPage = ({selectedOrderData, setSelectedStep}: ArtworkManagerProps) => {
+  const { version_id } = useParams();
+  
+  // Find the version in the selectedOrderData.versions array
+  const currentVersion = selectedOrderData?.versions?.find(
+    (version: any) => version.version_id == version_id
+  );
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [currentPath, setCurrentPath] = useState<string[]>(['Home']);
@@ -407,7 +415,7 @@ const ArtworkManagerPage = ({setSelectedStep}: ArtworkManagerProps) => {
       {/* Comment Modal */}
       {showCommentModal && <CommentModal commentText={commentText} setCommentText={setCommentText} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} />}
       {/* Upload Modal */}
-      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} />}
+      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} version_name={currentVersion?.version_name} />}
 
       {/* AI Modal */}
       {showAIModal && <AIModal analysisStep = {analysisStep} _closeAIModal = {handleCloseAIModal} />}

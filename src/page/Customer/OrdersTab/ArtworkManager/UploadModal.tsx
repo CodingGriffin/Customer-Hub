@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { Upload, X, Image } from 'lucide-react';
+import { X } from 'lucide-react';
 import { UppyUploader } from '../../../../component/UppyUploader';
 import useUppy from '../../../../utils/useUppy';
 
 interface UploadModalProps {
   _closeUploadModal: () => void;
+  version_name: string;
 }
 
-const UploadModal = React.memo(({ _closeUploadModal }: UploadModalProps) => {
+const UploadModal = React.memo(({version_name, _closeUploadModal }: UploadModalProps) => {
 
   const { uppy } = useUppy();
 
@@ -60,7 +61,7 @@ const UploadModal = React.memo(({ _closeUploadModal }: UploadModalProps) => {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl mx-4">
         <div className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">Upload Files</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">Upload Files - {version_name} - PAD</h2>
             <button
               onClick={_closeUploadModal}
               className="text-gray-500 hover:text-gray-700"

@@ -5,12 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
+  selectedOrderData: any
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
   selectedStep: number
   setSelectedStep: (step: number) => void;
 }
 
-function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProps) {
+function Versions({selectedSection, selectedStep, selectedOrderData, setSelectedStep}: VersionsProps) {
   const navigate = useNavigate();
   const { version_id } = useParams();
 
@@ -89,7 +90,7 @@ function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProp
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 ml-3">
-        <Outlet context={{ selectedSection, setSelectedStep }} />
+        <Outlet context={{ selectedOrderData, selectedSection, setSelectedStep }} />
       </div>
     </>
   )

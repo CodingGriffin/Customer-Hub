@@ -6,7 +6,7 @@ import { VersionsContext } from '../../../types';
 
 export default function ArtworkManagerWrapper() {
   const navigate = useNavigate();
-  const { selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
+  const { selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
   
   const setStep = async (step: number) => {
     await setSelectedStep(step)
@@ -19,5 +19,5 @@ export default function ArtworkManagerWrapper() {
     }
   };
 
-  return <ArtworkManagerPage setSelectedStep={setStep} />;
+  return <ArtworkManagerPage setSelectedStep={setStep} selectedOrderData={selectedOrderData} />;
 }

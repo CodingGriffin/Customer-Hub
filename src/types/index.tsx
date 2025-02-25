@@ -67,6 +67,7 @@ export type Address = {
 }
 
 export interface VersionsContext {
+  selectedOrderData: any,
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
   setSelectedStep: (step: number) => void;
 }
