@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
@@ -12,6 +12,7 @@ interface VersionsProps {
 
 function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProps) {
   const navigate = useNavigate();
+  const { version_id } = useParams();
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
@@ -26,29 +27,29 @@ function Versions({selectedSection, selectedStep, setSelectedStep}: VersionsProp
     switch (selectedSection) {
       case 'data':
         if (step ==1) {
-          navigate(`../${selectedSection}/setup`);
+          navigate(`../${selectedSection}/${version_id}/setup`);
         } else if (step == 2) {
-          navigate(`../${selectedSection}/data-upload`);
+          navigate(`../${selectedSection}/${version_id}/data-upload`);
         } else if (step == 3) {
-          navigate(`../${selectedSection}/data-proof`);
+          navigate(`../${selectedSection}/${version_id}/data-proof`);
         }
         break;
       case 'artwork':
         if (step ==1) {
-          navigate(`../${selectedSection}/setup`);
+          navigate(`../${selectedSection}/${version_id}/setup`);
         } else if (step == 2) {
-          navigate(`../${selectedSection}/artwork-upload`);
+          navigate(`../${selectedSection}/${version_id}/artwork-upload`);
         } else if (step == 3) {
-          navigate(`../${selectedSection}/artwork-proof`);
+          navigate(`../${selectedSection}/${version_id}/artwork-proof`);
         }
         break;
       default:
         if (step ==1) {
-          navigate(`../${selectedSection}/setup`);
+          navigate(`../${selectedSection}/${version_id}/setup`);
         } else if (step == 2) {
-          navigate(`../${selectedSection}/artwork-upload`);
+          navigate(`../${selectedSection}/${version_id}/artwork-upload`);
         } else if (step == 3) {
-          navigate(`../${selectedSection}/artwork-proof`);
+          navigate(`../${selectedSection}/${version_id}/artwork-proof`);
         }
         break;
     }
