@@ -6,9 +6,10 @@ import useUppy from '../../../../utils/useUppy';
 interface UploadModalProps {
   _closeUploadModal: () => void;
   version_name: string;
+  section: any;
 }
 
-const UploadModal = React.memo(({version_name, _closeUploadModal }: UploadModalProps) => {
+const UploadModal = React.memo(({version_name, section, _closeUploadModal }: UploadModalProps) => {
 
   const { uppy } = useUppy();
 
@@ -61,7 +62,9 @@ const UploadModal = React.memo(({version_name, _closeUploadModal }: UploadModalP
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl mx-4">
         <div className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">Upload Files - {version_name} - PAD</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">
+              Upload Files - {version_name} - {section.charAt(0).toUpperCase() + section.slice(1)}
+            </h2>
             <button
               onClick={_closeUploadModal}
               className="text-gray-500 hover:text-gray-700"

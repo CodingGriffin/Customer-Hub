@@ -17,7 +17,7 @@ interface ArtworkManagerProps {
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
 const ArtworkManagerPage = ({selectedOrderData, setSelectedStep}: ArtworkManagerProps) => {
-  const { version_id } = useParams();
+  const { version_id, section } = useParams();
   
   // Find the version in the selectedOrderData.versions array
   const currentVersion = selectedOrderData?.versions?.find(
@@ -415,7 +415,7 @@ const ArtworkManagerPage = ({selectedOrderData, setSelectedStep}: ArtworkManager
       {/* Comment Modal */}
       {showCommentModal && <CommentModal commentText={commentText} setCommentText={setCommentText} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} />}
       {/* Upload Modal */}
-      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} version_name={currentVersion?.version_name} />}
+      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
 
       {/* AI Modal */}
       {showAIModal && <AIModal analysisStep = {analysisStep} _closeAIModal = {handleCloseAIModal} />}
