@@ -153,7 +153,7 @@ function ArtworkPhotoSample({ isLiveSample = false }) {
 
   return (
     <div className="min-h-screen p-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         {images.map(image => (
           <div key={image.id} className="dark:bg-slate-900 bg-gray-600 rounded-lg overflow-hidden">
             <div 
