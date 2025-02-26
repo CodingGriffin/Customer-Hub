@@ -6,9 +6,14 @@ import { UserManagement } from './UserManagement';
 import Bottom from './Bottom';
 import PdfViewer from './PdfViewer';
 
+interface ArtworkManagerProps {
+  setSelectedStep: (id: number) => void;
+  selectedOrderData: any
+}
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function ArtworkProofViewer() {
+function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManagerProps) {
 
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
@@ -30,7 +35,7 @@ function ArtworkProofViewer() {
     <div className="flex h-screen bg-gray-100 relative">
       {/* Main Content Area */}
       {/* PDF Viewer */}
-      <PdfViewer pdfError={pdfError} setPdfError={setPdfError} />
+      <PdfViewer pdfError={pdfError} setPdfError={setPdfError} setSelectedStep={setSelectedStep} />
 
       {/* User Management Slide-out Panel */}
       <div

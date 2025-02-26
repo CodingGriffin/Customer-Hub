@@ -1,0 +1,459 @@
+import React, { useState } from 'react';
+import { Check, X, AlertTriangle, Pencil, FileCheck, Package, Scale } from 'lucide-react';
+import ImageViewer from '../../../../component/ArtworkPhotoSample/ImageViewer';
+
+const initialImages = [
+  {
+    id: '1',
+    url: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop&q=60',
+    title: 'Product Photo 1',
+    approved: true,
+    message: ""
+  },
+  {
+    id: '2',
+    url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=60',
+    title: 'Product Photo 2',
+    approved: true,
+    message: ""
+  },
+  {
+    id: '3',
+    url: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&auto=format&fit=crop&q=60',
+    title: 'Product Photo 3',
+    approved: true,
+    message: ""
+  },
+  {
+    id: '4',
+    url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=60',
+    title: 'Product Photo 4',
+    approved: true,
+    message: ""
+  },
+];
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (message?: string) => void;
+  type: 'approve' | 'reject';
+  initialMessage?: string;
+}
+
+interface ConfirmationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}
+
+interface ProductionApprovalModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}
+
+function ProductionApprovalModal({ isOpen, onClose, onConfirm }: ProductionApprovalModalProps) {
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-slate-900 rounded-lg p-6 w-full max-w-2xl">
+        <div className="flex items-center gap-3 mb-4">
+          <Scale className="text-blue-500" size={24} />
+          <h2 className="text-xl font-semibold">Production Approval Terms</h2>
+        </div>
+        <div className="bg-slate-800 rounded-lg p-4 mb-6 max-h-96 overflow-y-auto">
+          <div className="prose prose-invert prose-sm">
+            <p className="text-slate-300">
+              By approving these samples for production, you acknowledge and agree to the following terms:
+            </p>
+            <ul className="text-slate-300 list-disc pl-5 space-y-2">
+              <li>The approved samples represent the general quality and appearance of the final products.</li>
+              <li>Minor variations in color, texture, and finish are inherent in the production process and are considered acceptable.</li>
+              <li>Each piece in the production run may have slight variations from the approved samples.</li>
+              <li>Once production begins, modifications or cancellations may not be possible.</li>
+              <li>This approval constitutes your final sign-off for mass production.</li>
+            </ul>
+            <p className="text-slate-300 mt-4">
+              [Additional terms and conditions will be displayed here]
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center mb-6">
+          <input
+            type="checkbox"
+            id="terms"
+            checked={termsAccepted}
+            onChange={(e) => setTermsAccepted(e.target.checked)}
+            className="h-4 w-4 rounded border-slate-700 bg-slate-800 text-blue-600 focus:ring-blue-500"
+          />
+          <label htmlFor="terms" className="ml-2 text-sm text-slate-300">
+            I have read and agree to the production terms and conditions
+          </label>
+        </div>
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={!termsAccepted}
+            className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
+              termsAccepted
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-slate-700 text-slate-400 cursor-not-allowed'
+            }`}
+          >
+            <FileCheck size={18} />
+            <span>Approve for Production</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ConfirmationModal({ isOpen, onClose, onConfirm }: ConfirmationModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-slate-900 rounded-lg p-6 w-full max-w-md">
+        <div className="flex items-center gap-3 mb-4">
+          <AlertTriangle className="text-amber-500" size={24} />
+          <h2 className="text-xl font-semibold">Consider Before Proceeding</h2>
+        </div>
+        <p className="text-slate-300 mb-6">
+          Please note that requesting changes will delay production. While we strive for excellence, minor variations are inherent in bulk production. Consider if the changes are essential, as each piece in your order will have natural variations.
+        </p>
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+          >
+            Proceed with Comments
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Modal({ isOpen, onClose, onConfirm, type, initialMessage = '' }: ModalProps) {
+  const [message, setMessage] = useState(initialMessage);
+  const [error, setError] = useState('');
+
+  if (!isOpen) return null;
+
+  const handleSubmit = () => {
+    if (type === 'reject' && !message.trim()) {
+      setError('Please provide your comments');
+      return;
+    }
+    onConfirm(message);
+    setMessage('');
+    setError('');
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-slate-900 rounded-lg p-6 w-full max-w-md">
+        <h2 className="text-xl font-semibold mb-4">
+          {type === 'approve' ? 'Confirm Approval' : 'Provide Comments'}
+        </h2>
+        {type === 'reject' && (
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">
+              Please provide your comments:
+            </label>
+            <textarea
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white"
+              rows={3}
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value);
+                setError('');
+              }}
+              placeholder="Enter your comments here..."
+            />
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          </div>
+        )}
+        {type === 'approve' && (
+          <p className="mb-4">Are you sure you want to approve all images?</p>
+        )}
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            className={`px-4 py-2 rounded-lg ${
+              type === 'approve'
+                ? 'bg-blue-600 hover:bg-blue-700'
+                : 'bg-red-600 hover:bg-red-700'
+            } text-white`}
+          >
+            {type === 'approve' ? 'Confirm Approval' : 'Submit Comments'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App({ isLiveSample = false }) {
+  const [images, setImages] = useState(initialImages);
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    type: 'approve' | 'reject';
+    imageId?: string;
+    initialMessage?: string;
+  }>({
+    isOpen: false,
+    type: 'approve',
+  });
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showProductionApproval, setShowProductionApproval] = useState(false);
+  const [pendingReject, setPendingReject] = useState<string | null>(null);
+  const [finalComment, setFinalComment] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{
+    url: string;
+    title: string;
+  } | null>(null);
+
+  const handleApprove = (id: string) => {
+    setImages(images.map(img => {
+      if (img.id === id) {
+        return { ...img, approved: true, message: "undefined" };
+      }
+      return img;
+    }));
+  };
+
+  const handleReject = (id: string) => {
+    setModalState({
+      isOpen: true,
+      type: 'reject',
+      imageId: id,
+      initialMessage: images.find(img => img.id === id)?.message || '',
+    });
+  };
+
+  const handleEditComment = (id: string, currentMessage: string) => {
+    setModalState({
+      isOpen: true,
+      type: 'reject',
+      imageId: id,
+      initialMessage: currentMessage
+    });
+  };
+
+  const handleRemoveComment = (id: string) => {
+    setImages(images.map(img => {
+      if (img.id === id) {
+        return {
+          ...img,
+          approved: true,
+          message: "undefined"
+        };
+      }
+      return img;
+    }));
+  };
+
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    setPendingReject(null);
+  };
+
+  const handleConfirmationProceed = () => {
+    setShowConfirmation(false);
+    setModalState({
+      isOpen: true,
+      type: 'reject',
+    });
+  };
+
+  const handleModalConfirm = (message?: string) => {
+    if (modalState.imageId) {
+      setImages(images.map(img => {
+        if (img.id === modalState.imageId) {
+          return {
+            ...img,
+            approved: modalState.type === 'approve',
+            message: modalState.type === 'reject' ? (message || "") : "undefined",
+          };
+        }
+        return img;
+      }));
+    } else if (modalState.type === 'reject') {
+      // Store the final comment separately
+      setFinalComment(message || null);
+    }
+    setModalState({ isOpen: false, type: 'approve' });
+  };
+
+  const handleBulkAction = () => {
+    const anyRejected = images.some(img => !img.approved);
+    if (anyRejected) {
+      setPendingReject(null);
+      setShowConfirmation(true);
+    } else {
+      if (isLiveSample) {
+        handleProductionApproval();
+      } else {
+        setShowProductionApproval(true);
+      }
+    }
+  };
+
+  const handleProductionApproval = () => {
+    setShowProductionApproval(false);
+    // Here you would typically trigger the production process
+    console.log(isLiveSample ? 'Live sample requested' : 'Production approved', { finalComment });
+  };
+
+  const anyRejected = images.some(img => !img.approved);
+
+  return (
+    <div className="min-h-screen bg-slate-950 p-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        {images.map(image => (
+          <div key={image.id} className="bg-slate-900 rounded-lg overflow-hidden">
+            <div 
+              className="relative group cursor-pointer"
+              onClick={() => setSelectedImage({ url: image.url, title: image.title })}
+            >
+              <img
+                src={image.url}
+                alt={image.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity flex items-center justify-center">
+                <span className="text-white text-sm">Click to view</span>
+              </div>
+            </div>
+            <div className="p-4">
+              <h3 className="text-white font-medium mb-3">{image.title}</h3>
+              {image.message && (
+                <div className="flex items-start gap-2 mb-3 bg-slate-800 p-2 rounded">
+                  <p className="text-red-400 text-sm flex-1">{image.message}</p>
+                  <button
+                    onClick={() => handleEditComment(image.id, image.message || '')}
+                    className="text-slate-400 hover:text-white p-1"
+                    title="Edit comment"
+                  >
+                    <Pencil size={14} />
+                  </button>
+                  <button
+                    onClick={() => handleRemoveComment(image.id)}
+                    className="text-slate-400 hover:text-white p-1"
+                    title="Remove comment"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              )}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleApprove(image.id)}
+                  className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
+                    image.approved
+                      ? 'bg-green-600 text-white'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  <Check size={16} />
+                  <span>Approve</span>
+                </button>
+                <button
+                  onClick={() => handleReject(image.id)}
+                  className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
+                    !image.approved
+                      ? 'bg-red-600 text-white'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  <X size={16} />
+                  <span>Reject</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={handleBulkAction}
+        className={`w-full py-3 rounded-lg font-medium transition-colors ${
+          anyRejected
+            ? 'bg-red-600 hover:bg-red-700'
+            : 'bg-blue-600 hover:bg-blue-700'
+        } text-white flex items-center justify-center gap-2`}
+      >
+        {anyRejected ? (
+          <>
+            <AlertTriangle size={20} />
+            <span>Provide Comments</span>
+          </>
+        ) : (
+          <>
+            {isLiveSample ? (
+              <>
+                <Package size={20} />
+                <span>Approve to get a Live Sample Shipped ASAP</span>
+              </>
+            ) : (
+              <>
+                <FileCheck size={20} />
+                <span>Approve for Production</span>
+              </>
+            )}
+          </>
+        )}
+      </button>
+      <ConfirmationModal
+        isOpen={showConfirmation}
+        onClose={handleConfirmationClose}
+        onConfirm={handleConfirmationProceed}
+      />
+      <Modal
+        isOpen={modalState.isOpen}
+        onClose={() => setModalState({ isOpen: false, type: 'approve' })}
+        onConfirm={handleModalConfirm}
+        type={modalState.type}
+        initialMessage={modalState.initialMessage}
+      />
+      <ProductionApprovalModal
+        isOpen={showProductionApproval}
+        onClose={() => setShowProductionApproval(false)}
+        onConfirm={handleProductionApproval}
+      />
+      {selectedImage && (
+        <ImageViewer
+          isOpen={true}
+          onClose={() => setSelectedImage(null)}
+          imageUrl={selectedImage.url}
+          title={selectedImage.title}
+        />
+      )}
+    </div>
+  );
+}
+
+export default App;

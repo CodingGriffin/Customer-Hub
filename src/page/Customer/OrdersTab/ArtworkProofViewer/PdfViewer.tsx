@@ -13,11 +13,12 @@ import {
 interface PdfViewerProps {
   pdfError: string | null;
   setPdfError: (e: string | null) => void;
+  setSelectedStep: (id: number) => void;
 }
 
 const pdfUrl = "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf";
 
-function PdfViewer({pdfError, setPdfError}: PdfViewerProps) {
+function PdfViewer({pdfError, setPdfError, setSelectedStep}: PdfViewerProps) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [numPages, setNumPages] = useState<number | null>(null);
@@ -29,6 +30,10 @@ function PdfViewer({pdfError, setPdfError}: PdfViewerProps) {
     setPdfError('Failed to load PDF document. Please try again later.');
     setIsLoading(false);
   };
+
+  const continueSetup = () => {
+    setSelectedStep(4);
+  }
 
   const nextPage = () => {
     if (currentPage < (numPages || 1)) {
@@ -105,15 +110,28 @@ function PdfViewer({pdfError, setPdfError}: PdfViewerProps) {
                 </div>
               </div>
 
-              <button
-                onClick={() => window.open(pdfUrl, '_blank')}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:bg-blue-300"
-                disabled={!!pdfError}
-                title="Download PDF document"
-              >
-                <Download size={16} />
-                <span className="text-sm">Download</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => window.open(pdfUrl, '_blank')}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:bg-blue-300"
+                  disabled={!!pdfError}
+                  title="Download PDF document"
+                >
+                  <Download size={16} />
+                  <span className="text-sm">Download</span>
+                </button>
+                <button
+                  onClick={continueSetup}
+                  // disabled={!(nameIconStep == 3)}
+                  className={`px-4 py-2 rounded text-white ${
+                    // nameIconStep == 3
+                      'bg-blue-600 hover:bg-blue-700 text-sm'
+                      // : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
+                  }`}
+                >
+                  Continue
+                </button>
+              </div>
             </div>
 
             <Document
