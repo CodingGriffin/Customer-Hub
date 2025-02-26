@@ -12,7 +12,7 @@ import {
 
 function* getContacts(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.contacts.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.contacts.php", {...action.payload});
     yield put({ type: actions.GET_CONTACTS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.GET_CONTACTS_FAILURE, payload: error });
@@ -21,7 +21,7 @@ function* getContacts(action: any) {
 
 function* addContact(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.contacts.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.contacts.php", {...action.payload});
     yield put({ type: actions.ADD_CONTACT_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.ADD_CONTACT_FAILURE, payload: error });
@@ -30,7 +30,7 @@ function* addContact(action: any) {
 
 function* editContact(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.contacts.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.contacts.php", {...action.payload});
     yield put({ type: actions.EDIT_CONTACT_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.EDIT_CONTACT_FAILURE, payload: error });
@@ -39,7 +39,7 @@ function* editContact(action: any) {
 
 function* deleteContact(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.contacts.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.contacts.php", {...action.payload});
     yield put({ type: actions.EDIT_CONTACT_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.EDIT_CONTACT_FAILURE, payload: error });

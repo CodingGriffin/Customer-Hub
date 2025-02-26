@@ -12,7 +12,7 @@ import {
 
 function* getOrders(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.joblist.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.joblist.php", {...action.payload});
     yield put({ type: actions.GET_ORDERS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.GET_ORDERS_FAILURE, payload: error });
@@ -21,7 +21,7 @@ function* getOrders(action: any) {
 
 function* getOrder(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.getJob.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.getJob.php", {...action.payload});
     yield put({ type: actions.GET_ORDER_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.GET_ORDER_FAILURE, payload: error });

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { pdfjs } from 'react-pdf';
 import { X } from 'lucide-react';
 import { Modal } from '../../../../component/ArtworkProofViewer/Modal';
@@ -14,6 +15,13 @@ interface ArtworkManagerProps {
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManagerProps) {
+
+  const { version_id, section } = useParams();
+  
+  // Find the version in the selectedOrderData.versions array
+  const currentVersion = selectedOrderData?.versions?.find(
+    (version: any) => version.version_id == version_id
+  );
 
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);

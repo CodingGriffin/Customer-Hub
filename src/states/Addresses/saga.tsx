@@ -12,7 +12,7 @@ import {
 
 function* getAddresses(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/j/inc/class/class.addresses.php", {...action.payload});
     yield put({ type: actions.GET_ADDRESSES_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.GET_ADDRESSES_FAILURE, payload: error });
@@ -21,7 +21,7 @@ function* getAddresses(action: any) {
 
 function* addAddress(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/j/inc/class/class.addresses.php", {...action.payload});
     yield put({ type: actions.ADD_ADDRESS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.ADD_ADDRESS_FAILURE, payload: error });
@@ -30,7 +30,7 @@ function* addAddress(action: any) {
 
 function* editAddress(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.addresses.php", {...action.payload});
     yield put({ type: actions.EDIT_ADDRESS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.EDIT_ADDRESS_FAILURE, payload: error });
@@ -39,7 +39,7 @@ function* editAddress(action: any) {
 
 function* deleteAddress(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.addresses.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.addresses.php", {...action.payload});
     yield put({ type: actions.EDIT_ADDRESS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.EDIT_ADDRESS_FAILURE, payload: error });

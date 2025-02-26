@@ -12,7 +12,7 @@ import {
 
 function* getShipments(action: any) {
   try {
-    const response: any = yield* callApi(postRequestNoToken, "inc/class/class.shipping.php", {...action.payload});
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.shipping.php", {...action.payload});
     yield put({ type: actions.GET_SHIPMENTS_SUCCESS, payload: response });
   } catch (error) {
     yield put({ type: actions.GET_SHIPMENTS_FAILURE, payload: error });
