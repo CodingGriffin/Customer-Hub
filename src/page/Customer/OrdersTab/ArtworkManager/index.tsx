@@ -206,14 +206,14 @@ const ArtworkManagerPage = ({selectedOrderData, setSelectedStep}: ArtworkManager
       <Header setSelectedStep={setSelectedStep} />
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
       {/* Breadcrumb */}
-      <div className="flex items-center space-x-2 mb-4 text-sm dark:text-gray-600 overflow-x-auto whitespace-nowrap pb-2">
+      {/* <div className="flex items-center space-x-2 mb-4 text-sm dark:text-gray-600 overflow-x-auto whitespace-nowrap pb-2">
         {currentPath.map((item, index) => (
           <React.Fragment key={index}>
             {index > 0 && <ChevronRight className="w-4 h-4 flex-shrink-0" />}
             <span className="hover:text-blue-600 cursor-pointer">{item}</span>
           </React.Fragment>
         ))}
-      </div>
+      </div> */}
 
       {/* Action Bar */}
       <div className="flex flex-wrap gap-4 mb-6">
