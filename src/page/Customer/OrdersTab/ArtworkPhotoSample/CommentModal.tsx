@@ -26,7 +26,7 @@ export default function CommentModal({ isOpen, onClose, onConfirm, type, initial
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-slate-900 rounded-lg p-6 w-full max-w-md">
+      <div className="bg-gray-100 dark:bg-slate-900 rounded-lg p-6 w-full max-w-md dark:text-white">
         <h2 className="text-xl font-semibold mb-4">
           {type === 'approve' ? 'Confirm Approval' : 'Provide Comments'}
         </h2>
@@ -36,7 +36,7 @@ export default function CommentModal({ isOpen, onClose, onConfirm, type, initial
               Please provide your comments:
             </label>
             <textarea
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white"
+              className="w-full dark:bg-slate-800 border border-slate-700 rounded-lg p-2 dark:text-white"
               rows={3}
               value={message}
               onChange={(e) => {

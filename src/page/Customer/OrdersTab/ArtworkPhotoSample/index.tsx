@@ -152,10 +152,10 @@ function ArtworkPhotoSample({ isLiveSample = false }) {
   const anyRejected = images.some(img => !img.approved);
 
   return (
-    <div className="min-h-screen bg-slate-950 p-8">
+    <div className="min-h-screen p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {images.map(image => (
-          <div key={image.id} className="bg-slate-900 rounded-lg overflow-hidden">
+          <div key={image.id} className="dark:bg-slate-900 bg-gray-600 rounded-lg overflow-hidden">
             <div 
               className="relative group cursor-pointer"
               onClick={() => setSelectedImage({ url: image.url, title: image.title })}

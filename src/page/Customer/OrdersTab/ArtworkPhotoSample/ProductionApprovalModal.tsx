@@ -13,25 +13,25 @@ export default function ProductionApprovalModal({ isOpen, onClose, onConfirm }: 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-slate-900 rounded-lg p-6 w-full max-w-2xl">
+    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-gray-200 dark:bg-gray-900 rounded-lg p-6 w-full max-w-2xl">
         <div className="flex items-center gap-3 mb-4">
           <Scale className="text-blue-500" size={24} />
-          <h2 className="text-xl font-semibold">Production Approval Terms</h2>
+          <h2 className="text-xl font-semibold dark:text-white">Production Approval Terms</h2>
         </div>
-        <div className="bg-slate-800 rounded-lg p-4 mb-6 max-h-96 overflow-y-auto">
+        <div className="bg-gray-500 dark:bg-slate-800 rounded-lg p-4 mb-6 max-h-96 overflow-y-auto dark:text-slate-300 text-white">
           <div className="prose prose-invert prose-sm">
-            <p className="text-slate-300">
+            <p className="">
               By approving these samples for production, you acknowledge and agree to the following terms:
             </p>
-            <ul className="text-slate-300 list-disc pl-5 space-y-2">
+            <ul className="list-disc pl-5 space-y-2">
               <li>The approved samples represent the general quality and appearance of the final products.</li>
               <li>Minor variations in color, texture, and finish are inherent in the production process and are considered acceptable.</li>
               <li>Each piece in the production run may have slight variations from the approved samples.</li>
               <li>Once production begins, modifications or cancellations may not be possible.</li>
               <li>This approval constitutes your final sign-off for mass production.</li>
             </ul>
-            <p className="text-slate-300 mt-4">
+            <p className="mt-4">
               [Additional terms and conditions will be displayed here]
             </p>
           </div>
@@ -44,7 +44,7 @@ export default function ProductionApprovalModal({ isOpen, onClose, onConfirm }: 
             onChange={(e) => setTermsAccepted(e.target.checked)}
             className="h-4 w-4 rounded border-slate-700 bg-slate-800 text-blue-600 focus:ring-blue-500"
           />
-          <label htmlFor="terms" className="ml-2 text-sm text-slate-300">
+          <label htmlFor="terms" className="ml-2 text-sm dark:text-slate-300">
             I have read and agree to the production terms and conditions
           </label>
         </div>
