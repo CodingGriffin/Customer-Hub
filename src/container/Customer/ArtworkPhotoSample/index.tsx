@@ -13,9 +13,9 @@ export default function ArtworkProof() {
     await setSelectedStep(step)
     if (step === 5) {
       if (selectedSection === 'data') {
-        navigate(`../${version_id}/data-proof`);
+        navigate(`../${version_id}/data-live-sample`);
       } else {
-        navigate(`../${version_id}/artwork-proof`);
+        navigate(`../${version_id}/artwork-live-sample`);
       }
     }
   };
