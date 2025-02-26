@@ -11,19 +11,21 @@ import {
 } from 'lucide-react';
 
 interface PdfViewerProps {
+  currentVersion: any
   pdfError: string | null;
   setPdfError: (e: string | null) => void;
   setSelectedStep: (id: number) => void;
 }
 
-const pdfUrl = "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf";
+// const pdfUrl = "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf";
 
-function PdfViewer({pdfError, setPdfError, setSelectedStep}: PdfViewerProps) {
-
+function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: PdfViewerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [scale, setScale] = useState(0.5);
+
+  const pdfUrl = import.meta.env.VITE_SERVER_BASE_URL + currentVersion.files.artw.pdf.file_path
 
   const handlePdfLoadError = (error: Error) => {
     console.error('Error loading PDF:', error);

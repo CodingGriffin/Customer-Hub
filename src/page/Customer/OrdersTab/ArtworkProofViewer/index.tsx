@@ -43,7 +43,7 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManager
     <div className="flex h-screen bg-gray-100 relative">
       {/* Main Content Area */}
       {/* PDF Viewer */}
-      <PdfViewer pdfError={pdfError} setPdfError={setPdfError} setSelectedStep={setSelectedStep} />
+      <PdfViewer pdfError={pdfError} setPdfError={setPdfError} setSelectedStep={setSelectedStep} currentVersion={currentVersion} />
 
       {/* User Management Slide-out Panel */}
       <div
