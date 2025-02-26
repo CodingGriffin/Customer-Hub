@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Document, Page } from 'react-pdf';
+import axios from 'axios';
 import { 
   Download, 
   AlertCircle, 
@@ -17,15 +18,49 @@ interface PdfViewerProps {
   setSelectedStep: (id: number) => void;
 }
 
-// const pdfUrl = "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf";
-
 function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: PdfViewerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [scale, setScale] = useState(0.5);
+  const [pdfData, setPdfData] = useState<string | null>(null);
 
-  const pdfUrl = import.meta.env.VITE_SERVER_BASE_URL + currentVersion.files.artw.pdf.file_path
+  // Original PDF URL
+  const originalPdfUrl = "http://52.4.2.181:9999/j/f/Well%20Assembled%20Meetings/12135/v1/artw/revisions/rev1/12135_Well_Assembled_Meetings_v1_rev1.pdf";
+  
+  // Proxy URL (adjust the port if needed)
+  const proxyPdfUrl = "http://localhost:3001/proxy/j/f/Well%20Assembled%20Meetings/12135/v1/artw/revisions/rev1/12135_Well_Assembled_Meetings_v1_rev1.pdf";
+
+  useEffect(() => {
+    const fetchPdf = async () => {
+      try {
+        // Fetch the PDF through our proxy
+        const response = await axios.get(proxyPdfUrl, {
+          responseType: 'blob'
+        });
+        
+        // Convert blob to data URL
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const dataUrl = URL.createObjectURL(blob);
+        setPdfData(dataUrl);
+        setPdfError(null);
+      } catch (error) {
+        console.error('Error fetching PDF:', error);
+        setPdfError('Failed to load PDF document. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPdf();
+    
+    // Cleanup function to revoke object URL
+    return () => {
+      if (pdfData) {
+        URL.revokeObjectURL(pdfData);
+      }
+    };
+  }, []);
 
   const handlePdfLoadError = (error: Error) => {
     console.error('Error loading PDF:', error);
@@ -114,7 +149,7 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => window.open(pdfUrl, '_blank')}
+                  onClick={() => window.open(originalPdfUrl, '_blank')}
                   className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:bg-blue-300"
                   disabled={!!pdfError}
                   title="Download PDF document"
@@ -124,46 +159,43 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
                 </button>
                 <button
                   onClick={continueSetup}
-                  // disabled={!(nameIconStep == 3)}
-                  className={`px-4 py-2 rounded text-white ${
-                    // nameIconStep == 3
-                      'bg-blue-600 hover:bg-blue-700 text-sm'
-                      // : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
-                  }`}
+                  className="px-4 py-2 rounded text-white bg-blue-600 hover:bg-blue-700 text-sm"
                 >
                   Continue
                 </button>
               </div>
             </div>
 
-            <Document
-              file={pdfUrl}
-              onLoadSuccess={({ numPages }) => {
-                setNumPages(numPages);
-                setPdfError(null);
-                setIsLoading(false);
-              }}
-              onLoadError={handlePdfLoadError}
-              loading={
-                <div className="flex items-center justify-center h-full">
-                  <Loader className="w-8 h-8 animate-spin text-blue-600" />
-                </div>
-              }
-              className="flex justify-center"
-            >
-              <Page
-                pageNumber={currentPage}
-                scale={scale}
-                className="mb-4 shadow-lg"
-                width={window.innerWidth * 0.6}
-                error={
-                  <div className="flex flex-col items-center justify-center p-4 rounded-lg">
-                    <AlertCircle className="text-red-600 mb-2" size={24} />
-                    <p className="text-red-600">Failed to load page {currentPage}</p>
+            {pdfData && (
+              <Document
+                file={pdfData}
+                onLoadSuccess={({ numPages }) => {
+                  setNumPages(numPages);
+                  setPdfError(null);
+                  setIsLoading(false);
+                }}
+                onLoadError={handlePdfLoadError}
+                loading={
+                  <div className="flex items-center justify-center h-full">
+                    <Loader className="w-8 h-8 animate-spin text-blue-600" />
                   </div>
                 }
-              />
-            </Document>
+                className="flex justify-center"
+              >
+                <Page
+                  pageNumber={currentPage}
+                  scale={scale}
+                  className="mb-4 shadow-lg"
+                  width={window.innerWidth * 0.6}
+                  error={
+                    <div className="flex flex-col items-center justify-center p-4 rounded-lg">
+                      <AlertCircle className="text-red-600 mb-2" size={24} />
+                      <p className="text-red-600">Failed to load page {currentPage}</p>
+                    </div>
+                  }
+                />
+              </Document>
+            )}
           </div>
         )}
       </div>
