@@ -5,7 +5,7 @@ import OrdersList from './container/Customer/Orders';
 import OrderDetail from './container/Customer/Orders/detail';
 import ContactsList from './container/Customer/Contacts';
 import AddressesList from './container/Customer/Addresses';
-import ShipmentsList from './container/Customer/Orders/shipments';
+import ShipmentsList from './container/Customer/Orders/Shipments';
 import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
 import StepSetupWrapper from './page/Customer/OrdersTab/StepSetupWrapper';
 import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
