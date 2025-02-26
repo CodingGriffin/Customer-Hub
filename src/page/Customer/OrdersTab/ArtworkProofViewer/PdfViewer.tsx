@@ -26,10 +26,10 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
   const [pdfData, setPdfData] = useState<string | null>(null);
 
   // Original PDF URL
-  const originalPdfUrl = "http://52.4.2.181:9999/j/f/Well%20Assembled%20Meetings/12135/v1/artw/revisions/rev1/12135_Well_Assembled_Meetings_v1_rev1.pdf";
+  const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL + currentVersion.files.artw.pdf.file_path;
   
   // Proxy URL (adjust the port if needed)
-  const proxyPdfUrl = "http://localhost:3001/proxy/j/f/Well%20Assembled%20Meetings/12135/v1/artw/revisions/rev1/12135_Well_Assembled_Meetings_v1_rev1.pdf";
+  const proxyPdfUrl = "http://localhost:3001/proxy" + currentVersion.files.artw.pdf.file_path;
 
   useEffect(() => {
     const fetchPdf = async () => {
