@@ -12,6 +12,7 @@ import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
 import DataProof from './page/Customer/OrdersTab/DataProof';
 import ArtworkUpload from './container/Customer/ArtworkUpload';
 import ArtworkProof from './container/Customer/ArtworkProof';
+import ArtworkPhotoSample from './page/Customer/OrdersTab/ArtworkPhotoSample';
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
               <Route path=":version_id/data-proof" element={<DataProof />} />
               <Route path=":version_id/artwork-upload" element={<ArtworkUpload />} />
               <Route path=":version_id/artwork-proof" element={<ArtworkProof />} />
+              <Route path=":version_id/artwork-photo-sample" element={<ArtworkPhotoSample />} />
             </Route>
             <Route path="shipments" element={<ShipmentsList />} />
           </Route>

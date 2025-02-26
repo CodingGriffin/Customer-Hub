@@ -217,7 +217,7 @@ function Modal({ isOpen, onClose, onConfirm, type, initialMessage = '' }: ModalP
   );
 }
 
-function App({ isLiveSample = false }) {
+function ArtworkPhotoSample({ isLiveSample = false }) {
   const [images, setImages] = useState(initialImages);
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -456,4 +456,4 @@ function App({ isLiveSample = false }) {
   );
 }
 
-export default App;
+export default ArtworkPhotoSample;

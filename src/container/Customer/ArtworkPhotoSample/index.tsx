@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
-import ArtworkProofViewer from '../../../page/Customer/OrdersTab/ArtworkProofViewer';
+import ArtworkPhotoSample from '../../../page/Customer/OrdersTab/ArtworkPhotoSample';
 import { VersionsContext } from '../../../types';
 
 export default function ArtworkProof() {
@@ -11,14 +11,14 @@ export default function ArtworkProof() {
   
   const setStep = async (step: number) => {
     await setSelectedStep(step)
-    if (step === 4) {
+    if (step === 5) {
       if (selectedSection === 'data') {
-        navigate(`../${version_id}/data-photo-sample`);
+        navigate(`../${version_id}/data-proof`);
       } else {
-        navigate(`../${version_id}/artwork-photo-sample`);
+        navigate(`../${version_id}/artwork-proof`);
       }
     }
   };
 
-  return <ArtworkProofViewer setSelectedStep={setStep} selectedOrderData={selectedOrderData} />;
+  return <ArtworkPhotoSample />;
 }
