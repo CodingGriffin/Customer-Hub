@@ -28,8 +28,9 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
   // Original PDF URL
   const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL + currentVersion.files.artw.pdf.file_path;
   
-  // Proxy URL (adjust the port if needed)
-  const proxyPdfUrl = "http://localhost:3001/proxy" + currentVersion.files.artw.pdf.file_path;
+  // Updated proxy URL for Vercel deployment
+  // const proxyPdfUrl = "http://localhost:3001/proxy" + currentVersion.files.artw.pdf.file_path;
+  const proxyPdfUrl = "/api/proxy" + currentVersion.files.artw.pdf.file_path;
 
   useEffect(() => {
     const fetchPdf = async () => {
