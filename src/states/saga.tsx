@@ -5,7 +5,8 @@ import ordersSaga from "./Orders/saga";
 import contactsSaga from "./Contacts/saga";
 import addressesSaga from "./Addresses/saga";
 import shipmentSaga from "./Shipments/saga";
-import artworkProofSaga from "./ArtworkProof/saga"; 
+import artworkProofSaga from "./ArtworkProof/saga";
+import PADStatusSaga from "./PADStatus/saga";
 
 // Here you can include all the saga which you write for components
 export default function* rootSaga() {
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     addressesSaga(),
     shipmentSaga(),
     artworkProofSaga(),
+    PADStatusSaga(),
   ]);
 }
 
