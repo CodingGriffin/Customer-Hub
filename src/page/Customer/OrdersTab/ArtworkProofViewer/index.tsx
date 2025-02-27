@@ -8,13 +8,14 @@ import Bottom from './Bottom';
 import PdfViewer from './PdfViewer';
 
 interface ArtworkManagerProps {
+  updateApproved: (comment: string, pad_line_items_id: number) => void;
   setSelectedStep: (id: number) => void;
   selectedOrderData: any
 }
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManagerProps) {
+function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved}: ArtworkManagerProps) {
 
   const { version_id, section } = useParams();
   
@@ -23,6 +24,12 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManager
     (version: any) => version.version_id == version_id
   );
 
+  const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
+    (item: any) => item.pad_abbreviation == 'artw' && item.versions_id == version_id
+  )?.pad_line_items_id;
+
+  console.log(pad_line_items_id)
+
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [isUserManagementOpen, setIsUserManagementOpen] = useState(false);
@@ -30,7 +37,17 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManager
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [skipSample, setSkipSample] = useState(true);
 
-  const handleSubmit = () => {
+  const handleApproveSubmit = () => {
+    console.log('Comments:', comments);
+    console.log('Skip Sample:', skipSample);
+    updateApproved(comments, pad_line_items_id);
+    setComments('');
+    setSkipSample(true);
+    setIsApproveModalOpen(false);
+    setIsRejectModalOpen(false);
+  };
+
+  const handleRejectSubmit = () => {
     console.log('Comments:', comments);
     console.log('Skip Sample:', skipSample);
     setComments('');
@@ -107,7 +124,7 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManager
               Cancel
             </button>
             <button
-              onClick={handleSubmit}
+              onClick={handleApproveSubmit}
               className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
             >
               Submit Approval
@@ -136,7 +153,7 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep}: ArtworkManager
               Cancel
             </button>
             <button
-              onClick={handleSubmit}
+              onClick={handleRejectSubmit}
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
             >
               Submit Request
