@@ -5,6 +5,10 @@
       "destination": "/api/proxy/:path*"
     },
     {
+      "source": "/api/pdf-proxy/:path*",
+      "destination": "/api/pdf-proxy/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

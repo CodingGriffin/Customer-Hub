@@ -11,6 +11,8 @@ export default function handler(req, res) {
   // Extract the path from the URL (remove /api/proxy)
   const path = pathname.replace(/^\/api\/proxy/, '');
   
+  console.log('Proxying request to:', path);
+  
   // Create a custom server
   const server = createServer((req, res) => {
     const proxy = createProxyMiddleware({
@@ -19,12 +21,26 @@ export default function handler(req, res) {
       pathRewrite: {
         '^/api/proxy': '', // Remove /api/proxy prefix
       },
+      onProxyReq: (proxyReq, req, res) => {
+        // Log the outgoing request
+        console.log('Proxy request headers:', proxyReq.getHeaders());
+      },
       onProxyRes: (proxyRes, req, res) => {
+        // Log the incoming response
+        console.log('Proxy response status:', proxyRes.statusCode);
+        console.log('Proxy response headers:', proxyRes.headers);
+        
         // Add CORS headers
         proxyRes.headers['Access-Control-Allow-Origin'] = '*';
         proxyRes.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
         proxyRes.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
+        
+        // Ensure content type is preserved for PDFs
+        if (path.endsWith('.pdf') && !proxyRes.headers['content-type']) {
+          proxyRes.headers['content-type'] = 'application/pdf';
+        }
       },
+      selfHandleResponse: false, // Let the proxy handle the response
     });
     
     // Apply the proxy middleware
@@ -47,5 +63,6 @@ export default function handler(req, res) {
 export const config = {
   api: {
     bodyParser: false,
+    externalResolver: true,
   },
 };

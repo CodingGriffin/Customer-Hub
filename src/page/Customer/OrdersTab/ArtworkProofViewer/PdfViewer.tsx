@@ -27,26 +27,37 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
 
   // Original PDF URL
   const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL + currentVersion.files.artw.pdf.file_path;
-  
+
   // Updated proxy URL for Vercel deployment
   // const proxyPdfUrl = "http://localhost:3001/proxy" + currentVersion.files.artw.pdf.file_path;
-  const proxyPdfUrl = "/api/proxy" + currentVersion.files.artw.pdf.file_path;
+  const proxyPdfUrl = "/api/pdf-proxy" + currentVersion.files.artw.pdf.file_path;
 
   useEffect(() => {
     const fetchPdf = async () => {
       try {
         // Fetch the PDF through our proxy
+        console.log('Fetching PDF from:', proxyPdfUrl);
         const response = await axios.get(proxyPdfUrl, {
           responseType: 'blob'
         });
+        
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        console.log('Response type:', response.data.type);
+        console.log('Response size:', response.data.size);
         
         // Convert blob to data URL
         const blob = new Blob([response.data], { type: 'application/pdf' });
         const dataUrl = URL.createObjectURL(blob);
         setPdfData(dataUrl);
         setPdfError(null);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching PDF:', error);
+        console.error('Error details:', error.response ? {
+          status: error.response.status,
+          headers: error.response.headers,
+          data: error.response.data
+        } : 'No response data');
         setPdfError('Failed to load PDF document. Please try again later.');
       } finally {
         setIsLoading(false);
@@ -61,7 +72,7 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
         URL.revokeObjectURL(pdfData);
       }
     };
-  }, []);
+  }, [currentVersion, proxyPdfUrl]);
 
   const handlePdfLoadError = (error: Error) => {
     console.error('Error loading PDF:', error);
