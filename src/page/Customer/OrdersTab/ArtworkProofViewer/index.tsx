@@ -9,13 +9,14 @@ import PdfViewer from './PdfViewer';
 
 interface ArtworkManagerProps {
   updateApproved: (comment: string, pad_line_items_id: number) => void;
+  rejectApproved: (comment: string, pad_line_items_id: number) => void;
   setSelectedStep: (id: number) => void;
   selectedOrderData: any
 }
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved}: ArtworkManagerProps) {
+function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved, rejectApproved}: ArtworkManagerProps) {
 
   const { version_id, section } = useParams();
   
@@ -27,8 +28,6 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved}
   const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
     (item: any) => item.pad_abbreviation == 'artw' && item.versions_id == version_id
   )?.pad_line_items_id;
-
-  console.log(pad_line_items_id)
 
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
@@ -50,6 +49,7 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved}
   const handleRejectSubmit = () => {
     console.log('Comments:', comments);
     console.log('Skip Sample:', skipSample);
+    rejectApproved(comments, pad_line_items_id);
     setComments('');
     setSkipSample(true);
     setIsApproveModalOpen(false);

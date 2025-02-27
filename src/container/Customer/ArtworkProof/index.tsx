@@ -14,20 +14,36 @@ export default function ArtworkProof() {
   const { selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
 
   const updateApproved = (comment: string, pad_line_items_id: number) => {
-      dispatch({
-        type: actions.UPDATE_APPROVED,
-        payload: {
-          mode: "proofSent",
-          pad_line_items_id: pad_line_items_id,
-          status: 3,
-          jobnumber: selectedOrderData.job.job_number,
-          code: "p",
-          abbr: "v-proof-approved",
-          customerComment: comment,
-          onlyPhoto: false
-        }
-      });
-    }
+    dispatch({
+      type: actions.UPDATE_APPROVED,
+      payload: {
+        mode: "proofSent",
+        pad_line_items_id: pad_line_items_id,
+        status: 3,
+        jobnumber: selectedOrderData.job.job_number,
+        code: "p",
+        abbr: "v-proof-approved",
+        customerComment: comment,
+        onlyPhoto: false
+      }
+    });
+  }
+
+  const rejectApproved = (comment: string, pad_line_items_id: number) => {
+    dispatch({
+      type: actions.REJECT_APPROVED,
+      payload: {
+        mode: "proofSent",
+        pad_line_items_id: pad_line_items_id,
+        status: 3,
+        jobnumber: selectedOrderData.job.job_number,
+        code: "p",
+        abbr: "v-proof-approved",
+        customerComment: comment,
+        onlyPhoto: false
+      }
+    });
+  }
   
   const setStep = async (step: number) => {
     await setSelectedStep(step)
@@ -40,5 +56,5 @@ export default function ArtworkProof() {
     }
   };
 
-  return <ArtworkProofViewer setSelectedStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} />;
+return <ArtworkProofViewer setSelectedStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} />;
 }
