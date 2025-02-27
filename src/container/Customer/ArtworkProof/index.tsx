@@ -35,10 +35,10 @@ export default function ArtworkProof() {
       payload: {
         mode: "proofSent",
         pad_line_items_id: pad_line_items_id,
-        status: 3,
+        status: 2,
         jobnumber: selectedOrderData.job.job_number,
         code: "p",
-        abbr: "v-proof-approved",
+        abbr: "v-proof-rejected",
         customerComment: comment,
         onlyPhoto: false
       }
@@ -52,6 +52,12 @@ export default function ArtworkProof() {
         navigate(`../${version_id}/data-photo-sample`);
       } else {
         navigate(`../${version_id}/artwork-photo-sample`);
+      }
+    } else if (step === 2) {
+      if (selectedSection === 'data') {
+        navigate(`../${version_id}/data-upload`);
+      } else {
+        navigate(`../${version_id}/artwork-upload`);
       }
     }
   };

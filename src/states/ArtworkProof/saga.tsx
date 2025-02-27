@@ -29,6 +29,6 @@ function* rejectApproved(action: any) {
 }
 
 export default function* rootSaga() {
-  yield all([takeLatest(actions.REJECT_APPROVED, updateApproved)]);
+  yield all([takeLatest(actions.UPDATE_APPROVED, updateApproved)]);
   yield all([takeLatest(actions.REJECT_APPROVED, rejectApproved)]);
 }

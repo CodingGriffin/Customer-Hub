@@ -36,24 +36,26 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved,
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [skipSample, setSkipSample] = useState(true);
 
-  const handleApproveSubmit = () => {
+  const handleApproveSubmit = async () => {
     console.log('Comments:', comments);
     console.log('Skip Sample:', skipSample);
-    updateApproved(comments, pad_line_items_id);
+    await updateApproved(comments, pad_line_items_id);
     setComments('');
     setSkipSample(true);
     setIsApproveModalOpen(false);
     setIsRejectModalOpen(false);
+    setSelectedStep(4);
   };
 
-  const handleRejectSubmit = () => {
+  const handleRejectSubmit = async () => {
     console.log('Comments:', comments);
     console.log('Skip Sample:', skipSample);
-    rejectApproved(comments, pad_line_items_id);
+    await rejectApproved(comments, pad_line_items_id);
     setComments('');
     setSkipSample(true);
     setIsApproveModalOpen(false);
     setIsRejectModalOpen(false);
+    setSelectedStep(2);
   };
 
   return (
