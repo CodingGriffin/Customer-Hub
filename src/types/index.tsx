@@ -72,15 +72,23 @@ export interface VersionsContext {
   setSelectedStep: (step: number) => void;
 }
 
-export type status = {
+export type stepStatus = {
   setup: ['v-upload-nudge'],
   upload: ['v-upload-wait', 'v-proof-rejected'],
   proof: ['v-upload-receive', 'v-proof-sent', 'v-proof-nudge', 'v-production-photo-sample-rejected'],
   photoSample: ['v-proof-approved', 'v-sample-sent', 'v-production-live-sample-rejected'],
   liveSample: ['v-sample-sent', 'v-production-photo-sample-approved', 'v-production-live-sample-proof-sent']
-    
+
     // v-production-nudge
     // v-production-live-sample-approved
     // v-production-proof-approved
     // v-proof-rejected-production
 }
+
+export const STEP_STATUS = {
+  setup: ['v-upload-nudge'],
+  upload: ['v-upload-wait', 'v-proof-rejected'],
+  proof: ['v-upload-receive', 'v-proof-sent', 'v-proof-nudge', 'v-production-photo-sample-rejected'],
+  photoSample: ['v-proof-approved', 'v-sample-sent', 'v-production-live-sample-rejected'],
+  liveSample: ['v-sample-sent', 'v-production-photo-sample-approved', 'v-production-live-sample-proof-sent']
+} as const;
