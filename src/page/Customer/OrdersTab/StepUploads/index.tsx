@@ -7,10 +7,10 @@ import Review from './Review';
 import NameIcon from './NameIcon';
 
 interface StepUploadProps {
-  setSelectedStep: (id: number) => void;
+  setStep: (id: number) => void;
 }
 
-function StepUpload({setSelectedStep}: StepUploadProps) {
+function StepUpload({setStep}: StepUploadProps) {
   const [windowsDriveLabel, setWindowsDriveLabel] = useState('USB DRIVE');
   const [macosDriveLabel, setMacosDriveLabel] = useState('USB DRIVE');
   const [activeTab, setActiveTab] = useState('format');
@@ -18,7 +18,7 @@ function StepUpload({setSelectedStep}: StepUploadProps) {
   const [nameIconStep, setNameIconStep] = useState(1);
 
   const continueSetup = () => {
-    setSelectedStep(3);
+    setStep(3);
   }
 
   const renderContent = () => {

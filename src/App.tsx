@@ -8,7 +8,7 @@ import AddressesList from './container/Customer/Addresses';
 import ShipmentsList from './container/Customer/Orders/Shipments';
 import VersionsContainer from './container/Customer/Versions';
 import StepSetupContainer from './container/Customer/StepSetup';
-import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
+import StepUploadContainer from './container/Customer/StepUpload';
 import DataProof from './page/Customer/OrdersTab/DataProof';
 import ArtworkUpload from './container/Customer/ArtworkUpload';
 import ArtworkProof from './container/Customer/ArtworkProof';
@@ -25,7 +25,7 @@ export default function App() {
             <Route index element={<div>Select a section to begin</div>} />
             <Route path=":section" element={<VersionsContainer />}>
               <Route path=":version_id/setup" element={<StepSetupContainer />} />
-              <Route path=":version_id/data-upload" element={<StepUploadWrapper />} />
+              <Route path=":version_id/data-upload" element={<StepUploadContainer />} />
               <Route path=":version_id/data-proof" element={<DataProof />} />
               <Route path=":version_id/artwork-upload" element={<ArtworkUpload />} />
               <Route path=":version_id/artwork-proof" element={<ArtworkProof />} />

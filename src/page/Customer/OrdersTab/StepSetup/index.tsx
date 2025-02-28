@@ -12,7 +12,6 @@ function StepSetup({setStep}: StepSetupProps) {
   const navigate = useNavigate();
   const [setupOption, setSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
   const [selectedSetupOption, setSelectedSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
-  const [wantsSamplePhotos, setWantsSamplePhotos] = useState(false);
 
   const continueSetup = () => {
     switch (setupOption) {
