@@ -15,10 +15,10 @@ interface PdfViewerProps {
   currentVersion: any
   pdfError: string | null;
   setPdfError: (e: string | null) => void;
-  setSelectedStep: (id: number) => void;
+  setStep: (id: number) => void;
 }
 
-function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: PdfViewerProps) {
+function PdfViewer({currentVersion, pdfError, setPdfError, setStep}: PdfViewerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,7 +70,7 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setSelectedStep}: Pdf
   };
 
   const continueSetup = () => {
-    setSelectedStep(4);
+    setStep(4);
   }
 
   const nextPage = () => {

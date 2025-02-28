@@ -10,13 +10,13 @@ import PdfViewer from './PdfViewer';
 interface ArtworkManagerProps {
   updateApproved: (comment: string, pad_line_items_id: number) => void;
   rejectApproved: (comment: string, pad_line_items_id: number) => void;
-  setSelectedStep: (id: number) => void;
+  setStep: (id: number) => void;
   selectedOrderData: any
 }
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved, rejectApproved}: ArtworkManagerProps) {
+function ArtworkProofViewer({selectedOrderData, setStep, updateApproved, rejectApproved}: ArtworkManagerProps) {
 
   const { version_id, section } = useParams();
   
@@ -44,7 +44,7 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved,
     setSkipSample(true);
     setIsApproveModalOpen(false);
     setIsRejectModalOpen(false);
-    setSelectedStep(4);
+    setStep(4);
   };
 
   const handleRejectSubmit = async () => {
@@ -55,14 +55,14 @@ function ArtworkProofViewer({selectedOrderData, setSelectedStep, updateApproved,
     setSkipSample(true);
     setIsApproveModalOpen(false);
     setIsRejectModalOpen(false);
-    setSelectedStep(2);
+    setStep(2);
   };
 
   return (
     <div className="flex h-screen bg-gray-100 relative">
       {/* Main Content Area */}
       {/* PDF Viewer */}
-      <PdfViewer pdfError={pdfError} setPdfError={setPdfError} setSelectedStep={setSelectedStep} currentVersion={currentVersion} />
+      <PdfViewer pdfError={pdfError} setPdfError={setPdfError} setStep={setStep} currentVersion={currentVersion} />
 
       {/* User Management Slide-out Panel */}
       <div

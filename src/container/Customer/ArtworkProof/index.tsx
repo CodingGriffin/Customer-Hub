@@ -11,7 +11,7 @@ export default function ArtworkProof() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
+  const { selectedOrderData, selectedSection, setStep } = useOutletContext<VersionsContext>();
 
   const updateApproved = (comment: string, pad_line_items_id: number) => {
     dispatch({
@@ -44,23 +44,6 @@ export default function ArtworkProof() {
       }
     });
   }
-  
-  const setStep = async (step: number) => {
-    await setSelectedStep(step)
-    if (step === 4) {
-      if (selectedSection === 'data') {
-        navigate(`../${version_id}/data-photo-sample`);
-      } else {
-        navigate(`../${version_id}/artwork-photo-sample`);
-      }
-    } else if (step === 2) {
-      if (selectedSection === 'data') {
-        navigate(`../${version_id}/data-upload`);
-      } else {
-        navigate(`../${version_id}/artwork-upload`);
-      }
-    }
-  };
 
-return <ArtworkProofViewer setSelectedStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} />;
+return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} />;
 }

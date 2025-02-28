@@ -5,8 +5,6 @@ import ArtworkManagerPage from '../../../page/Customer/OrdersTab/ArtworkManager'
 import { VersionsContext } from '../../../types';
 
 export default function ArtworkUpload() {
-  const { version_id } = useParams();
-  const navigate = useNavigate();
   const { selectedOrderData, setStep } = useOutletContext<VersionsContext>();
 
 
