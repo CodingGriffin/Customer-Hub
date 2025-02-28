@@ -66,6 +66,8 @@ export default function VersionsContainer() {
           setCurrentStep(5)
         }
 
+        console.log(currentStep, currentStatus)
+
         // setStep(currentStep);
       }
     }

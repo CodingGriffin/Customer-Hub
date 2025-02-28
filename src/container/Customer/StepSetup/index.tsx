@@ -12,6 +12,7 @@ export default function StepSetupContainer() {
   const dispatch = useDispatch();
 
   if (currentStep) {
+    console.log(currentStep)
     setStep(currentStep);
   }
 
