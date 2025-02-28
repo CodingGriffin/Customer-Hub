@@ -66,7 +66,7 @@ export default function VersionsContainer() {
           setCurrentStep(5)
         }
 
-        setStep(currentStep);
+        // setStep(currentStep);
       }
     }
   }, [status, currentStep, currentStatus]);

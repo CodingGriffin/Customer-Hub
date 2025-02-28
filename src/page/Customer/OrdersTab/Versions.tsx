@@ -53,7 +53,7 @@ function Versions({ currentStep, selectedOrderData, setStep}: VersionsProps) {
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 ml-3">
-        <Outlet context={{ selectedOrderData, setStep }} />
+        <Outlet context={{ selectedOrderData, setStep, currentStep }} />
       </div>
     </>
   )

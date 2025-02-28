@@ -6,7 +6,11 @@ import { VersionsContext } from '../../../types';
 
 export default function StepSetupContainer() {
 
-  const { setStep } = useOutletContext<VersionsContext>();
+  const { setStep, currentStep } = useOutletContext<VersionsContext>();
+
+  if (currentStep) {
+    setStep(currentStep);
+  }
 
   return <StepSetup setStep={setStep} />;
 }
