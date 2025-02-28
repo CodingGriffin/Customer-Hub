@@ -10,13 +10,14 @@ import { ArtworkManagerItemType } from '../../../../types';
 import { useParams } from 'react-router-dom';
 
 interface ArtworkManagerProps {
+  updateStatus: (pad_line_items_id: number) => void;
   setStep: (id: number) => void;
   selectedOrderData: any
 }
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = ({selectedOrderData, setStep}: ArtworkManagerProps) => {
+const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkManagerProps) => {
   const { version_id, section } = useParams();
   
   // Find the version in the selectedOrderData.versions array
@@ -43,6 +44,12 @@ const ArtworkManagerPage = ({selectedOrderData, setStep}: ArtworkManagerProps) =
     { id: '2', name: 'logo.ai', type: 'file', size: '5.1 MB', modified: '2024-03-14', hidden: false },
     { id: '3', name: 'logo.png', type: 'file', size: '1.2 MB', modified: '2024-03-14', hidden: false },
   ]);
+
+  const padType = section?.substring(0, 4);
+
+  const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
+    (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
+  )?.pad_line_items_id;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -203,7 +210,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep}: ArtworkManagerProps) =
       {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
       {/* Main Content */}
-      <Header setStep={setStep} />
+      <Header setStep={setStep} updateStatus={updateStatus} pad_line_items_id={pad_line_items_id} />
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
       {/* Breadcrumb */}
       {/* <div className="flex items-center space-x-2 mb-4 text-sm dark:text-gray-600 overflow-x-auto whitespace-nowrap pb-2">

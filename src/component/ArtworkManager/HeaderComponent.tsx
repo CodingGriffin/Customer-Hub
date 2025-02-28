@@ -2,14 +2,19 @@ import { useState } from 'react';
 import { Menu, Binary as Binoculars } from 'lucide-react';
 
 interface HeaderProps {
+  pad_line_items_id: number;
   setStep: (id: number) => void;
+  updateStatus: (pad_line_items_id: number) => void;
 }
 
-function Header({setStep} : HeaderProps) {
+function Header({setStep, updateStatus, pad_line_items_id} : HeaderProps) {
   
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
+  
+
   const continueSetup = () => {
+    updateStatus(pad_line_items_id);
     setStep(3);
   }
 
