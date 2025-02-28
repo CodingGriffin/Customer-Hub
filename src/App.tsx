@@ -6,7 +6,7 @@ import OrderDetail from './container/Customer/Orders/detail';
 import ContactsList from './container/Customer/Contacts';
 import AddressesList from './container/Customer/Addresses';
 import ShipmentsList from './container/Customer/Orders/Shipments';
-import VersionsWrapper from './page/Customer/OrdersTab/VersionsWrapper';
+import VersionsContainer from './container/Customer/Versions';
 import StepSetupContainer from './container/Customer/StepSetup';
 import StepUploadWrapper from './page/Customer/OrdersTab/StepUploadWrapper';
 import DataProof from './page/Customer/OrdersTab/DataProof';
@@ -23,7 +23,7 @@ export default function App() {
           <Route index element={<OrdersList />} />
           <Route path=":orderId" element={<OrderDetail />}>
             <Route index element={<div>Select a section to begin</div>} />
-            <Route path=":section" element={<VersionsWrapper />}>
+            <Route path=":section" element={<VersionsContainer />}>
               <Route path=":version_id/setup" element={<StepSetupContainer />} />
               <Route path=":version_id/data-upload" element={<StepUploadWrapper />} />
               <Route path=":version_id/data-proof" element={<DataProof />} />

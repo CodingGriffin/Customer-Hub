@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Order } from '../../../types';
-import Versions from './Versions';
+import Versions from '../../../page/Customer/OrdersTab/Versions';
 
 interface OrderContext {
   selectedOrderData: Order;
@@ -10,7 +10,7 @@ interface OrderContext {
   setSelectedStep: (step: number) => void;
 }
 
-export default function VersionsWrapper() {
+export default function VersionsContainer() {
   const { selectedOrderData, selectedSection, selectedStep, setSelectedStep } = useOutletContext<OrderContext>();
 
   return (
