@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 import VersionSetup from './VersionSetup';
 
 interface StepSetupProps {
+  selectedOrderData: any,
   setStep: (id: number) => void;
+  updateStatus: (pad_line_items_id: number) => void;
 }
 
-function StepSetup({setStep}: StepSetupProps) {
+function StepSetup({selectedOrderData, setStep, updateStatus}: StepSetupProps) {
+
+  const { version_id, section } = useParams();
+  
+  // Find the version in the selectedOrderData.versions array
+  const currentVersion = selectedOrderData?.versions?.find(
+    (version: any) => version.version_id == version_id
+  );
+
+  const padType = section?.substring(0, 4);
+
+  const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
+    (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
+  )?.pad_line_items_id;
 
   const navigate = useNavigate();
   const [setupOption, setSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
@@ -16,6 +31,7 @@ function StepSetup({setStep}: StepSetupProps) {
   const continueSetup = () => {
     switch (setupOption) {
       case 'new':
+        updateStatus(pad_line_items_id);
         setStep(2);
         break;
       case 'version':

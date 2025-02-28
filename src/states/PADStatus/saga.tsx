@@ -19,6 +19,16 @@ function* getStatus(action: any) {
   }
 }
 
+function* updateStatus(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.proofNew.php", {...action.payload});
+    yield put({ type: actions.UPDATE_STATUS_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.UPDATE_STATUS_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_STATUS, getStatus)]);
+  yield all([takeLatest(actions.UPDATE_STATUS, updateStatus)]);
 }

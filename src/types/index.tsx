@@ -86,9 +86,9 @@ export type stepStatus = {
 }
 
 export const STEP_STATUS = {
-  setup: ['v-upload-nudge'],
+  setup: ['start'],
   upload: ['v-upload-wait', 'v-proof-rejected'],
-  proof: ['v-upload-receive', 'v-proof-sent', 'v-proof-nudge', 'v-production-photo-sample-rejected'],
-  photoSample: ['v-proof-approved', 'v-sample-sent', 'v-production-live-sample-rejected'],
+  proof: ['v-upload-receive', 'v-upload-nudge', 'v-proof-sent', 'v-production-photo-sample-rejected'],
+  photoSample: ['v-send-thanks', 'v-proof-approved', 'v-proof-nudge', 'v-sample-sent', 'v-production-live-sample-rejected'],
   liveSample: ['v-sample-sent', 'v-production-photo-sample-approved', 'v-production-live-sample-proof-sent']
 } as const;

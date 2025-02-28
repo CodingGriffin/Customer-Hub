@@ -25,8 +25,10 @@ function ArtworkProofViewer({selectedOrderData, setStep, updateApproved, rejectA
     (version: any) => version.version_id == version_id
   );
 
+  const padType = section?.substring(0, 4);
+
   const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
-    (item: any) => item.pad_abbreviation == 'artw' && item.versions_id == version_id
+    (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
   )?.pad_line_items_id;
 
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
