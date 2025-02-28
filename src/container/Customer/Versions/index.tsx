@@ -84,6 +84,21 @@ export default function VersionsContainer() {
     });
   };
 
+  const updateStatus = (pad_line_items_id: number, abbr: string, status: number) => {
+    dispatch({
+      type: actions.UPDATE_STATUS,
+      payload: {
+        mode: "proofSent",
+        pad_line_items_id: pad_line_items_id,
+        status: status,
+        job_number: selectedOrderData.job.job_number,
+        code: "p",
+        abbr: abbr,
+        onlyPhoto: false
+      }
+    });
+    getStatus();
+  }
 
   const setStep = async (step: number) => {
     await setCurrentStep(step);
@@ -130,6 +145,7 @@ export default function VersionsContainer() {
       selectedOrderData={selectedOrderData}
       currentStep={currentStep}
       setStep={setStep}
+      updateStatus={updateStatus}
     />
   );
 }
