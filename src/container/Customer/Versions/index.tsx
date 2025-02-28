@@ -7,15 +7,13 @@ import { STEP_STATUS } from '../../../types';
 import actions from '../../../states/PADStatus/actions';
 interface OrderContext {
   selectedOrderData: any;
-  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
-  selectedStep: number;
   setSelectedStep: (step: number) => void;
 }
 
 export default function VersionsContainer() {
-  const { selectedOrderData, selectedSection, selectedStep, setSelectedStep } = useOutletContext<OrderContext>();
+  const { selectedOrderData, setSelectedStep } = useOutletContext<OrderContext>();
+  const { version_id, section } = useParams();
   const navigate = useNavigate();
-  const { version_id } = useParams();
   const dispatch = useDispatch();
 
   const {
@@ -24,12 +22,14 @@ export default function VersionsContainer() {
     error,
   } = useSelector((state: any) => state.PADStatus);
 
-  const padType = (selectedSection === 'data' ? 'data' : selectedSection === 'artwork' ? 'artw' : 'pack');
+  let currentStep = 1;
+  let currentStatus: any = null;
+
+  const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
   const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
     (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
   )?.pad_line_items_id;
   const job_number = selectedOrderData?.job?.job_number;
-  let currentStatus: any = null;
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -46,7 +46,6 @@ export default function VersionsContainer() {
 
         if (currentStatus) {
           const currentAbbr = currentStatus.event_type_abbr;
-          let currentStep = 1;
 
           if (STEP_STATUS.setup.includes(currentAbbr)) {
             currentStep = 1;
@@ -82,32 +81,38 @@ export default function VersionsContainer() {
 
   const setStep = async (step: number) => {
     await setSelectedStep(step)
-    switch (selectedSection) {
+    switch (section) {
       case 'data':
         if (step ==1) {
-          navigate(`../${selectedSection}/${version_id}/setup`);
+          navigate(`../${section}/${version_id}/setup`);
         } else if (step == 2) {
-          navigate(`../${selectedSection}/${version_id}/data-upload`);
+          navigate(`../${section}/${version_id}/data-upload`);
         } else if (step == 3) {
-          navigate(`../${selectedSection}/${version_id}/data-proof`);
+          navigate(`../${section}/${version_id}/data-proof`);
+        } else if (step == 4) {
+          navigate(`../${section}/${version_id}/data-photo-sample`);
         }
         break;
       case 'artwork':
         if (step ==1) {
-          navigate(`../${selectedSection}/${version_id}/setup`);
+          navigate(`../${section}/${version_id}/setup`);
         } else if (step == 2) {
-          navigate(`../${selectedSection}/${version_id}/artwork-upload`);
+          navigate(`../${section}/${version_id}/artwork-upload`);
         } else if (step == 3) {
-          navigate(`../${selectedSection}/${version_id}/artwork-proof`);
+          navigate(`../${section}/${version_id}/artwork-proof`);
+        } else if (step == 4) {
+          navigate(`../${section}/${version_id}/artwork-photo-sample`);
         }
         break;
       default:
         if (step ==1) {
-          navigate(`../${selectedSection}/${version_id}/setup`);
+          navigate(`../${section}/${version_id}/setup`);
         } else if (step == 2) {
-          navigate(`../${selectedSection}/${version_id}/artwork-upload`);
+          navigate(`../${section}/${version_id}/artwork-upload`);
         } else if (step == 3) {
-          navigate(`../${selectedSection}/${version_id}/artwork-proof`);
+          navigate(`../${section}/${version_id}/artwork-proof`);
+        } else if (step == 4) {
+          navigate(`../${section}/${version_id}/artwork-photo-sample`);
         }
         break;
     }
@@ -116,8 +121,7 @@ export default function VersionsContainer() {
   return (
     <Versions 
       selectedOrderData={selectedOrderData}
-      selectedSection={selectedSection}
-      selectedStep={selectedStep}
+      currentStep={currentStep}
       setStep={setStep}
     />
   );

@@ -5,12 +5,11 @@ import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
   selectedOrderData: any
-  selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
-  selectedStep: number
+  currentStep: number
   setStep: (step: number) => void;
 }
 
-function Versions({selectedSection, selectedStep, selectedOrderData, setStep}: VersionsProps) {
+function Versions({ currentStep, selectedOrderData, setStep}: VersionsProps) {
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
@@ -32,14 +31,14 @@ function Versions({selectedSection, selectedStep, selectedOrderData, setStep}: V
               key={step.number}
               onClick={() => setStep(step.number)}
               className={`flex items-center ${
-                selectedStep === step.number
+                currentStep === step.number
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-500 dark:text-gray-400'
               }`}
-              disabled={selectedStep < step.number}
+              disabled={currentStep < step.number}
             >
               <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
-                selectedStep === step.number
+                currentStep === step.number
                   ? 'bg-blue-600 text-white dark:bg-blue-500'
                   : 'bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600'
               }`}>
@@ -54,7 +53,7 @@ function Versions({selectedSection, selectedStep, selectedOrderData, setStep}: V
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 ml-3">
-        <Outlet context={{ selectedOrderData, selectedSection, setStep }} />
+        <Outlet context={{ selectedOrderData, setStep }} />
       </div>
     </>
   )

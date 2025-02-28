@@ -5,7 +5,7 @@ import StepUpload from '../../../page/Customer/OrdersTab/StepUploads';
 import { VersionsContext } from '../../../types';
 
 export default function StepUploadContainer() {
-  const {setStep } = useOutletContext<VersionsContext>();
+  const { setStep } = useOutletContext<VersionsContext>();
 
   return <StepUpload setStep={setStep} />;
 }
