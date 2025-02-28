@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 
-import { useNavigate, useParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 interface VersionsProps {
   selectedOrderData: any
   selectedSection: 'packaging' | 'artwork' | 'data' | 'shipments' | null;
   selectedStep: number
-  setSelectedStep: (step: number) => void;
+  setStep: (step: number) => void;
 }
 
-function Versions({selectedSection, selectedStep, selectedOrderData, setSelectedStep}: VersionsProps) {
-  const navigate = useNavigate();
-  const { version_id } = useParams();
+function Versions({selectedSection, selectedStep, selectedOrderData, setStep}: VersionsProps) {
 
   const steps = [
     { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
@@ -22,39 +19,6 @@ function Versions({selectedSection, selectedStep, selectedOrderData, setSelected
     { number: 4, title: 'Photo Sample', icon: <Camera className="w-5 h-5" /> },
     { number: 5, title: 'Live Sample', icon: <Camera className="w-5 h-5" /> }
   ];
-
-  const setStep = async (step: number) => {
-    await setSelectedStep(step)
-    switch (selectedSection) {
-      case 'data':
-        if (step ==1) {
-          navigate(`../${selectedSection}/${version_id}/setup`);
-        } else if (step == 2) {
-          navigate(`../${selectedSection}/${version_id}/data-upload`);
-        } else if (step == 3) {
-          navigate(`../${selectedSection}/${version_id}/data-proof`);
-        }
-        break;
-      case 'artwork':
-        if (step ==1) {
-          navigate(`../${selectedSection}/${version_id}/setup`);
-        } else if (step == 2) {
-          navigate(`../${selectedSection}/${version_id}/artwork-upload`);
-        } else if (step == 3) {
-          navigate(`../${selectedSection}/${version_id}/artwork-proof`);
-        }
-        break;
-      default:
-        if (step ==1) {
-          navigate(`../${selectedSection}/${version_id}/setup`);
-        } else if (step == 2) {
-          navigate(`../${selectedSection}/${version_id}/artwork-upload`);
-        } else if (step == 3) {
-          navigate(`../${selectedSection}/${version_id}/artwork-proof`);
-        }
-        break;
-    }
-  };
 
   return (
     <>
@@ -90,7 +54,7 @@ function Versions({selectedSection, selectedStep, selectedOrderData, setSelected
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 ml-3">
-        <Outlet context={{ selectedOrderData, selectedSection, setSelectedStep }} />
+        <Outlet context={{ selectedOrderData, selectedSection, setStep }} />
       </div>
     </>
   )

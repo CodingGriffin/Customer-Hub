@@ -4,10 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import VersionSetup from './VersionSetup';
 
 interface StepSetupProps {
-  setSelectedStep: (id: number) => void;
+  setStep: (id: number) => void;
 }
 
-function StepSetup({setSelectedStep}: StepSetupProps) {
+function StepSetup({setStep}: StepSetupProps) {
 
   const navigate = useNavigate();
   const [setupOption, setSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
@@ -17,13 +17,13 @@ function StepSetup({setSelectedStep}: StepSetupProps) {
   const continueSetup = () => {
     switch (setupOption) {
       case 'new':
-        setSelectedStep(2);
+        setStep(2);
         break;
       case 'version':
         setSelectedSetupOption('version');
         break;
       case 'previous':
-        setSelectedStep(2);
+        setStep(2);
         break;
       default:
         break;
