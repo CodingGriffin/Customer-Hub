@@ -16,14 +16,14 @@ export default function VersionsContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStatus, setCurrentStatus] = useState<any>(null);
+
   const {
     status,
     loading,
     error,
   } = useSelector((state: any) => state.PADStatus);
-
-  let currentStep = 1;
-  let currentStatus: any = null;
 
   const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
   const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
@@ -36,39 +36,43 @@ export default function VersionsContainer() {
       if (pad_line_items_id) {
         await getStatus();
       }
-      
-      if (status?.data) {
-        currentStatus = status.data.length > 0 
-          ? status.data.reduce((max: any, current: any) => 
-              (current.event_id > max.event_id) ? current : max
-            )
-          : null;
-
-        if (currentStatus) {
-          const currentAbbr = currentStatus.event_type_abbr;
-
-          if (STEP_STATUS.setup.includes(currentAbbr)) {
-            currentStep = 1;
-          } else if (STEP_STATUS.upload.includes(currentAbbr)) {
-            currentStep = 2;
-          } else if (STEP_STATUS.proof.includes(currentAbbr)) {
-            currentStep = 3;
-          } else if (STEP_STATUS.photoSample.includes(currentAbbr)) {
-            currentStep = 4;
-          } else if (STEP_STATUS.liveSample.includes(currentAbbr)) {
-            currentStep = 5;
-          }
-
-          setStep(currentStep);
-        }
-      }
     };
 
     fetchStatus();
   }, [pad_line_items_id]);
 
-  const getStatus = () => {
-    dispatch({
+  useEffect(() => {
+    if (status?.data) {
+      const data = status.data.length > 0 
+        ? status.data.reduce((max: any, current: any) => 
+            (current.event_id > max.event_id) ? current : max
+          )
+        : null;
+
+      setCurrentStatus(data);
+
+      if (currentStatus) {
+        const currentAbbr = currentStatus.event_type_abbr;
+
+        if (STEP_STATUS.setup.includes(currentAbbr)) {
+          setCurrentStep(1)
+        } else if (STEP_STATUS.upload.includes(currentAbbr)) {
+          setCurrentStep(2)
+        } else if (STEP_STATUS.proof.includes(currentAbbr)) {
+          setCurrentStep(3)
+        } else if (STEP_STATUS.photoSample.includes(currentAbbr)) {
+          setCurrentStep(4)
+        } else if (STEP_STATUS.liveSample.includes(currentAbbr)) {
+          setCurrentStep(5)
+        }
+
+        setStep(currentStep);
+      }
+    }
+  }, [status, currentStep, currentStatus]);
+
+  const getStatus = async () => {
+    await dispatch({
       type: actions.GET_STATUS,
       payload: {
         mode: "getEventStatus",
