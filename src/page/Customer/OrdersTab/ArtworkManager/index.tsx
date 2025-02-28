@@ -10,13 +10,13 @@ import { ArtworkManagerItemType } from '../../../../types';
 import { useParams } from 'react-router-dom';
 
 interface ArtworkManagerProps {
-  setSelectedStep: (id: number) => void;
+  setStep: (id: number) => void;
   selectedOrderData: any
 }
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = ({selectedOrderData, setSelectedStep}: ArtworkManagerProps) => {
+const ArtworkManagerPage = ({selectedOrderData, setStep}: ArtworkManagerProps) => {
   const { version_id, section } = useParams();
   
   // Find the version in the selectedOrderData.versions array
@@ -203,7 +203,7 @@ const ArtworkManagerPage = ({selectedOrderData, setSelectedStep}: ArtworkManager
       {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
       {/* Main Content */}
-      <Header setSelectedStep={setSelectedStep} />
+      <Header setStep={setStep} />
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
       {/* Breadcrumb */}
       {/* <div className="flex items-center space-x-2 mb-4 text-sm dark:text-gray-600 overflow-x-auto whitespace-nowrap pb-2">

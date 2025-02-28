@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Menu, Binary as Binoculars } from 'lucide-react';
 
 interface HeaderProps {
-  setSelectedStep: (id: number) => void;
+  setStep: (id: number) => void;
 }
 
-function Header({setSelectedStep} : HeaderProps) {
+function Header({setStep} : HeaderProps) {
   
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const continueSetup = () => {
-    setSelectedStep(3);
+    setStep(3);
   }
 
   return (
