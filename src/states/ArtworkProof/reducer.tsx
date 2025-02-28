@@ -42,6 +42,23 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.INVITE_REVIEWER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.INVITE_REVIEWER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actions.INVITE_REVIEWER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }

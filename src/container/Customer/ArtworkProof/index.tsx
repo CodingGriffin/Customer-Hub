@@ -47,5 +47,22 @@ export default function ArtworkProof() {
     setStep(2);
   }
 
-return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} />;
+  const inviteReviewer = (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean) => {
+    dispatch({
+      type: actions.INVITE_REVIEWER,
+      payload: {
+        mode: "insert",
+        entities_id: 163,
+        job_number: selectedOrderData.job.job_number,
+        contact_name: contactName,
+        email: email,
+        phone_types_id:2,
+        contact_acl: type,
+        approver: isApprover,
+        uploader: isUploader,
+      }
+    });
+  }
+
+return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} inviteReviewer={inviteReviewer} />;
 }

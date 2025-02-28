@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Info } from 'lucide-react';
 
+interface UserManagementProps {
+  inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean) => void;
+}
 interface User {
   id: string;
   name: string;
@@ -43,7 +46,17 @@ const ROLES: Role[] = [
   }
 ];
 
-export function UserManagement() {
+const getRoleType = (roles: string[]): string => {
+  const hasArtwork = roles.includes('artwork');
+  const hasData = roles.includes('data');
+
+  if (hasArtwork && hasData) return '00011';
+  if (hasArtwork) return '00010';
+  if (hasData) return '00001';
+  return '00000'; // fallback case
+};
+
+export function UserManagement({inviteReviewer}: UserManagementProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [newUser, setNewUser] = useState({ 
     name: '', 
@@ -59,10 +72,20 @@ export function UserManagement() {
       alert('Please select at least one role');
       return;
     }
+    
+    const roleType = getRoleType(newUser.roles);
+    
     setUsers([...users, { ...newUser, id: crypto.randomUUID() }]);
     setNewUser({ name: '', email: '', roles: [], permissions: ['read'] });
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
+    inviteReviewer(
+      newUser.name, 
+      [newUser.email], 
+      roleType, 
+      newUser.permissions.includes('approve'), 
+      newUser.permissions.includes('upload')
+    );
   };
 
   const removeUser = (id: string) => {
