@@ -158,12 +158,12 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setStep}: PdfViewerPr
                   <Download size={16} />
                   <span className="text-sm">Download</span>
                 </button>
-                <button
+                {/* <button
                   onClick={continueSetup}
                   className="px-4 py-2 rounded text-white bg-blue-600 hover:bg-blue-700 text-sm"
                 >
                   Continue
-                </button>
+                </button> */}
               </div>
             </div>
 
