@@ -84,6 +84,7 @@ export default function VersionsContainer() {
 
 
   const setStep = async (step: number) => {
+    await setCurrentStep(step);
     await setSelectedStep(step)
     switch (section) {
       case 'data':

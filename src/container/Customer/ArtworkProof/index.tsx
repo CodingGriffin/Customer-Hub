@@ -27,6 +27,7 @@ export default function ArtworkProof() {
         onlyPhoto: false
       }
     });
+    setStep(4);
   }
 
   const rejectApproved = (comment: string, pad_line_items_id: number) => {
@@ -43,6 +44,7 @@ export default function ArtworkProof() {
         onlyPhoto: false
       }
     });
+    setStep(2);
   }
 
 return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} />;
