@@ -37,8 +37,18 @@ function* inviteReviewer(action: any) {
   }
 }
 
+function* getReviewers(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.contacts.php", {...action.payload});
+    yield put({ type: actions.GET_REVIEWERS_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.GET_REVIEWERS_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.UPDATE_APPROVED, updateApproved)]);
   yield all([takeLatest(actions.REJECT_APPROVED, rejectApproved)]);
   yield all([takeLatest(actions.INVITE_REVIEWER, inviteReviewer)]);
+  yield all([takeLatest(actions.GET_REVIEWERS, getReviewers)]);
 }

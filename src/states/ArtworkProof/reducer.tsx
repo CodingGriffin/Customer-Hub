@@ -59,6 +59,23 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+      case actions.GET_REVIEWERS:
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      case actions.GET_REVIEWERS_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+        };
+      case actions.GET_REVIEWERS_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload
+        };
     default:
       return state;
   }
