@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
-import confirm from 'antd/es/modal/confirm';
+import { Modal } from 'antd';
 
 interface VersionsProps {
   selectedOrderData: any
@@ -29,21 +29,25 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
 
   const updateStep = async (step: number) => {
     if(step === 2 && currentStep > step) {
-      confirm({
+      Modal.confirm({
         title: 'Are you sure you want to reset the upload status?',
         okText: 'Yes, Reset',
         cancelText: 'No, Cancel',
+        cancelButtonProps: {
+          className: 'bg-gray-300 hover:bg-gray-400',
+        },
         okButtonProps: {
           className: 'bg-red-600 hover:bg-red-700',
         },
+        onCancel() {
+          console.log('Cancel');
+        },
+
         async onOk() {
           await updateStatus(pad_line_items_id, "v-upload-wait", 0);
           await setStep(step);
 
         },
-        onCancel() {
-          console.log('Cancel');
-        }
       });
     }
   }
