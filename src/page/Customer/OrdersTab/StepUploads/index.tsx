@@ -27,9 +27,9 @@ function StepUpload({selectedOrderData, setStep, updateStatus}: StepUploadProps)
     (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
   )?.pad_line_items_id;
 
-  const continueSetup = () => {
-    updateStatus(pad_line_items_id);
-    setStep(3);
+  const continueSetup = async () => {
+    await updateStatus(pad_line_items_id);
+    await setStep(3);
   }
 
   const renderContent = () => {

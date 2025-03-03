@@ -12,8 +12,8 @@ export default function ArtworkProof() {
 
   const { selectedOrderData, selectedSection, setStep } = useOutletContext<VersionsContext>();
 
-  const updateApproved = (comment: string, pad_line_items_id: number) => {
-    dispatch({
+  const updateApproved = async (comment: string, pad_line_items_id: number) => {
+    await dispatch({
       type: actions.UPDATE_APPROVED,
       payload: {
         mode: "proofSent",
@@ -26,11 +26,11 @@ export default function ArtworkProof() {
         onlyPhoto: false
       }
     });
-    setStep(4);
+    await setStep(4);
   }
 
-  const rejectApproved = (comment: string, pad_line_items_id: number) => {
-    dispatch({
+  const rejectApproved = async (comment: string, pad_line_items_id: number) => {
+    await dispatch({
       type: actions.REJECT_APPROVED,
       payload: {
         mode: "proofSent",
@@ -43,7 +43,7 @@ export default function ArtworkProof() {
         onlyPhoto: false
       }
     });
-    setStep(2);
+    await setStep(2);
   }
 
   const inviteReviewer = (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean) => {

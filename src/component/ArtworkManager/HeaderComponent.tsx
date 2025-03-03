@@ -13,9 +13,9 @@ function Header({setStep, updateStatus, pad_line_items_id} : HeaderProps) {
 
   
 
-  const continueSetup = () => {
-    updateStatus(pad_line_items_id);
-    setStep(3);
+  const continueSetup = async () => {
+    await updateStatus(pad_line_items_id);
+    await setStep(3);
   }
 
   return (
