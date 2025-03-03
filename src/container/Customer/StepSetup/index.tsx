@@ -11,10 +11,12 @@ export default function StepSetupContainer() {
   const { setStep, currentStep, selectedOrderData } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
 
-  if (currentStep) {
-    console.log(currentStep)
-    setStep(currentStep);
-  }
+  useEffect(() => {
+    if (currentStep) {
+      console.log("here is setup step===>", currentStep)
+      setStep(currentStep);
+    }
+  }, [currentStep]);
 
   const updateStatus = (pad_line_items_id: number) => {
     dispatch({

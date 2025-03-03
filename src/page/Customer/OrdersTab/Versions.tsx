@@ -36,9 +36,9 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
         okButtonProps: {
           className: 'bg-red-600 hover:bg-red-700',
         },
-        onOk() {
-          updateStatus(pad_line_items_id, "v-upload-wait", 0);
-          setStep(step);
+        async onOk() {
+          await updateStatus(pad_line_items_id, "v-upload-wait", 0);
+          await setStep(step);
 
         },
         onCancel() {

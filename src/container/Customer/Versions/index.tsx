@@ -18,6 +18,7 @@ export default function VersionsContainer() {
 
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [currentStatus, setCurrentStatus] = useState<any>(null);
+  const [pad_line_items_id, setPadLineItemsId] = useState<number | null>(null);
 
   const {
     status,
@@ -25,13 +26,17 @@ export default function VersionsContainer() {
     error,
   } = useSelector((state: any) => state.PADStatus);
 
-  const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
-  const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
-    (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
-  )?.pad_line_items_id;
+  
   const job_number = selectedOrderData?.job?.job_number;
-
+  
   useEffect(() => {
+    const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
+    const _pad_line_items_id = selectedOrderData?.pad_line_items?.find(
+      (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
+    )?.pad_line_items_id;
+
+    setPadLineItemsId(_pad_line_items_id);
+
     const fetchStatus = async () => {
       if (pad_line_items_id) {
         await getStatus();
@@ -53,25 +58,27 @@ export default function VersionsContainer() {
 
       if (currentStatus) {
         const currentAbbr = currentStatus.event_type_abbr;
+        let step = 1;
+        console.log('currentAbbr===>', currentAbbr)
 
         if (STEP_STATUS.setup.includes(currentAbbr)) {
-          setCurrentStep(1)
+          step = 1;
         } else if (STEP_STATUS.upload.includes(currentAbbr)) {
-          setCurrentStep(2)
+          step = 2;
         } else if (STEP_STATUS.proof.includes(currentAbbr)) {
-          setCurrentStep(3)
+          step = 3;
         } else if (STEP_STATUS.photoSample.includes(currentAbbr)) {
-          setCurrentStep(4)
+          step = 4;
         } else if (STEP_STATUS.liveSample.includes(currentAbbr)) {
-          setCurrentStep(5)
+          step = 5;
         }
 
-        console.log(currentStep, currentStatus)
+        console.log(currentAbbr, step, currentStatus)
 
-        // setStep(currentStep);
+        setStep(step);
       }
     }
-  }, [status, currentStep, currentStatus]);
+  }, [status, currentStatus]);
 
   const getStatus = async () => {
     await dispatch({
@@ -84,8 +91,8 @@ export default function VersionsContainer() {
     });
   };
 
-  const updateStatus = (pad_line_items_id: number, abbr: string, status: number) => {
-    dispatch({
+  const updateStatus = async (pad_line_items_id: number, abbr: string, status: number) => {
+    await dispatch({
       type: actions.UPDATE_STATUS,
       payload: {
         mode: "proofSent",
@@ -97,7 +104,7 @@ export default function VersionsContainer() {
         onlyPhoto: false
       }
     });
-    getStatus();
+    await getStatus();
   }
 
   const setStep = async (step: number) => {
