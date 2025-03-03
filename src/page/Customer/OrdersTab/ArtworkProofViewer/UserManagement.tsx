@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Trash2, Info } from 'lucide-react';
 
 interface UserManagementProps {
-  inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean) => void;
+  inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => void;
 }
 interface User {
   id: string;
@@ -84,7 +84,9 @@ export function UserManagement({inviteReviewer}: UserManagementProps) {
       [newUser.email], 
       roleType, 
       newUser.permissions.includes('approve'), 
-      newUser.permissions.includes('upload')
+      newUser.permissions.includes('upload'),
+      newUser.roles.includes('data'),
+      newUser.roles.includes('artwork')
     );
   };
 

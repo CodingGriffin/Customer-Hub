@@ -11,7 +11,7 @@ interface ArtworkManagerProps {
   updateApproved: (comment: string, pad_line_items_id: number) => void;
   rejectApproved: (comment: string, pad_line_items_id: number) => void;
   setStep: (id: number) => void;
-  inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean) => void;
+  inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => void;
   selectedOrderData: any
 }
 

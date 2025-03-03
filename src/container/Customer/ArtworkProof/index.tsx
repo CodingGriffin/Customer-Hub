@@ -46,7 +46,7 @@ export default function ArtworkProof() {
     await setStep(2);
   }
 
-  const inviteReviewer = (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean) => {
+  const inviteReviewer = (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => {
     dispatch({
       type: actions.INVITE_REVIEWER,
       payload: {
@@ -57,6 +57,8 @@ export default function ArtworkProof() {
         email: email,
         phone_types_id:2,
         contact_acl: type,
+        data: isData,
+        artwork: isArtwork,
         approver: isApprover,
         uploader: isUploader,
       }
