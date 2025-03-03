@@ -9,7 +9,6 @@ import actions from "../../../states/ArtworkProof/actions";
 export default function ArtworkProof() {
   const { version_id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { selectedOrderData, selectedSection, setStep } = useOutletContext<VersionsContext>();
 
