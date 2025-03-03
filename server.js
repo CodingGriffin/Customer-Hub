@@ -8,7 +8,7 @@ app.use(cors());
 
 // Proxy requests to the PHP server
 app.use('/proxy', createProxyMiddleware({
-  target: 'http://52.4.2.181:9999',
+  target: 'https://everyusb.info',
   changeOrigin: true,
   pathRewrite: {
     '^/proxy': '', // remove /proxy path
