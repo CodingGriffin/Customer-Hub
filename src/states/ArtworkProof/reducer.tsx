@@ -78,6 +78,23 @@ function Reducer(state = initialState, action: any) {
           loading: false,
           error: action.payload
         };
+      case actions.REMOVE_REVIEWER:
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      case actions.REMOVE_REVIEWER_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+        };
+      case actions.REMOVE_REVIEWER_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload
+        };
     default:
       return state;
   }
