@@ -3,6 +3,7 @@ import { Plus, Trash2, Info } from 'lucide-react';
 
 interface UserManagementProps {
   inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => void;
+  removeReviewer: (contactId: number) => void;
   reviewers: any;
 }
 interface Role {
@@ -44,10 +45,10 @@ interface Contact {
   contact_name: string;
   emails: string;
   phone_numbers: string;
-  enabled: boolean;
+  enabled: number;  // Changed from boolean to number
   label_codes: string;
-  roles?: string[];  // Add roles property as optional
-  permissions?: string[];  // Add permissions property as optional since it's also being used
+  roles?: string[];
+  permissions?: string[];
 }
 
 const processLabelCodes = (labelCodes: string) => {
@@ -81,8 +82,10 @@ const getRoleType = (roles: string[]): string => {
   return '00000'; // fallback case
 };
 
-export function UserManagement({inviteReviewer, reviewers}: UserManagementProps) {
-  const [users, setUsers] = useState<Contact[]>(reviewers);
+export function UserManagement({inviteReviewer, removeReviewer, reviewers}: UserManagementProps) {
+  const [users, setUsers] = useState<Contact[]>(
+    reviewers.filter((user: Contact) => user.enabled === 1)
+  );
   const [newUser, setNewUser] = useState({ 
     name: '', 
     email: '', 
@@ -92,9 +95,10 @@ export function UserManagement({inviteReviewer, reviewers}: UserManagementProps)
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
-    setUsers(reviewers);
-    if (users?.length > 0) {
-      users.forEach(user => {
+    const enabledReviewers = reviewers.filter((user: Contact) => user.enabled === 1);
+    setUsers(enabledReviewers);
+    if (enabledReviewers?.length > 0) {
+      enabledReviewers.forEach(user => {
         if (user.label_codes) {
           const { roles, permissions } = processLabelCodes(user.label_codes);
           user.roles = roles;
@@ -102,8 +106,7 @@ export function UserManagement({inviteReviewer, reviewers}: UserManagementProps)
         }
       });
     }
-    console.log("users ---------->", users, reviewers);
-  }, [users]);
+  }, [reviewers]);
 
   const addUser = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,7 +117,6 @@ export function UserManagement({inviteReviewer, reviewers}: UserManagementProps)
     
     const roleType = getRoleType(newUser.roles);
     
-    // setUsers([...users, { ...newUser }]);
     setNewUser({ name: '', email: '', roles: [], permissions: ['read'] });
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
@@ -129,8 +131,8 @@ export function UserManagement({inviteReviewer, reviewers}: UserManagementProps)
     );
   };
 
-  const removeUser = (id: string) => {
-    // setUsers(users.filter(user => user?.contact_id !== id));
+  const removeUser = (id: number) => {
+    removeReviewer(id);
   };
 
   const toggleRole = (roleId: string) => {
@@ -275,7 +277,7 @@ export function UserManagement({inviteReviewer, reviewers}: UserManagementProps)
                   </p>
                 </div>
                 <button
-                  onClick={() => removeUser(user.contact_id.toString())}
+                  onClick={() => removeUser(user.contact_id)}
                   className="p-1 text-red-600 hover:bg-red-50 rounded-full transition-colors"
                   title="Remove invite"
                 >

@@ -57,8 +57,8 @@ export default function ArtworkProof() {
     await setStep(2);
   }
 
-  const inviteReviewer = (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => {
-    dispatch({
+  const inviteReviewer = async (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => {
+    await dispatch({
       type: actions.INVITE_REVIEWER,
       payload: {
         mode: "insert",
@@ -74,6 +74,7 @@ export default function ArtworkProof() {
         uploader: isUploader,
       }
     });
+    await getReviewers()
   }
 
   const getReviewers = () => {
@@ -82,10 +83,23 @@ export default function ArtworkProof() {
       payload: {
         mode: "getReviewers",
         entities_id: 163,
-        job_number: 1221400,
+        job_number: Number(selectedOrderData.job.job_number),
       }
     });
   }
 
-return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} inviteReviewer={inviteReviewer} reviewers={reviewers.data ? reviewers.data : []} />;
+  const removeReviewer = async (contactId: number) => {
+    await dispatch({
+      type: actions.REMOVE_REVIEWER,
+      payload: {
+        mode: "contoggle",
+        entities_id: 163,
+        job_number: Number(selectedOrderData.job.job_number),
+        contact_id: contactId,
+      }
+    });
+    await getReviewers()
+  }
+
+return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} reviewers={reviewers.data ? reviewers.data : []} updateApproved={updateApproved} rejectApproved={rejectApproved} inviteReviewer={inviteReviewer} removeReviewer={removeReviewer} />;
 }

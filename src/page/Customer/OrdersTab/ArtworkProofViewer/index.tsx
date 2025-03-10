@@ -12,13 +12,14 @@ interface ArtworkManagerProps {
   rejectApproved: (comment: string, pad_line_items_id: number) => void;
   setStep: (id: number) => void;
   inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => void;
+  removeReviewer: (contactId: number) => void;
   selectedOrderData: any
   reviewers: any;
 }
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-function ArtworkProofViewer({selectedOrderData, setStep, updateApproved, rejectApproved, inviteReviewer, reviewers}: ArtworkManagerProps) {
+function ArtworkProofViewer({selectedOrderData, reviewers, setStep, updateApproved, rejectApproved, inviteReviewer, removeReviewer}: ArtworkManagerProps) {
 
   const { version_id, section } = useParams();
   
@@ -92,7 +93,7 @@ function ArtworkProofViewer({selectedOrderData, setStep, updateApproved, rejectA
           </div>
           
           <div className="flex-1 overflow-y-auto">
-            <UserManagement inviteReviewer={inviteReviewer} reviewers={reviewers} />
+            <UserManagement inviteReviewer={inviteReviewer} removeReviewer={removeReviewer} reviewers={reviewers} />
           </div>
         </div>
       </div>
