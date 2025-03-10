@@ -1,6 +1,7 @@
 import actions from "./actions";
 
 const initialState = {
+  reviewers: {},
   loading: false,
   error: null,
 };
@@ -68,6 +69,7 @@ function Reducer(state = initialState, action: any) {
       case actions.GET_REVIEWERS_SUCCESS:
         return {
           ...state,
+          reviewers: action.payload,
           loading: false,
         };
       case actions.GET_REVIEWERS_FAILURE:

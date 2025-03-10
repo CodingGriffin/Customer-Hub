@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,9 +8,20 @@ import actions from "../../../states/ArtworkProof/actions";
 
 export default function ArtworkProof() {
   const { version_id } = useParams();
+
+  const {
+    reviewers,
+    loading,
+    error,
+  } = useSelector((state: any) => state.artworkProof);
+
   const dispatch = useDispatch();
 
   const { selectedOrderData, selectedSection, setStep } = useOutletContext<VersionsContext>();
+
+  useEffect(() => {
+    getReviewers();
+  }, [dispatch]);
 
   const updateApproved = async (comment: string, pad_line_items_id: number) => {
     await dispatch({
@@ -65,5 +76,16 @@ export default function ArtworkProof() {
     });
   }
 
-return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} inviteReviewer={inviteReviewer} />;
+  const getReviewers = () => {
+    dispatch({
+      type: actions.GET_REVIEWERS,
+      payload: {
+        mode: "getReviewers",
+        entities_id: 163,
+        job_number: 1221400,
+      }
+    });
+  }
+
+return <ArtworkProofViewer setStep={setStep} selectedOrderData={selectedOrderData} updateApproved={updateApproved} rejectApproved={rejectApproved} inviteReviewer={inviteReviewer} reviewers={reviewers.data ? reviewers.data : []} />;
 }

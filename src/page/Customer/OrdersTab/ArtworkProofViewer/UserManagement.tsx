@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Info } from 'lucide-react';
 
 interface UserManagementProps {
   inviteReviewer: (contactName: string, email: [string], type: string, isApprover: boolean, isUploader: boolean, isData: boolean, isArtwork: boolean) => void;
+  reviewers: any;
 }
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  roles: string[];
-  permissions: string[];
-}
-
 interface Role {
   id: string;
   name: string;
@@ -46,6 +39,38 @@ const ROLES: Role[] = [
   }
 ];
 
+interface Contact {
+  contact_id: number;
+  contact_name: string;
+  emails: string;
+  phone_numbers: string;
+  enabled: boolean;
+  label_codes: string;
+  roles?: string[];  // Add roles property as optional
+  permissions?: string[];  // Add permissions property as optional since it's also being used
+}
+
+const processLabelCodes = (labelCodes: string) => {
+  const codes = labelCodes.split(',').map(code => code.trim());
+  
+  const roles: string[] = [];
+  const permissions: string[] = ['read']; // 'read' is always included
+
+  // Check for admin first as it grants all permissions
+  if (codes.includes('acl-admin')) {
+    permissions.push('upload', 'approve');
+  } else {
+    if (codes.includes('acl-upload')) permissions.push('upload');
+    if (codes.includes('acl-approve')) permissions.push('approve');
+  }
+
+  // Check roles
+  if (codes.includes('acl-artwork')) roles.push('artwork');
+  if (codes.includes('acl-data')) roles.push('data');
+
+  return { roles, permissions };
+};
+
 const getRoleType = (roles: string[]): string => {
   const hasArtwork = roles.includes('artwork');
   const hasData = roles.includes('data');
@@ -56,8 +81,8 @@ const getRoleType = (roles: string[]): string => {
   return '00000'; // fallback case
 };
 
-export function UserManagement({inviteReviewer}: UserManagementProps) {
-  const [users, setUsers] = useState<User[]>([]);
+export function UserManagement({inviteReviewer, reviewers}: UserManagementProps) {
+  const [users, setUsers] = useState<Contact[]>(reviewers);
   const [newUser, setNewUser] = useState({ 
     name: '', 
     email: '', 
@@ -65,6 +90,20 @@ export function UserManagement({inviteReviewer}: UserManagementProps) {
     permissions: ['read'] as string[]
   });
   const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    setUsers(reviewers);
+    if (users?.length > 0) {
+      users.forEach(user => {
+        if (user.label_codes) {
+          const { roles, permissions } = processLabelCodes(user.label_codes);
+          user.roles = roles;
+          user.permissions = permissions;
+        }
+      });
+    }
+    console.log("users ---------->", users, reviewers);
+  }, [users]);
 
   const addUser = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +114,7 @@ export function UserManagement({inviteReviewer}: UserManagementProps) {
     
     const roleType = getRoleType(newUser.roles);
     
-    setUsers([...users, { ...newUser, id: crypto.randomUUID() }]);
+    // setUsers([...users, { ...newUser }]);
     setNewUser({ name: '', email: '', roles: [], permissions: ['read'] });
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
@@ -91,7 +130,7 @@ export function UserManagement({inviteReviewer}: UserManagementProps) {
   };
 
   const removeUser = (id: string) => {
-    setUsers(users.filter(user => user.id !== id));
+    // setUsers(users.filter(user => user?.contact_id !== id));
   };
 
   const toggleRole = (roleId: string) => {
@@ -215,28 +254,28 @@ export function UserManagement({inviteReviewer}: UserManagementProps) {
         </button>
       </form>
 
-      {users.length > 0 && (
+      {users?.length > 0 && (
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-2">Pending Invites</h3>
           <div className="space-y-2">
             {users.map(user => (
-              <div key={user.id} className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+              <div key={user.contact_id} className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
                 <div>
-                  <p className="font-medium">{user.name}</p>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                  <p className="font-medium">{user.contact_name}</p>
+                  <p className="text-sm text-gray-600">{user.emails}</p>
                   <p className="text-sm text-gray-500">
-                    {user.roles.map(roleId => 
+                    {user.roles?.map(roleId => 
                       ROLES.find(r => r.id === roleId)?.name
                     ).join(', ')}
                   </p>
                   <p className="text-xs text-gray-500">
-                    Can: {user.permissions.map(p => 
+                    Can: {user.permissions?.map(p => 
                       PERMISSIONS.find(perm => perm.id === p)?.name
                     ).join(', ')}
                   </p>
                 </div>
                 <button
-                  onClick={() => removeUser(user.id)}
+                  onClick={() => removeUser(user.contact_id.toString())}
                   className="p-1 text-red-600 hover:bg-red-50 rounded-full transition-colors"
                   title="Remove invite"
                 >
