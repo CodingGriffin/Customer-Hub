@@ -54,9 +54,23 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
 
   return (
     <>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6 mx-3">
+        <div className="flex items-center space-x-4">
+          <img
+            src='https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=50&h=50&q=80'
+            alt='Custom USB Drive'
+            className="w-[50px] h-[50px] object-cover rounded-lg"
+          />
+          <div>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Custom USB Drive</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">32GB Metal Swivel, Brushed Silver</p>
+          </div>
+        </div>
+      </div>
       <div className="relative">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-gray-200 dark:border-gray-700" />
+
         </div>
         <div className="ml-3 mb-4 relative flex justify-between">
           {steps.map((step) => (
