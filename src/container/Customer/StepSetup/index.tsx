@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom';
 
 import StepSetup from '../../../page/Customer/OrdersTab/StepSetup';
 import { VersionsContext } from '../../../types';
@@ -10,6 +10,9 @@ export default function StepSetupContainer() {
 
   const { setStep, currentStep, selectedOrderData } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
+
+  const [searchParams] = useSearchParams();
+  const fromParam = searchParams.get('from');
 
   useEffect(() => {
     if (currentStep) {
@@ -33,5 +36,5 @@ export default function StepSetupContainer() {
     });
   }
 
-  return <StepSetup setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} />;
+  return <StepSetup setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} fromParam={fromParam} />;
 }

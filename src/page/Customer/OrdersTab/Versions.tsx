@@ -49,6 +49,9 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
 
         },
       });
+    } else if (currentStep === 2 && step === 1) {
+      // await updateStatus(pad_line_items_id, "start", 0);
+      await setStep(1);
     }
   }
 

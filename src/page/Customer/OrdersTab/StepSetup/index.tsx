@@ -7,9 +7,10 @@ interface StepSetupProps {
   selectedOrderData: any,
   setStep: (id: number) => void;
   updateStatus: (pad_line_items_id: number) => void;
+  fromParam: string | null;
 }
 
-function StepSetup({selectedOrderData, setStep, updateStatus}: StepSetupProps) {
+function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSetupProps) {
 
   const { version_id, section } = useParams();
   
@@ -25,7 +26,7 @@ function StepSetup({selectedOrderData, setStep, updateStatus}: StepSetupProps) {
   )?.pad_line_items_id;
 
   const navigate = useNavigate();
-  const [setupOption, setSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
+  const [setupOption, setSetupOption] = useState<string | null>(fromParam ? fromParam : 'new');
   const [selectedSetupOption, setSelectedSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
 
   const continueSetup = () => {

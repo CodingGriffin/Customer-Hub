@@ -124,7 +124,7 @@ export default function VersionsContainer() {
         break;
       case 'artwork':
         if (step ==1) {
-          navigate(`../${section}/${version_id}/setup`);
+          navigate(`../${section}/${version_id}/setup?from=new`);
         } else if (step == 2) {
           navigate(`../${section}/${version_id}/artwork-upload`);
         } else if (step == 3) {
