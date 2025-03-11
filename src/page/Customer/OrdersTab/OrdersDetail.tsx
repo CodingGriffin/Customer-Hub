@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Settings, FileText, Camera, ArrowLeft, Plus, Truck, Package, Palette, Database, ChevronDown, ChevronRight, HardDrive } from 'lucide-react';
-import { useNavigate, useParams, Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { ArrowLeft, Truck, Package, Palette, Database, ChevronDown, ChevronRight } from 'lucide-react';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 interface OrdersDetailProps {
   selectedOrderData: any | null;
