@@ -41,7 +41,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   const toggleVersion = (version: number) => {
     setExpandedVersions(prev => {
       // Create a new object with all versions closed
-      const allClosed = Object.keys(prev).reduce((acc, key) => {
+      const allClosed = Object.keys(prev).reduce((acc: any, key: any) => {
         acc[key] = false;
         return acc;
       }, {} as Record<number, boolean>);
