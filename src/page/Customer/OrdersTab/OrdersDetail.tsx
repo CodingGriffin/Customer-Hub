@@ -40,12 +40,23 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
 
   const toggleVersion = (version: number) => {
     setExpandedVersions(prev => {
-      const newState = { ...prev, [version]: !prev[version] };
-      if (newState[version]) {
-        setSelectedSection(null);
-      }
-      return newState;
+      // Create a new object with all versions closed
+      const allClosed = Object.keys(prev).reduce((acc, key) => {
+        acc[key] = false;
+        return acc;
+      }, {} as Record<number, boolean>);
+
+      // Toggle the selected version
+      return {
+        ...allClosed,
+        [version]: !prev[version]
+      };
     });
+    
+    // Reset selected section when closing
+    if (!expandedVersions[version]) {
+      setSelectedSection(null);
+    }
   };
 
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null, version_id: number) => {
