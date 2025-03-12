@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Modal } from 'antd';
 
 import VersionSetup from './VersionSetup';
 
@@ -30,20 +31,55 @@ function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSe
   const [selectedSetupOption, setSelectedSetupOption] = useState<'new' | 'previous' | 'version' | null>(null);
 
   const continueSetup = () => {
-    switch (setupOption) {
-      case 'new':
-        updateStatus(pad_line_items_id);
-        setStep(2);
-        break;
-      case 'version':
-        setSelectedSetupOption('version');
-        break;
-      case 'previous':
-        setStep(2);
-        break;
-      default:
-        break;
+    if (fromParam != setupOption) {
+      Modal.confirm({
+        title: 'You have already uploaded files! Are you sure you want to use PAD from another version or job?',
+        okText: 'OK',
+        cancelText: 'Cancel',
+        cancelButtonProps: {
+          className: 'bg-gray-300 hover:bg-gray-400',
+        },
+        okButtonProps: {
+          className: 'bg-red-600 hover:bg-red-700',
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+
+        async onOk() {
+          switch (setupOption) {
+            case 'new':
+              updateStatus(pad_line_items_id);
+              setStep(2);
+              break;
+            case 'version':
+              setSelectedSetupOption('version');
+              break;
+            case 'previous':
+              setStep(2);
+              break;
+            default:
+              break;
+          }
+        },
+      });
+    } else {
+      switch (setupOption) {
+        case 'new':
+          updateStatus(pad_line_items_id);
+          setStep(2);
+          break;
+        case 'version':
+          setSelectedSetupOption('version');
+          break;
+        case 'previous':
+          setStep(2);
+          break;
+        default:
+          break;
+      }
     }
+
   }
 
   const returnSetup = () => {
