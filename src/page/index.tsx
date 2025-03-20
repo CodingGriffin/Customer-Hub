@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Users, MapPin, ShoppingCart } from 'lucide-react';
 
 import CustomerHubPage from './Customer';
-import VendorOrdersTab from './Vendor/VendorOrders';
+import OrdersList from '../container/Vendor/Orders'
+import VendorOrdersTab from './Vendor';
 import Header from '../component/HeaderComponent';
 
 import { HubType } from '../types';
@@ -37,7 +38,7 @@ function HubPage() {
           <CustomerHubPage />
         ) : (
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <VendorOrdersTab />
+            <OrdersList />
           </div>
         )}
       </main>
