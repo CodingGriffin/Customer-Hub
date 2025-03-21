@@ -1,0 +1,7 @@
+export const actions = {
+  GET_REVISIONS: "GET_REVISIONS",
+  GET_REVISIONS_SUCCESS: "GET_REVISIONS_SUCCESS",
+  GET_REVISIONS_FAILURE: "GET_REVISIONS_FAILURE",
+};
+
+export default actions;
