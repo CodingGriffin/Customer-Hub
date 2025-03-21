@@ -60,13 +60,13 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   };
 
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null, version_id: number) => {
-    navigate(`/orders/${selectedOrderData?.job?.job_number}/${section}/${version_id}/setup`);
+    navigate(`../${selectedOrderData?.job?.job_number}/${section}/${version_id}/setup`);
     setSelectedSection(section);
     setSelectedStep(1);
   };
 
   const shipments = async () => {
-    navigate(`/orders/${selectedOrderData?.job?.job_number}/shipments`);
+    navigate(`../${selectedOrderData?.job?.job_number}/shipments`);
   }
 
   const getSectionIcon = (section: string) => {

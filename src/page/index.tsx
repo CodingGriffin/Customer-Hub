@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Users, MapPin, ShoppingCart } from 'lucide-react';
 
-import CustomerHubPage from './Customer';
 import OrdersList from '../container/Vendor/Orders'
-import VendorOrdersTab from './Vendor';
 import Header from '../component/HeaderComponent';
+import { Outlet } from 'react-router-dom';
 
 import { HubType } from '../types';
 
@@ -34,13 +32,7 @@ function HubPage() {
 
       <Header hubType={hubType} isDarkMode={isDarkMode} setHubType={setHubType} toggleDarkMode={toggleDarkMode} />
       <main className="max-w-7xl mx-auto px-4 py-6">
-        {hubType === 'customer' ? (
-          <CustomerHubPage />
-        ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <OrdersList />
-          </div>
-        )}
+        <Outlet />
       </main>
     </div>
   );
