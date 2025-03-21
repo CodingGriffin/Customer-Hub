@@ -56,8 +56,8 @@ export default function App() {
                 <Route path=":version_id/artwork-upload" element={<ArtworkUpload />} />
                 <Route path=":version_id/artwork-proof" element={<ArtworkProof />} />
                 <Route path=":version_id/artwork-photo-sample" element={<ArtworkPhotoSample />} />
-              </Route>
-              <Route path="shipments" element={<ShipmentsList />} /> */}
+              </Route> */}
+              <Route path="shipments" element={<ShipmentsList />} />
             </Route>
           </Route>
         </Route>

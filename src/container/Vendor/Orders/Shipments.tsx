@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import ShipmentsPage from "../../../page/Customer/OrdersTab/Shipments";
+import ShipmentsPage from "../../../page/Vendor/Shipments";
 import actions from "../../../states/Shipments/actions";
 
 function ShipmentsList() {
