@@ -49,14 +49,14 @@ export default function App() {
             <Route index element={<VendorOrdersTab />} />
             <Route path=":orderId" element={<VendorOrderDetail />}>
               <Route index element={<div>Select a section to begin</div>} />
-              {/* <Route path=":section" element={<VersionsContainer />}>
+              <Route path=":section" element={<VersionsContainer />}>
                 <Route path=":version_id/setup" element={<StepSetupContainer />} />
                 <Route path=":version_id/data-upload" element={<StepUploadContainer />} />
                 <Route path=":version_id/data-proof" element={<DataProof />} />
                 <Route path=":version_id/artwork-upload" element={<ArtworkUpload />} />
                 <Route path=":version_id/artwork-proof" element={<ArtworkProof />} />
                 <Route path=":version_id/artwork-photo-sample" element={<ArtworkPhotoSample />} />
-              </Route> */}
+              </Route>
               <Route path="shipments" element={<ShipmentsList />} />
             </Route>
           </Route>
