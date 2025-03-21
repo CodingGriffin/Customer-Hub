@@ -11,7 +11,7 @@ export default function OrdersTab({orders}: OrdersTabProps) {
   const navigate = useNavigate();
 
   const setSelectedOrder = (id: string) => {
-    navigate(`/vendor/orders/${id}`);
+    navigate(`${id}`);
   };
 
   return <OrdersList orders={orders} setSelectedOrder={setSelectedOrder} />;

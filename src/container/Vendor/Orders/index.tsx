@@ -20,6 +20,7 @@ function OrdersList() {
     dispatch({
       type: actions.GET_ORDERS,
       payload: {
+        jobStatus_exclude: '3, 0',
         sortby: "InHandsDate",
         order: "ASC",
         joblimit: 25,
