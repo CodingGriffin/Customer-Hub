@@ -8,7 +8,7 @@ interface OrdersListProps {
 }
 
 function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
-
+  const [filteredOrders, setFilteredOrders] = React.useState(orders);
   const currentDate = new Date("yyyy-mm-dd");
   
   return (
@@ -16,6 +16,21 @@ function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-medium text-gray-900 dark:text-white">Orders</h2>
+          <div className="relative w-64">
+            <input
+              type="text"
+              placeholder="Filter by order number..."
+              onChange={(e) => {
+                const filterValue = e.target.value.toLowerCase();
+                setFilteredOrders(
+                  orders.filter((order: any) =>
+                    order.jobNumber.toLowerCase().includes(filterValue)
+                  )
+                );
+              }}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
+          </div>
         </div>
 
         <div className="overflow-hidden bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 rounded-lg">
@@ -37,7 +52,7 @@ function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {orders.map((order: any) => (
+              {filteredOrders.map((order: any) => (
                 <tr
                   key={order.jobNumber}
                   className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
