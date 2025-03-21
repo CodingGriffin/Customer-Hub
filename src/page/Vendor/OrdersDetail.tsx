@@ -60,7 +60,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   };
 
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null, version_id: number) => {
-    navigate(`../${selectedOrderData?.job?.job_number}/${section}/${version_id}/setup`);
+    navigate(`../${selectedOrderData?.job?.job_number}/${section}/${version_id}/files`);
     setSelectedSection(section);
     setSelectedStep(1);
   };

@@ -26,31 +26,7 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
   )?.pad_line_items_id;
 
   const updateStep = async (step: number) => {
-    if(step === 2 && currentStep > step) {
-      Modal.confirm({
-        title: 'Are you sure you want to reset the upload status?',
-        okText: 'Yes, Reset',
-        cancelText: 'No, Cancel',
-        cancelButtonProps: {
-          className: 'bg-gray-300 hover:bg-gray-400',
-        },
-        okButtonProps: {
-          className: 'bg-red-600 hover:bg-red-700',
-        },
-        onCancel() {
-          console.log('Cancel');
-        },
-
-        async onOk() {
-          await updateStatus(pad_line_items_id, "v-upload-wait", 0);
-          await setStep(step);
-
-        },
-      });
-    } else if (currentStep === 2 && step === 1) {
-      // await updateStatus(pad_line_items_id, "start", 0);
-      await setStep(1);
-    }
+    await setStep(step);
   }
 
   return (
@@ -114,7 +90,6 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-500 dark:text-gray-400'
               }`}
-              disabled={currentStep < step.number}
             >
               <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
                 currentStep === step.number

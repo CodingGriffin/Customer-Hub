@@ -17,6 +17,9 @@ import ArtworkPhotoSample from './page/Customer/OrdersTab/ArtworkPhotoSample';
 
 import VendorOrdersTab from './container/Vendor/Orders';
 import VendorOrderDetail from './container/Vendor/Orders/detail';
+import VendorVersionContainer from './container/Vendor/Versions';
+import VendorFiles from './container/Vendor/Files';
+import VendorPhotoSample from './container/Vendor/PhotoSample';
 
 export default function App() {
   return (
@@ -49,13 +52,9 @@ export default function App() {
             <Route index element={<VendorOrdersTab />} />
             <Route path=":orderId" element={<VendorOrderDetail />}>
               <Route index element={<div>Select a section to begin</div>} />
-              <Route path=":section" element={<VersionsContainer />}>
-                <Route path=":version_id/setup" element={<StepSetupContainer />} />
-                <Route path=":version_id/data-upload" element={<StepUploadContainer />} />
-                <Route path=":version_id/data-proof" element={<DataProof />} />
-                <Route path=":version_id/artwork-upload" element={<ArtworkUpload />} />
-                <Route path=":version_id/artwork-proof" element={<ArtworkProof />} />
-                <Route path=":version_id/artwork-photo-sample" element={<ArtworkPhotoSample />} />
+              <Route path=":section" element={<VendorVersionContainer />}>
+                <Route path=":version_id/files" element={<VendorFiles />} />
+                <Route path=":version_id/samples" element={<VendorPhotoSample />} />
               </Route>
               <Route path="shipments" element={<ShipmentsList />} />
             </Route>

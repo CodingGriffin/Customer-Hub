@@ -58,24 +58,20 @@ export default function VersionsContainer() {
 
       if (currentStatus) {
         const currentAbbr = currentStatus.event_type_abbr;
-        let step = 1;
-        console.log('currentAbbr===>', currentAbbr)
+        let step = 0;
+        console.log('currentAbbr at vendor===>', currentAbbr)
 
-        if (STEP_STATUS.setup.includes(currentAbbr)) {
+        if (STEP_STATUS.proof.includes(currentAbbr)) {
           step = 1;
-        } else if (STEP_STATUS.upload.includes(currentAbbr)) {
-          step = 2;
-        } else if (STEP_STATUS.proof.includes(currentAbbr)) {
-          step = 3;
         } else if (STEP_STATUS.photoSample.includes(currentAbbr)) {
-          step = 4;
+          step = 2;
         } else if (STEP_STATUS.liveSample.includes(currentAbbr)) {
-          step = 5;
+          step = 3;
         }
 
         console.log(currentAbbr, step, currentStatus)
 
-        setStep(step);
+        // setStep(step);
       }
     }
   }, [status, currentStatus]);
@@ -113,35 +109,29 @@ export default function VersionsContainer() {
     switch (section) {
       case 'data':
         if (step ==1) {
-          navigate(`../${section}/${version_id}/setup`);
+          navigate(`../${section}/${version_id}/files`);
         } else if (step == 2) {
-          navigate(`../${section}/${version_id}/data-upload`);
+          navigate(`../${section}/${version_id}/samples`);
         } else if (step == 3) {
-          navigate(`../${section}/${version_id}/data-proof`);
-        } else if (step == 4) {
-          navigate(`../${section}/${version_id}/data-photo-sample`);
+          navigate(`../${section}/${version_id}/production`);
         }
         break;
       case 'artwork':
         if (step ==1) {
-          navigate(`../${section}/${version_id}/setup?from=new`);
+          navigate(`../${section}/${version_id}/files`);
         } else if (step == 2) {
-          navigate(`../${section}/${version_id}/artwork-upload`);
+          navigate(`../${section}/${version_id}/samples`);
         } else if (step == 3) {
-          navigate(`../${section}/${version_id}/artwork-proof`);
-        } else if (step == 4) {
-          navigate(`../${section}/${version_id}/artwork-photo-sample`);
+          navigate(`../${section}/${version_id}/production`);
         }
         break;
       default:
         if (step ==1) {
-          navigate(`../${section}/${version_id}/setup`);
+          navigate(`../${section}/${version_id}/files`);
         } else if (step == 2) {
-          navigate(`../${section}/${version_id}/artwork-upload`);
+          navigate(`../${section}/${version_id}/samples`);
         } else if (step == 3) {
-          navigate(`../${section}/${version_id}/artwork-proof`);
-        } else if (step == 4) {
-          navigate(`../${section}/${version_id}/artwork-photo-sample`);
+          navigate(`../${section}/${version_id}/production`);
         }
         break;
     }
