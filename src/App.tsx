@@ -15,6 +15,7 @@ import ArtworkUpload from './container/Customer/ArtworkUpload';
 import ArtworkProof from './container/Customer/ArtworkProof';
 import ArtworkPhotoSample from './page/Customer/OrdersTab/ArtworkPhotoSample';
 
+import VendorOrdersTab from './container/Vendor/Orders';
 import VendorOrderDetail from './container/Vendor/Orders/detail';
 
 export default function App() {
@@ -41,7 +42,11 @@ export default function App() {
           </Route>
           <Route path="contacts" element={<ContactsList />} />
           <Route path="addresses" element={<AddressesList />} />
-          <Route path="vendor/orders">
+        </Route>
+        <Route path="vendor">
+          <Route index element={<Navigate to="orders" replace />} />
+          <Route path="orders">
+            <Route index element={<VendorOrdersTab />} />
             <Route path=":orderId" element={<VendorOrderDetail />}>
               <Route index element={<div>Select a section to begin</div>} />
               {/* <Route path=":section" element={<VersionsContainer />}>

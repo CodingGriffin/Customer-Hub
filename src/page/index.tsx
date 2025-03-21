@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 import { HubType } from '../types';
 
 function HubPage() {
-  const [hubType, setHubType] = useState<HubType>('customer');
+  const [hubType, setHubType] = useState<HubType>('vendor');
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       return document.documentElement.classList.contains('dark');

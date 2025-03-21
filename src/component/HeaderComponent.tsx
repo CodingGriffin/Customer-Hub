@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Building2, Sun, Moon } from 'lucide-react';
 import { HubType } from '../types';
 
@@ -10,6 +11,7 @@ interface HeaderProps {
 }
 
 const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType }: HeaderProps) => {
+  const navigate = useNavigate();
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm">
@@ -31,11 +33,11 @@ const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType }: H
               )}
             </button>
             <button
-              onClick={() => setHubType(hubType === 'customer' ? 'vendor' : 'customer')}
+              onClick={async () => {await setHubType(hubType === 'customer' ? 'vendor' : 'customer'); navigate(`/${hubType}`);}}
               className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               <Building2 className="w-4 h-4 mr-2" />
-              Switch to {hubType === 'customer' ? 'Vendor' : 'Customer'} Hub
+              Switch to {hubType === 'vendor' ? 'Vendor' : 'Customer'} Hub
             </button>
           </div>
         </div>
