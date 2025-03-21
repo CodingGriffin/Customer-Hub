@@ -20,6 +20,7 @@ import VendorOrderDetail from './container/Vendor/Orders/detail';
 import VendorVersionContainer from './container/Vendor/Versions';
 import VendorFiles from './container/Vendor/Files';
 import VendorPhotoSample from './container/Vendor/PhotoSample';
+import VendorProduction from './container/Vendor/Production';
 
 export default function App() {
   return (
@@ -55,6 +56,7 @@ export default function App() {
               <Route path=":section" element={<VendorVersionContainer />}>
                 <Route path=":version_id/files" element={<VendorFiles />} />
                 <Route path=":version_id/samples" element={<VendorPhotoSample />} />
+                <Route path=":version_id/production" element={<VendorProduction />} />
               </Route>
               <Route path="shipments" element={<ShipmentsList />} />
             </Route>

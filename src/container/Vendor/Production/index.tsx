@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom';
 
-import PhotoSample from '../../../page/Vendor/PhotoSample';
+import Production from '../../../page/Vendor/Production';
 import { VersionsContext } from '../../../types';
 import actions from "../../../states/PADStatus/actions";
 import { useDispatch } from 'react-redux';
 
-export default function PhotoSampleContainer() {
+export default function ProductionContainer() {
 
   const { selectedOrderData } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
@@ -36,5 +36,5 @@ export default function PhotoSampleContainer() {
     });
   }
 
-  return <PhotoSample selectedOrderData={selectedOrderData} />
+  return <Production selectedOrderData={selectedOrderData} />
 }
