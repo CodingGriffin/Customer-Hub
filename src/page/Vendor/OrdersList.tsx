@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Clock } from 'lucide-react';
 import { Order } from '../../types';
 import dayjs from 'dayjs';
@@ -11,6 +11,10 @@ interface OrdersListProps {
 function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
   const [filteredOrders, setFilteredOrders] = React.useState(orders);
   const currentDate = new Date("yyyy-mm-dd");
+
+  useEffect(() => {
+    setFilteredOrders(orders);
+  }, [orders]);
   
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
