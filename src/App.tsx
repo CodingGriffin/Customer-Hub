@@ -19,7 +19,7 @@ import VendorOrdersTab from './container/Vendor/Orders';
 import VendorOrderDetail from './container/Vendor/Orders/detail';
 import VendorVersionContainer from './container/Vendor/Versions';
 import VendorFiles from './container/Vendor/Files';
-import VendorPhotoSample from './container/Vendor/PhotoSample';
+import VendorPhotoSample from './container/Vendor/PhotoSamples';
 import VendorProduction from './container/Vendor/Production';
 
 export default function App() {
