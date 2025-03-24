@@ -19,41 +19,25 @@ export default function FilesContainer() {
 
   const { version_id, section } = useParams();
 
-  // useEffect(() => {
-  //   if (currentStep) {
-  //     console.log("here is setup step===>", currentStep)
-  //     setStep(currentStep);
-  //   }
-  // }, [currentStep]);
-
-  // const updateStatus = (pad_line_items_id: number) => {
-  //   dispatch({
-  //     type: actions.UPDATE_STATUS,
-  //     payload: {
-  //       mode: "proofSent",
-  //       pad_line_items_id: pad_line_items_id,
-  //       status: 0,
-  //       job_number: selectedOrderData.job.job_number,
-  //       code: "p",
-  //       abbr: "v-upload-wait",
-  //       onlyPhoto: false
-  //     }
-  //   });
-  // }
-
   useEffect(() => {
     if (version_id) getRevisions();
   }, [dispatch, version_id]);
 
   const getRevisions = () => {
     const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
+    
+    // Find the version_number from selectedOrderData.versions
+    const version = selectedOrderData?.versions?.find(
+      (v: any) => v.version_id == version_id
+    );
+    const version_number = version?.version_number;
 
     dispatch({
       type: actions.GET_REVISIONS,
       payload: {
         mode: "getrevisions",
         job_number: selectedOrderData.job.job_number,
-        version_number: version_id,
+        version_number: version_number,
         pad: padType,
       }
     });
