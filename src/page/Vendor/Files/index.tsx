@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
-import { FileSearch, FileX, FileText, File } from 'lucide-react';
+import { FileSearch, FileX, FileText, File, Image } from 'lucide-react';
 
 import Empty from '../../../component/Vendor/Files/Empty';
 
@@ -18,12 +18,14 @@ function Files({selectedOrderData, revisions}: RevisionsProps) {
   };
 
   const getFileIcon = (fileName: string) => {
-    const isPdf = fileName.toLowerCase().endsWith('.pdf');
-    return isPdf ? (
-      <FileText className="w-5 h-5 text-red-500 dark:text-red-400 flex-shrink-0 mr-2" />
-    ) : (
-      <File className="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0 mr-2" />
-    );
+    const extension = fileName.toLowerCase().split('.').pop();
+    
+    if (extension === 'pdf') {
+      return <FileText className="w-5 h-5 text-red-500 dark:text-red-400 flex-shrink-0 mr-2" />;
+    } else if (['jpg', 'jpeg', 'png', 'gif'].includes(extension || '')) {
+      return <Image className="w-5 h-5 text-blue-500 dark:text-blue-400 flex-shrink-0 mr-2" />;
+    }
+    return <File className="w-5 h-5 text-gray-400 dark:text-gray-500 flex-shrink-0 mr-2" />;
   };
 
   return (
