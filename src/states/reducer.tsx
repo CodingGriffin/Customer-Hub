@@ -7,6 +7,7 @@ import shipmentsReducer from "./Shipments/reducer"
 import artworkProofReducer from "./ArtworkProof/reducer";
 import PADStatusReducer from "./PADStatus/reducer";
 import revisionsReducer from "./Revisions/reducer";
+import samplesReducer from "./PhotoSamples/reducer";
 
 const rootReducer = combineReducers({
   orders: ordersReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   artworkProof: artworkProofReducer,
   PADStatus: PADStatusReducer,
   revisions: revisionsReducer,
+  samples: samplesReducer,
 });
 
 export default rootReducer;

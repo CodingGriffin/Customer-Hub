@@ -1,0 +1,7 @@
+export const actions = {
+  GET_SAMPLES: "GET_SAMPLES",
+  GET_SAMPLES_SUCCESS: "GET_SAMPLES_SUCCESS",
+  GET_SAMPLES_FAILURE: "GET_SAMPLES_FAILURE",
+};
+
+export default actions;
