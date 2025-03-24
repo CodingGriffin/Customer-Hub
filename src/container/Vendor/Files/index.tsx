@@ -21,7 +21,7 @@ export default function FilesContainer() {
 
   useEffect(() => {
     if (version_id) getRevisions();
-  }, [dispatch, version_id]);
+  }, [dispatch, version_id, section]);
 
   const getRevisions = () => {
     const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
