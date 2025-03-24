@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { Files, Boxes, Camera, SwatchBook } from 'lucide-react';
+import { Settings, FileText, Camera, HardDrive } from 'lucide-react';
 import { Modal } from 'antd';
 
 interface VersionsProps {
@@ -14,9 +14,11 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
   const { version_id, section } = useParams();
 
   const steps = [
-    { number: 1, title: 'Files', icon: <Files className="w-5 h-5" /> },
-    { number: 2, title: 'Samples', icon: <SwatchBook className="w-5 h-5" /> },
-    { number: 3, title: 'Production', icon: <Boxes className="w-5 h-5" /> },
+    { number: 1, title: 'Setup', icon: <Settings className="w-5 h-5" /> },
+    { number: 2, title: 'Upload', icon: <HardDrive className="w-5 h-5" /> },
+    { number: 3, title: 'Proof', icon: <FileText className="w-5 h-5" /> },
+    { number: 4, title: 'Photo Sample', icon: <Camera className="w-5 h-5" /> },
+    { number: 5, title: 'Live Sample', icon: <Camera className="w-5 h-5" /> }
   ];
 
   const padType = section?.substring(0, 4);
