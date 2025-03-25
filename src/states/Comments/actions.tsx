@@ -1,0 +1,7 @@
+export const actions = {
+  ADD_COMMENTS: "ADD_COMMENTS",
+  ADD_COMMENTS_SUCCESS: "ADD_COMMENTS_SUCCESS",
+  ADD_COMMENTS_FAILURE: "ADD_COMMENTS_FAILURE",
+};
+
+export default actions;
