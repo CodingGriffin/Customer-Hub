@@ -255,6 +255,16 @@ export default function useUppy() {
                 files: files,
               }
             });
+
+            dispatch({
+              type: actions.GET_SAMPLES,
+              payload: {
+                mode: "getPhotoSamples",
+                jobs_id: orderId,
+                versions_id: version_id,
+                pads_type: padType,
+              }
+            });
           }
           
           files = [];
