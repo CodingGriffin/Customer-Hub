@@ -11,6 +11,8 @@ interface StepSetupProps {
 
 function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [commentText, setCommentText] = useState('');
 
   const { version_id, section } = useParams();
   
@@ -23,6 +25,14 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
     setShowUploadModal(false);
   }, []);
 
+  const handleCommentSubmit = (sampleId: string) => {
+    // Add your comment submission logic here
+    console.log('Submitting comment for sample:', sampleId, commentText);
+    // After submission success:
+    setEditingCommentId(null);
+    setCommentText('');
+  };
+
   return (
     <div>
       <button 
@@ -34,7 +44,92 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
       </button>
       {
         samples.length > 0 ? (
-          "samples"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            {samples.map((sample: any) => (
+              <div 
+                key={sample.photo_sample_id} 
+                className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
+              >
+                {/* Image Preview */}
+                <div className="relative aspect-video group">
+                  <img
+                    src={sample.file_path}
+                    alt={sample.name || 'Photo Sample'}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-center justify-center">
+                    <button 
+                      className="opacity-0 group-hover:opacity-100 bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-4 py-2 rounded-lg shadow transition-opacity"
+                      onClick={() => window.open(sample.file_path, '_blank')}
+                    >
+                      View Full Size
+                    </button>
+                  </div>
+                </div>
+
+                {/* Sample Info */}
+                <div className="p-4 bg-gray-200 dark:bg-gray-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-medium text-gray-800 dark:text-white truncate">
+                      {(sample.name || 'Untitled Sample').split('.').slice(0, -1).join('.')}
+                    </h3>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {new Date(sample.timestamp).toLocaleDateString()}
+                    </span>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="mt-3">
+                    {sample.comments && !editingCommentId && (
+                      <div className="bg-gray-50 dark:bg-gray-700 rounded p-3 mb-2">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          {sample.comments}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {editingCommentId === sample.photo_sample_id ? (
+                      <div className="space-y-2">
+                        <textarea
+                          value={commentText}
+                          onChange={(e) => setCommentText(e.target.value)}
+                          className="w-full h-20 px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-none"
+                          placeholder="Enter your comment..."
+                        />
+                        <div className="flex justify-end space-x-2">
+                          <button
+                            onClick={() => {
+                              setEditingCommentId(null);
+                              setCommentText('');
+                            }}
+                            className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={() => handleCommentSubmit(sample.photo_sample_id)}
+                            className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEditingCommentId(sample.photo_sample_id);
+                          setCommentText(sample.comments || '');
+                        }}
+                        className="w-full px-3 py-2 text-sm bg-blue-600 text-gray-100 rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        <span>{sample.comments ? 'Edit Comment' : 'Add Comment'}</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) :
 
         <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center mb-6">
@@ -55,8 +150,7 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
 
         </div>
       }
-      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
-
+      {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
     </div>
   )
 }
