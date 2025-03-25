@@ -27,6 +27,24 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.ADD_SAMPLES:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.ADD_SAMPLES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // samples: action.payload,
+      };
+    case actions.ADD_SAMPLES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }

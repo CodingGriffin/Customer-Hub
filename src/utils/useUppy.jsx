@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus'
 import Box from '@uppy/box';
 import OneDrive from '@uppy/onedrive';
 import GoogleDrive from '@uppy/google-drive';
-import Dropbox from '@uppy/dropbox'
+import Dropbox from '@uppy/dropbox';
+import actions from "../states/PhotoSamples/actions";
 
 import '@uppy/core/dist/style.min.css'
 import '@uppy/dashboard/dist/style.min.css'
@@ -32,19 +35,22 @@ function serialize(data) {
 
 export default function useUppy() {
   const [files, setFiles] = useState([]);
-  // const [uppy] = useState(() => {
-    const uppy = new Uppy({
-      id: 'uppy',
-      autoProceed: false,
-      debug: true,
-      restrictions: {
-        maxFileSize: 10 * 1024 * 1024 * 1024, // 1GB
-        maxNumberOfFiles: null,
-        allowedFileTypes: null // allow all file types
-      }
-    })
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { version_id, section } = useParams();
 
-    uppy
+  const uppy = new Uppy({
+    id: 'uppy',
+    autoProceed: false,
+    debug: true,
+    restrictions: {
+      maxFileSize: 10 * 1024 * 1024 * 1024, // 1GB
+      maxNumberOfFiles: null,
+      allowedFileTypes: null // allow all file types
+    }
+  })
+
+  uppy
   //     .use(DashboardPlugin, {
   //       inline: true,
   //       target: 'body',
@@ -202,11 +208,14 @@ export default function useUppy() {
       // .use(ScreenCapture)
 
       useEffect(() => {
+        let files = [];
+        let temp_file = {};
         const fileAddedHandler = (file) => {
           console.log("Added file name: ", file.name, file.meta.relativePath)
           uppy.setFileMeta(file.id, {
             relativePath: file.meta.relativePath
           });
+          temp_file.name = file.name
           // setFiles(prev => [...prev, file.name]);
         };
     
@@ -221,10 +230,38 @@ export default function useUppy() {
           
           // The file URL in S3 will typically be:
           const fileUrl = response.uploadURL;
+          temp_file.fileUrl = fileUrl;
+          files.push(temp_file);
           // setFiles(prev => [...prev, {name: file.name, url: fileUrl}]);
           console.log('File URL:', fileUrl);
         };
-    
+
+        const completeHandler = (result) => {
+          const successResults = result.successful;
+          console.log("uploading completed============>", files);
+          
+          // Check if we're on vendor/*/samples route
+          const pathParts = location.pathname.split('/');
+          const isVendorRoute = pathParts[1] === 'vendor';
+          const isSamplesRoute = pathParts[pathParts.length - 1] === 'samples';
+          
+          if (isVendorRoute && isSamplesRoute && version_id) {
+            const padType = section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack';
+            
+            dispatch({
+              type: actions.GET_SAMPLES,
+              payload: {
+                mode: "getPhotoSamples",
+                jobs_id: files[0]?.name, // Adjust this based on how you want to get the job number
+                version_number: version_id,
+                pad: padType,
+              }
+            });
+          }
+          
+          files = [];
+        };
+
         const uploadErrorHandler = (file, error, response) => {
           console.error('Upload error:', file.name, error);
           console.error('S3 response:', response);
@@ -234,15 +271,17 @@ export default function useUppy() {
         // uppy.on('file-removed', fileRemovedHandler);
         uppy.on('upload-success', uploadSuccessHandler);
         // uppy.on('upload-error', uploadErrorHandler);
+        uppy.on('complete', completeHandler);
     
         return () => {
           uppy.off('upload-success', uploadSuccessHandler);
           uppy.off('file-added', fileAddedHandler);
           // uppy.off('file-removed', fileRemovedHandler);
           // uppy.off('upload-error', uploadErrorHandler);
+          uppy.off('complete', completeHandler);
           uppy.clear();
         };
-      }, []);
+      }, [location, dispatch, version_id, section]);
 
     return { uppy, files };
   // })

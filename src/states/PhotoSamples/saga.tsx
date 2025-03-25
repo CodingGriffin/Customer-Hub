@@ -19,6 +19,16 @@ function* getSamples(action: any) {
   }
 }
 
+function* addSamples(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.photoSample.php", {...action.payload});
+    yield put({ type: actions.ADD_SAMPLES_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.ADD_SAMPLES_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_SAMPLES, getSamples)]);
+  yield all([takeLatest(actions.ADD_SAMPLES, addSamples)]);
 }
