@@ -35,13 +35,16 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
 
   return (
     <div>
-      <button 
-        onClick={() => setShowUploadModal(true)}
-        className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-      >
-        <Upload className="w-4 h-4 mr-1.5" />
-        <span>Upload</span>
-      </button>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Photo Samples</h2>
+        <button 
+          onClick={() => setShowUploadModal(true)}
+          className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+        >
+          <Upload className="w-4 h-4 mr-1.5" />
+          <span>Upload</span>
+        </button>
+      </div>
       {
         samples.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
