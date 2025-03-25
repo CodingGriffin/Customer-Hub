@@ -1,7 +1,7 @@
 import actions from "./actions";
 
 const initialState = {
-  revisions: {},
+  comments: {},
   loading: false,
   error: null,
 };
@@ -19,7 +19,7 @@ function Reducer(state = initialState, action: any) {
       return {
         ...state,
         loading: false,
-        revisions: action.payload,
+        // revisions: action.payload,
       };
     case actions.ADD_COMMENTS_FAILURE:
       return {
