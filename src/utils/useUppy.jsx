@@ -9,7 +9,7 @@ import Dropbox from '@uppy/dropbox'
 import '@uppy/core/dist/style.min.css'
 import '@uppy/dashboard/dist/style.min.css'
 
-const endPoint= "http://everyusb.info:3000/uploads"
+const endPoint= "http://54.89.206.113:3000/uploads"
 const companionUrl = "http://localhost:3020/companion";
 
 function serializeSubPart(key, value) {
@@ -221,7 +221,7 @@ export default function useUppy() {
           
           // The file URL in S3 will typically be:
           const fileUrl = response.uploadURL;
-          setFiles(prev => [...prev, {name: file.name, url: fileUrl}]);
+          // setFiles(prev => [...prev, {name: file.name, url: fileUrl}]);
           console.log('File URL:', fileUrl);
         };
     
@@ -232,13 +232,13 @@ export default function useUppy() {
     
         uppy.on('file-added', fileAddedHandler);
         // uppy.on('file-removed', fileRemovedHandler);
-        // uppy.on('upload-success', uploadSuccessHandler);
+        uppy.on('upload-success', uploadSuccessHandler);
         // uppy.on('upload-error', uploadErrorHandler);
     
         return () => {
+          uppy.off('upload-success', uploadSuccessHandler);
           uppy.off('file-added', fileAddedHandler);
           // uppy.off('file-removed', fileRemovedHandler);
-          // uppy.off('upload-success', uploadSuccessHandler);
           // uppy.off('upload-error', uploadErrorHandler);
           uppy.clear();
         };

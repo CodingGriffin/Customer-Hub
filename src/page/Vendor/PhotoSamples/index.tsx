@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
-import { ImageOff, MailCheck } from 'lucide-react';
+import { ImageOff, MailCheck, Upload } from 'lucide-react';
+import UploadModal from './UploadModal';
 
 interface StepSetupProps {
   selectedOrderData: any,
@@ -9,6 +10,7 @@ interface StepSetupProps {
 }
 
 function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const { version_id, section } = useParams();
   
@@ -17,8 +19,19 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
     (version: any) => version.version_id == version_id
   );
 
+  const handleCloseWUploadModal = useCallback(() => {
+    setShowUploadModal(false);
+  }, []);
+
   return (
     <div>
+      <button 
+        onClick={() => setShowUploadModal(true)}
+        className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+      >
+        <Upload className="w-4 h-4 mr-1.5" />
+        <span>Upload</span>
+      </button>
       {
         samples.length > 0 ? (
           "samples"
@@ -32,15 +45,18 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-3">No Photo Samples Yet</h2>
           
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Please wait until the production department uploads a photo of a product sample.
+            Looks like you haven't uploaded any samples yet.
           </p>
           
           <div className="flex items-center justify-center text-amber-500 dark:text-amber-400 font-medium">
             <MailCheck className="mr-2 h-5 w-5" />
-            <span>We will reach out asap</span>
+            <span>Upload samples to get started</span>
           </div>
+
         </div>
       }
+      {showUploadModal && <UploadModal _closeUploadModal = {handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
+
     </div>
   )
 }
