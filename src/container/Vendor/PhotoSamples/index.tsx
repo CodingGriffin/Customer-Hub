@@ -31,8 +31,8 @@ export default function PhotoSampleContainer() {
       payload: {
         mode: "getPhotoSamples",
         jobs_id: selectedOrderData.job.job_number,
-        version_number: version_id,
-        pad: padType,
+        versions_id: version_id,
+        pads_type: padType,
       }
     });
   }

@@ -37,7 +37,7 @@ export default function useUppy() {
   const [files, setFiles] = useState([]);
   const location = useLocation();
   const dispatch = useDispatch();
-  const { version_id, section } = useParams();
+  const {orderId, version_id, section } = useParams();
 
   const uppy = new Uppy({
     id: 'uppy',
@@ -209,13 +209,11 @@ export default function useUppy() {
 
       useEffect(() => {
         let files = [];
-        let temp_file = {};
         const fileAddedHandler = (file) => {
           console.log("Added file name: ", file.name, file.meta.relativePath)
           uppy.setFileMeta(file.id, {
             relativePath: file.meta.relativePath
           });
-          temp_file.name = file.name
           // setFiles(prev => [...prev, file.name]);
         };
     
@@ -230,8 +228,7 @@ export default function useUppy() {
           
           // The file URL in S3 will typically be:
           const fileUrl = response.uploadURL;
-          temp_file.fileUrl = fileUrl;
-          files.push(temp_file);
+          files.push({name: file.name, file_path: fileUrl});
           // setFiles(prev => [...prev, {name: file.name, url: fileUrl}]);
           console.log('File URL:', fileUrl);
         };
@@ -249,12 +246,13 @@ export default function useUppy() {
             const padType = section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack';
             
             dispatch({
-              type: actions.GET_SAMPLES,
+              type: actions.ADD_SAMPLES,
               payload: {
-                mode: "getPhotoSamples",
-                jobs_id: files[0]?.name, // Adjust this based on how you want to get the job number
-                version_number: version_id,
-                pad: padType,
+                mode: "insertSamples",
+                jobs_id: orderId, // Adjust this based on how you want to get the job number
+                versions_id: version_id,
+                pads_type: padType,
+                files: files,
               }
             });
           }
