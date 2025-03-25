@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Building2, Sun, Moon } from 'lucide-react';
 import { HubType } from '../types';
 
@@ -12,7 +12,11 @@ interface HeaderProps {
 
 const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType }: HeaderProps) => {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const pathParts = location.pathname.split('/');
+  const isVendorRoute = pathParts[1] === 'vendor';
+  if (isVendorRoute) hubType = 'customer';
+  
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4">
