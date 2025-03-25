@@ -1,10 +1,15 @@
-import { MapPin, Truck } from 'lucide-react';
+import { MapPin, Truck, Copy } from 'lucide-react';
 
 interface ShipmentsProps {
   shipments: any[];
 }
 
 function Shipments({shipments}: ShipmentsProps) {
+  const handleCopyClick = (text: string) => {
+    navigator.clipboard.writeText(text)
+      .catch(err => console.error('Failed to copy text: ', err));
+  };
+
   return (
     <div className="space-y-6">
     <div className="overflow-hidden bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 rounded-lg">
@@ -22,6 +27,9 @@ function Shipments({shipments}: ShipmentsProps) {
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
               In-Hands Date
+            </th>
+            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
+              Reference Number
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
               Tracking Number
@@ -57,6 +65,18 @@ function Shipments({shipments}: ShipmentsProps) {
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
                   {shipment.inHandsDate}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
+                  <div className="flex items-center gap-2">
+                    <span>{shipment_version.jobnum}-{shipment.shipment_id}</span>
+                    <button 
+                      onClick={() => handleCopyClick(`${shipment_version.jobnum}-${shipment.shipment_id}`)}
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      title="Copy reference number"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </button>
+                  </div>
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
                   {shipment.tracking_number && (
