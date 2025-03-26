@@ -105,10 +105,6 @@ function Shipments({shipments, entity_name}: ShipmentsProps) {
                 <div class="detail-label">Reference Number</div>
                 <div class="detail-value">${shipment_version.jobnum}-${shipment.shipment_id}</div>
               </div>
-              <div class="detail-row">
-                <div class="detail-label">Tracking Number</div>
-                <div class="detail-value">${shipment.tracking_number || 'N/A'}</div>
-              </div>
             </div>
 
             <!-- Comments Section -->
