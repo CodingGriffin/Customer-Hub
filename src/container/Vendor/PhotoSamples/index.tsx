@@ -17,12 +17,25 @@ export default function PhotoSampleContainer() {
     loading,
     error,
   } = useSelector((state: any) => state.samples);
+
+  const {
+    comments,
+  } = useSelector((state: any) => state.comments);
+
   
   const { version_id, section } = useParams();
 
   useEffect(() => {
-    if (version_id) getPhotoSamples();
+    if (version_id) {
+      getPhotoSamples();
+    }
   }, [dispatch, version_id, section]);
+
+  useEffect(() => {
+    if (samples.data && samples.data.length > 0) {
+      getComments();
+    }
+  }, [samples.data]);
 
   const getPhotoSamples = () => {
     const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
@@ -39,10 +52,6 @@ export default function PhotoSampleContainer() {
   }
 
   const addComment = (comment: string, sample_id: number) => {
-    const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
-    const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
-      (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
-    )?.pad_line_items_id;
     dispatch({
       type: commentActions.ADD_COMMENTS,
       payload: {
@@ -50,10 +59,26 @@ export default function PhotoSampleContainer() {
         comment: comment,
         resource_id: 100000 + sample_id,
         table_code: "vendor_table"
-        // onlyPhoto: false
+      }
+    });
+    getComments();
+  }
+
+  const getComments = () => {
+    // Extract all photo_sample_ids and add 100000 to each
+    const resourceIds = samples.data 
+      ? samples.data.map((sample: any) => 100000 + sample.photo_sample_id)
+      : [];
+
+    dispatch({
+      type: commentActions.GET_COMMENTS,
+      payload: {
+        mode: "getPhotoSampleComments",
+        resource_ids: resourceIds, // Now sending array of all resource_ids
+        table_code: "vendor_table"
       }
     });
   }
 
-  return <PhotoSamples selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} addComment={addComment} />
+  return <PhotoSamples selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} addComment={addComment} />
 }

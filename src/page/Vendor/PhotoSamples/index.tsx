@@ -6,11 +6,12 @@ import UploadModal from './UploadModal';
 
 interface StepSetupProps {
   addComment: (comment: string, sample_id: number) => void,
+  comments: any,
   selectedOrderData: any,
   samples: any,
 }
 
-function PhotoSamples({selectedOrderData, samples, addComment}: StepSetupProps) {
+function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSetupProps) {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
@@ -85,11 +86,35 @@ function PhotoSamples({selectedOrderData, samples, addComment}: StepSetupProps) 
 
                   {/* Comments Section */}
                   <div className="mt-3">
-                    {sample.comments && !editingCommentId && (
+                    {comments && !editingCommentId && (
                       <div className="bg-gray-50 dark:bg-gray-700 rounded p-3 mb-2">
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {sample.comments}
-                        </p>
+                        {comments.filter((comment: any) => 
+                          comment.resource_id === (100000 + sample.photo_sample_id)
+                        ).map((comment: any) => (
+                          <div key={comment.comment_id} className="mb-2 last:mb-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className={`text-xs px-2 py-0.5 rounded-full ${
+                                comment.table_code === 'vendor_table'
+                                  ? 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
+                                  : comment.table_code === 'customer_table'
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
+                                  : 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100'
+                              }`}>
+                                {comment.table_code === 'vendor_table'
+                                  ? 'Vendor'
+                                  : comment.table_code === 'customer_table'
+                                  ? 'Customer'
+                                  : 'Staff'}
+                              </span>
+                              {/* <span className="text-xs text-gray-400">
+                                {new Date(comment.timestamp).toLocaleDateString()}
+                              </span> */}
+                            </div>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                              {comment.comment}
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     )}
                     
@@ -123,11 +148,11 @@ function PhotoSamples({selectedOrderData, samples, addComment}: StepSetupProps) 
                       <button
                         onClick={() => {
                           setEditingCommentId(sample.photo_sample_id);
-                          setCommentText(sample.comments || '');
+                          setCommentText('');
                         }}
                         className="w-full px-3 py-2 text-sm bg-blue-600 text-gray-100 rounded-lg hover:bg-blue-700 transition-colors"
                       >
-                        <span>{sample.comments ? 'Edit Comment' : 'Add Comment'}</span>
+                        <span>Add Comment</span>
                       </button>
                     )}
                   </div>
