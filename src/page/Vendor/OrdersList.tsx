@@ -9,13 +9,25 @@ interface OrdersListProps {
 }
 
 function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
-  const [filteredOrders, setFilteredOrders] = React.useState(orders);
+  // Filter orders with vendorPo: true initially
+  const [filteredOrders, setFilteredOrders] = React.useState(
+    orders.filter((order: any) => order.vendorPo === true)
+  );
   const currentDate = new Date("yyyy-mm-dd");
 
   useEffect(() => {
-    setFilteredOrders(orders);
+    // Update filtered orders whenever orders prop changes
+    setFilteredOrders(orders.filter((order: any) => order.vendorPo === true));
   }, [orders]);
   
+  const handleSearch = (filterValue: string) => {
+    setFilteredOrders(
+      orders
+        .filter((order: any) => order.vendorPo === true) // First filter for vendorPo
+        .filter((order: any) => order.jobNumber.toLowerCase().includes(filterValue.toLowerCase())) // Then filter by search term
+    );
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
       <div className="space-y-6">
@@ -25,14 +37,7 @@ function OrdersList({orders, setSelectedOrder}: OrdersListProps) {
             <input
               type="text"
               placeholder="Filter by order number..."
-              onChange={(e) => {
-                const filterValue = e.target.value.toLowerCase();
-                setFilteredOrders(
-                  orders.filter((order: any) =>
-                    order.jobNumber.toLowerCase().includes(filterValue)
-                  )
-                );
-              }}
+              onChange={(e) => handleSearch(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
           </div>
