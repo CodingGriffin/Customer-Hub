@@ -5,11 +5,12 @@ import { ImageOff, MailCheck, Upload } from 'lucide-react';
 import UploadModal from './UploadModal';
 
 interface StepSetupProps {
+  addComment: (comment: string, sample_id: number) => void,
   selectedOrderData: any,
   samples: any,
 }
 
-function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
+function PhotoSamples({selectedOrderData, samples, addComment}: StepSetupProps) {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
@@ -25,9 +26,10 @@ function PhotoSamples({selectedOrderData, samples}: StepSetupProps) {
     setShowUploadModal(false);
   }, []);
 
-  const handleCommentSubmit = (sampleId: string) => {
+  const handleCommentSubmit = (sampleId: number) => {
     // Add your comment submission logic here
     console.log('Submitting comment for sample:', sampleId, commentText);
+    addComment(commentText, sampleId);
     // After submission success:
     setEditingCommentId(null);
     setCommentText('');
