@@ -26,14 +26,21 @@ const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType, ent
     <header className="bg-white dark:bg-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {hubType === 'vendor' ? 'Customer Hub - Well Assembled Meetings' : (
-              <>
-                Vendor Hub
-                {entityName && ' - ' + entityName}
-              </>
-            )}
-          </h1>
+          <div className="flex items-center gap-4">
+            <img 
+              src="https://imagedelivery.net/MKEvMIcAFUaEDbHj7BP86Q/5b404e84-91b7-4e07-269e-0816162e4300/public" 
+              alt="Well Assembled Meetings Logo" 
+              className="h-8 w-auto"
+            />
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {hubType === 'vendor' ? 'Customer Hub - Well Assembled Meetings' : (
+                <>
+                  Vendor Hub
+                  {entityName && ' - ' + entityName}
+                </>
+              )}
+            </h1>
+          </div>
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDarkMode}
