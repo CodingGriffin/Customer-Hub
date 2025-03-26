@@ -95,11 +95,11 @@ function Shipments({shipments, entity_name}: ShipmentsProps) {
               <div class="section-title">Shipment Details</div>
               <div class="detail-row">
                 <div class="detail-label">Shipper Account</div>
-                <div class="detail-value">${shipment.shipment_shipper_account || 'N/A'}</div>
+                <div class="detail-value">${shipment.shipment_shipper_account || 'Every USB'}</div>
               </div>
               <div class="detail-row">
                 <div class="detail-label">Shipment Method</div>
-                <div class="detail-value">${shipment.shipment_shipping_method || 'N/A'}</div>
+                <div class="detail-value">${shipment.shipment_shipping_method || 'FedEx Int\'l Priority'}</div>
               </div>
               <div class="detail-row">
                 <div class="detail-label">Reference Number</div>
