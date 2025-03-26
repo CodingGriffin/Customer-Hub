@@ -3,7 +3,8 @@ import actions from "./actions";
 const initialState = {
   shipments: {
     shipments: [],
-    job_number: null
+    job_number: null,
+    entity_name: null
   },
   loading: false,
   error: null,
@@ -24,7 +25,8 @@ function Reducer(state = initialState, action: any) {
           loading: false,
           shipments: {
             shipments: action.payload.shipments,
-            job_number: action.payload.job_number
+            job_number: action.payload.job_number,
+            entity_name: action.payload.entity_name
           },
         };
       case actions.GET_SHIPMENTS_FAILURE:

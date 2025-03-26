@@ -26,10 +26,11 @@ function ShipmentsList() {
         }
       });
     }
+    console.log("this is the shipments in shipments container of vendor", shipments);
   }, [orderId]);
 
   return (
-    <ShipmentsPage shipments={shipments.shipments ? shipments.shipments : []} />
+    <ShipmentsPage shipments={shipments.shipments ? shipments.shipments : []} entity_name={shipments.entity_name ? shipments.entity_name : null} />
   )
 }
 
