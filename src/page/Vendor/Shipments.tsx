@@ -75,9 +75,26 @@ function Shipments({shipments, entity_name}: ShipmentsProps) {
                 padding: 12px;
                 border-radius: 4px;
               }
+              .logo-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+              }
+              .logo {
+                height: 40px;
+                display: block;
+              }
             </style>
           </head>
           <body>
+            <div class="logo-container">
+              <img 
+                src="https://imagedelivery.net/MKEvMIcAFUaEDbHj7BP86Q/5b404e84-91b7-4e07-269e-0816162e4300/public" 
+                alt="Well Assembled Meetings Logo" 
+                class="logo"
+                onload="window.print()"
+              />
+            </div>
             <!-- Shipping Address Section -->
             <div class="section">
               <div class="section-title">Shipping Address</div>
@@ -127,7 +144,6 @@ function Shipments({shipments, entity_name}: ShipmentsProps) {
         </html>
       `);
       printWindow.document.close();
-      printWindow.print();
     }
   };
 
