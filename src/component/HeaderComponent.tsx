@@ -8,21 +8,31 @@ interface HeaderProps {
   hubType: HubType;
   toggleDarkMode: () => void;
   setHubType: (status: HubType) => void;
+  entityName?: string;
 }
 
-const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType }: HeaderProps) => {
+const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType, entityName}: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathParts = location.pathname.split('/');
   const isVendorRoute = pathParts[1] === 'vendor';
+  const isOrdersList = pathParts[2] === 'orders';
+
   if (isVendorRoute) hubType = 'customer';
+  if (isVendorRoute && isOrdersList && (pathParts[3] == '' || !pathParts[3])) entityName = '';
+  console.log(pathParts[2]);
   
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {hubType === 'vendor' ? 'Customer Hub - Well Assembled Meetings' : 'Vendor Hub'} 
+            {hubType === 'vendor' ? 'Customer Hub - Well Assembled Meetings' : (
+              <>
+                Vendor Hub
+                {entityName && ' - ' + entityName}
+              </>
+            )}
           </h1>
           <div className="flex items-center space-x-4">
             <button
