@@ -27,6 +27,24 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.GET_COMMENTS:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.GET_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        comments: action.payload,
+      };
+    case actions.GET_COMMENTS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }
