@@ -257,11 +257,11 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                   </td>
                 </tr>
                 {expandedShipments[shipment.shipment_id] && (
-                  <tr className="bg-gray-50 dark:bg-gray-750">
+                  <tr className="bg-gray-50 dark:bg-gray-700">
                     <td colSpan={7} className="px-8 py-4">
                       <div className="rounded-lg bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 dark:ring-gray-700">
                         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                          <thead className="bg-gray-50 dark:bg-gray-750">
+                          <thead className="bg-gray-50 dark:bg-gray-800">
                             <tr>
                               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
                                 #
