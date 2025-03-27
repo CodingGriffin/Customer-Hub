@@ -1,19 +1,30 @@
-import { MapPin, Truck, Copy, Printer } from 'lucide-react';
+import { useState } from 'react';
+import { MapPin, Truck, Copy, Printer, ChevronDown, ChevronRight } from 'lucide-react';
+
+interface ExpandedShipmentsState {
+  [key: string]: boolean;
+}
 
 interface ShipmentsProps {
   shipments: any[];
   entity_name: string;
 }
 
-function Shipments({shipments, entity_name}: ShipmentsProps) {
+function Shipments({ shipments, entity_name }: ShipmentsProps) {
+  const [expandedShipments, setExpandedShipments] = useState<ExpandedShipmentsState>({});
+
   const handleCopyClick = (text: string) => {
-    navigator.clipboard.writeText(text)
-      .catch(err => console.error('Failed to copy text: ', err));
+    navigator.clipboard.writeText(text);
   };
 
-  // console.log(entity_name, shipments)
+  const toggleShipmentExpand = (shipmentId: string) => {
+    setExpandedShipments(prev => ({
+      ...prev,
+      [shipmentId]: !prev[shipmentId]
+    }));
+  };
 
-  const handlePrintClick = (shipment: any, shipment_version: any) => {
+  const handlePrintClick = (shipment: any) => {
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.write(`
@@ -120,7 +131,7 @@ function Shipments({shipments, entity_name}: ShipmentsProps) {
               </div>
               <div class="detail-row">
                 <div class="detail-label">Reference Number</div>
-                <div class="detail-value">${shipment_version.jobnum}-${shipment.shipment_id}</div>
+                <div class="detail-value">${shipment.shipment_id}</div>
               </div>
             </div>
 
@@ -148,110 +159,149 @@ function Shipments({shipments, entity_name}: ShipmentsProps) {
   };
 
   return (
-  <div className="space-y-6">
-    <div className="overflow-hidden bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-      <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-        <thead>
-          <tr>
-            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Quantity
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Job/Version
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Shipping Address
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              In-Hands Date
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Reference Number
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Tracking Number
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Status
-            </th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-          {shipments.map((shipment) => (
-            shipment.shipment_versions.map((shipment_version: any) => (
-              <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 dark:text-gray-100">
-                  <div className="flex items-center">
-                    <Truck className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2" />
-                    {shipment_version.quantity} units
-                  </div>
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                {shipment_version.isWareHousing ? shipment_version.ref_jobNumber : shipment_version.jobnum}{shipment_version.name}
-                </td>
-                <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                  <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5" />
-                    <div>
-                      <div>{shipment.shipment_address[0].address_street1} {shipment.shipment_address[0].address_street1 && <>,</>} {shipment.shipment_address[0].address_street2}{shipment.shipment_address[0].address_street2 && <>,</>} {shipment.shipment_address[0].address_street3}</div>
-                      <div className="text-gray-500 dark:text-gray-400">
-                        {shipment.shipment_address[0].address_city}, {shipment.shipment_address[0].address_state} {shipment.shipment_address[0].address_code}
+    <div className="space-y-6">
+      <div className="overflow-hidden bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 dark:ring-gray-700 rounded-lg">
+        <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-800">
+            <tr>
+              <th scope="col" className="w-8 py-3.5 pl-4 pr-3"></th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Shipper Account
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Shipment Method
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Shipping Address
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Reference Number
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Tracking Number
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
+            {shipments.map((shipment) => (
+              <>
+                <tr key={shipment.shipment_id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
+                  <td className="py-4 pl-4 pr-3">
+                    <button
+                      onClick={() => toggleShipmentExpand(shipment.shipment_id)}
+                      className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
+                    >
+                      {expandedShipments[shipment.shipment_id] ? 
+                        <ChevronDown className="h-5 w-5" /> : 
+                        <ChevronRight className="h-5 w-5" />
+                      }
+                    </button>
+                  </td>
+                  <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                    {shipment.shipment_shipper_account || 'Every USB'}
+                  </td>
+                  <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                    {shipment.shipment_shipping_method || 'FedEx Int\'l Priority'}
+                  </td>
+                  <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                    <div className="flex items-start">
+                      <MapPin className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2 mt-0.5" />
+                      <div>
+                        <div>{shipment.shipment_address[0].address_street1} {shipment.shipment_address[0].address_street1 && <>,</>} {shipment.shipment_address[0].address_street2}{shipment.shipment_address[0].address_street2 && <>,</>} {shipment.shipment_address[0].address_street3}</div>
+                        <div className="text-gray-500 dark:text-gray-400">
+                          {shipment.shipment_address[0].address_city}, {shipment.shipment_address[0].address_state} {shipment.shipment_address[0].address_code}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                  {shipment.inHandsDate}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                  <div className="flex items-center gap-2">
-                    <span>{shipment_version.jobnum}-{shipment.shipment_id}</span>
-                    <button 
-                      onClick={() => handleCopyClick(`${shipment_version.jobnum}-${shipment.shipment_id}`)}
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                      title="Copy reference number"
+                  </td>
+                  <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                    <div className="flex items-center gap-2">
+                      <span>{shipment.shipment_id}</span>
+                      <button 
+                        onClick={() => handleCopyClick(shipment.shipment_id)}
+                        className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
+                        title="Copy reference number"
+                      >
+                        <Copy className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                  <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                    {shipment.tracking_number && (
+                      <a
+                        href={`https://www.fedex.com/wtrk/track/?trknbr=${shipment.tracking_number}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
+                      >
+                        {shipment.tracking_number}
+                      </a>
+                    )}
+                  </td>
+                  <td className="px-3 py-4 text-sm">
+                    <button
+                      onClick={() => handlePrintClick(shipment)}
+                      className="inline-flex items-center px-2 py-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
+                      title="Print shipment details"
                     >
-                      <Copy className="h-4 w-4" />
+                      <Printer className="h-4 w-4" />
                     </button>
-                  </div>
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 dark:text-gray-100">
-                  {shipment.tracking_number && (
-                    <a
-                      href={`https://www.fedex.com/wtrk/track/?trknbr=${shipment.tracking_number}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
-                    >
-                      {shipment.tracking_number}
-                    </a>
-                  )}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm">
-                  <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">
-                  {shipment.tracking_status ? shipment.tracking_status : "Pending"}
-                  </span>
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm">
-                  <button
-                    onClick={() => handlePrintClick(shipment, shipment_version)}
-                    className="inline-flex items-center px-2 py-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                    title="Print shipment details"
-                  >
-                    <Printer className="h-4 w-4" />
-                  </button>
-                </td>
-              </tr>
-            ))
-          ))}
-        </tbody>
-      </table>
+                  </td>
+                </tr>
+                {expandedShipments[shipment.shipment_id] && (
+                  <tr className="bg-gray-50 dark:bg-gray-750">
+                    <td colSpan={7} className="px-8 py-4">
+                      <div className="rounded-lg bg-white dark:bg-gray-800 shadow ring-1 ring-black ring-opacity-5 dark:ring-gray-700">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                          <thead className="bg-gray-50 dark:bg-gray-750">
+                            <tr>
+                              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                #
+                              </th>
+                              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                Version Name
+                              </th>
+                              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                Bundle
+                              </th>
+                              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                Quantity
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
+                            {shipment.shipment_versions.map((version: any, index: number) => (
+                              <tr key={version.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
+                                <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                                  {index + 1}
+                                </td>
+                                <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                                  {version.name}
+                                </td>
+                                <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                                  {version.bundle || 'N/A'}
+                                </td>
+                                <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                                  {version.quantity} units
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  )
+  );
 }
 
 export default Shipments;
