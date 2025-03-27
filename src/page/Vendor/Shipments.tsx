@@ -35,44 +35,44 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
             <style>
               body {
                 font-family: Arial, sans-serif;
-                line-height: 1.6;
-                padding: 40px;
+                line-height: 1.4;
+                padding: 20px;
                 max-width: 800px;
                 margin: 0 auto;
                 color: #333;
               }
               .section {
-                margin-bottom: 40px;
-                padding: 20px;
+                margin-bottom: 20px;
+                padding: 12px;
                 border: 1px solid #e5e7eb;
-                border-radius: 8px;
-                background-color: #fff;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                border-radius: 6px;
               }
               .section-title {
-                font-size: 18px;
+                font-size: 14px;
                 font-weight: bold;
                 color: #1f2937;
-                margin-bottom: 16px;
-                padding-bottom: 8px;
-                border-bottom: 2px solid #e5e7eb;
+                margin-bottom: 8px;
+                padding-bottom: 4px;
+                border-bottom: 1px solid #e5e7eb;
               }
               .entity-name {
-                font-size: 24px;
+                font-size: 16px;
                 font-weight: bold;
                 color: #111827;
-                margin-bottom: 12px;
+                margin-bottom: 8px;
               }
               .address-details {
                 margin-left: 4px;
                 color: #4b5563;
+                font-size: 12px;
               }
               .detail-row {
                 display: flex;
-                margin-bottom: 8px;
+                margin-bottom: 4px;
+                font-size: 12px;
               }
               .detail-label {
-                width: 140px;
+                width: 120px;
                 font-weight: 600;
                 color: #4b5563;
               }
@@ -84,127 +84,113 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                 white-space: pre-wrap;
                 color: #4b5563;
                 background-color: #f9fafb;
-                padding: 12px;
+                padding: 8px;
                 border-radius: 4px;
+                font-size: 12px;
               }
               .logo-container {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 20px;
+                text-align: center;
+                margin-bottom: 16px;
               }
               .logo {
-                height: 40px;
-                display: block;
-              }
-              .page-break {
-                page-break-before: always;
+                height: 30px;
               }
               .versions-table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-top: 12px;
+                margin-top: 8px;
+                font-size: 12px;
               }
               .versions-table th {
                 text-align: left;
-                padding: 12px;
+                padding: 6px;
                 background-color: #f9fafb;
                 font-weight: 600;
                 color: #1f2937;
                 border-bottom: 1px solid #e5e7eb;
               }
               .versions-table td {
-                padding: 12px;
+                padding: 6px;
                 border-bottom: 1px solid #e5e7eb;
                 color: #4b5563;
-              }
-              .versions-table tr:last-child td {
-                border-bottom: none;
               }
             </style>
           </head>
           <body>
-            <div class="first-page">
-              <div class="logo-container">
-                <img 
-                  src="https://imagedelivery.net/MKEvMIcAFUaEDbHj7BP86Q/5b404e84-91b7-4e07-269e-0816162e4300/public" 
-                  alt="Well Assembled Meetings Logo" 
-                  class="logo"
-                  onload="window.print()"
-                />
+            <div class="logo-container">
+              <img 
+                src="https://imagedelivery.net/MKEvMIcAFUaEDbHj7BP86Q/5b404e84-91b7-4e07-269e-0816162e4300/public" 
+                alt="Well Assembled Meetings Logo" 
+                class="logo"
+                onload="window.print()"
+              />
+            </div>
+            <div class="section">
+              <div class="section-title">Shipping Address</div>
+              <div class="entity-name">${entity_name || 'N/A'}</div>
+              <div class="address-details">
+                ${shipment.shipment_address[0].address_street1}<br>
+                ${shipment.shipment_address[0].address_street2 ? `${shipment.shipment_address[0].address_street2}<br>` : ''}
+                ${shipment.shipment_address[0].address_street3 ? `${shipment.shipment_address[0].address_street3}<br>` : ''}
+                ${shipment.shipment_address[0].address_city}, ${shipment.shipment_address[0].address_state} ${shipment.shipment_address[0].address_code}
               </div>
-              <!-- Shipping Address Section -->
-              <div class="section">
-                <div class="section-title">Shipping Address</div>
-                ${shipment.showEntityName ? `<div class="entity-name">${entity_name || 'N/A'}</div>` : ''}
-                <div class="address-details">
-                  ${shipment.shipment_address[0].address_street1}<br>
-                  ${shipment.shipment_address[0].address_street2 ? `${shipment.shipment_address[0].address_street2}<br>` : ''}
-                  ${shipment.shipment_address[0].address_street3 ? `${shipment.shipment_address[0].address_street3}<br>` : ''}
-                  ${shipment.shipment_address[0].address_city}, ${shipment.shipment_address[0].address_state} ${shipment.shipment_address[0].address_code}
-                </div>
-              </div>
+            </div>
 
-              <!-- Shipment Details Section -->
-              <div class="section">
-                <div class="section-title">Shipment Details</div>
-                <div class="detail-row">
-                  <div class="detail-label">Shipper Account</div>
-                  <div class="detail-value">${shipment.shipment_shipper_account || 'Every USB'}</div>
-                </div>
-                <div class="detail-row">
-                  <div class="detail-label">Shipment Method</div>
-                  <div class="detail-value">${shipment.shipment_shipping_method || 'FedEx Int\'l Priority'}</div>
-                </div>
-                <div class="detail-row">
-                  <div class="detail-label">Reference Number</div>
-                  <div class="detail-value">${job_number} - ${shipment.shipment_id}</div>
+            <div class="section">
+              <div class="section-title">Shipment Details</div>
+              <div class="detail-row">
+                <div class="detail-label">Shipper Account</div>
+                <div class="detail-value">${shipment.shipment_shipper_account || 'Every USB'}</div>
+              </div>
+              <div class="detail-row">
+                <div class="detail-label">Shipment Method</div>
+                <div class="detail-value">${shipment.shipment_shipping_method || 'FedEx Int\'l Priority'}</div>
+              </div>
+              <div class="detail-row">
+                <div class="detail-label">Reference Number</div>
+                <div class="detail-value">${job_number} - ${shipment.shipment_id}</div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">Comments</div>
+              <div class="detail-row">
+                <div class="detail-label">Recipient Comments</div>
+                <div class="detail-value">
+                  <div class="comments">${shipment.recipientComments || 'N/A'}</div>
                 </div>
               </div>
-
-              <!-- Comments Section -->
-              <div class="section">
-                <div class="section-title">Comments</div>
-                <div class="detail-row">
-                  <div class="detail-label">Recipient Comments</div>
-                  <div class="detail-value">
-                    <div class="comments">${shipment.recipientComments || 'N/A'}</div>
-                  </div>
-                </div>
-                <div class="detail-row">
-                  <div class="detail-label">Production Comments</div>
-                  <div class="detail-value">
-                    <div class="comments">${shipment.productionComments || 'N/A'}</div>
-                  </div>
+              <div class="detail-row">
+                <div class="detail-label">Production Comments</div>
+                <div class="detail-value">
+                  <div class="comments">${shipment.productionComments || 'N/A'}</div>
                 </div>
               </div>
             </div>
 
             ${shipment.shipment_versions && shipment.shipment_versions.length > 0 ? `
-              <!-- Versions Section on new page -->
-              <div class="page-break">
-                <div class="section">
-                  <div class="section-title">Versions</div>
-                  <table class="versions-table">
-                    <thead>
+              <div class="section">
+                <div class="section-title">Versions</div>
+                <table class="versions-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Version Name</th>
+                      <th>Bundle</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${shipment.shipment_versions.map((version: any, index: number) => `
                       <tr>
-                        <th>#</th>
-                        <th>Version Name</th>
-                        <th>Bundle</th>
-                        <th>Quantity</th>
+                        <td>${index + 1}</td>
+                        <td>${version.name || 'N/A'}</td>
+                        <td>${version.bundle || 'N/A'}</td>
+                        <td>${version.quantity} units</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      ${shipment.shipment_versions.map((version: any, index: number) => `
-                        <tr>
-                          <td>${index + 1}</td>
-                          <td>${version.name || 'N/A'}</td>
-                          <td>${version.bundle || 'N/A'}</td>
-                          <td>${version.quantity} units</td>
-                        </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
+                    `).join('')}
+                  </tbody>
+                </table>
               </div>
             ` : ''}
           </body>
