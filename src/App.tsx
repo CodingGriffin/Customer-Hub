@@ -33,7 +33,7 @@ export default function App() {
           <Route path="orders">
             <Route index element={<OrdersList />} />
             <Route path=":orderId" element={<OrderDetail />}>
-              <Route index element={<VendorShipmentsList />} />
+              <Route index element={<ShipmentsList />} />
               <Route path=":section" element={<VersionsContainer />}>
                 <Route path=":version_id/setup" element={<StepSetupContainer />} />
                 <Route path=":version_id/data-upload" element={<StepUploadContainer />} />
