@@ -4,6 +4,7 @@ const initialState = {
   shipments: {
     shipments: [],
     job_number: null,
+    versions: [],
     entity_name: null
   },
   loading: false,
@@ -26,6 +27,7 @@ function Reducer(state = initialState, action: any) {
           shipments: {
             shipments: action.payload.shipments,
             job_number: action.payload.job_number,
+            versions: action.payload.versions,
             entity_name: action.payload.entity_name
           },
         };

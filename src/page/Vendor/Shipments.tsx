@@ -8,9 +8,10 @@ interface ExpandedShipmentsState {
 interface ShipmentsProps {
   shipments: any[];
   entity_name: string;
+  job_number: string;
 }
 
-function Shipments({ shipments, entity_name }: ShipmentsProps) {
+function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
   const [expandedShipments, setExpandedShipments] = useState<ExpandedShipmentsState>({});
 
   const handleCopyClick = (text: string) => {
@@ -131,7 +132,7 @@ function Shipments({ shipments, entity_name }: ShipmentsProps) {
               </div>
               <div class="detail-row">
                 <div class="detail-label">Reference Number</div>
-                <div class="detail-value">${shipment.shipment_id}</div>
+                <div class="detail-value">${job_number} - ${shipment.shipment_id}</div>
               </div>
             </div>
 
@@ -219,7 +220,7 @@ function Shipments({ shipments, entity_name }: ShipmentsProps) {
                   </td>
                   <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
                     <div className="flex items-center gap-2">
-                      <span>{shipment.shipment_id}</span>
+                      <span>{job_number} - {shipment.shipment_id}</span>
                       <button 
                         onClick={() => handleCopyClick(shipment.shipment_id)}
                         className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
@@ -230,7 +231,7 @@ function Shipments({ shipments, entity_name }: ShipmentsProps) {
                     </div>
                   </td>
                   <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
-                    {shipment.tracking_number && (
+                    {shipment.tracking_number ? (
                       <a
                         href={`https://www.fedex.com/wtrk/track/?trknbr=${shipment.tracking_number}`}
                         target="_blank"
@@ -239,6 +240,10 @@ function Shipments({ shipments, entity_name }: ShipmentsProps) {
                       >
                         {shipment.tracking_number}
                       </a>
+                    ) : (
+                      <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                        Not yet shipped
+                      </span>
                     )}
                   </td>
                   <td className="px-3 py-4 text-sm">

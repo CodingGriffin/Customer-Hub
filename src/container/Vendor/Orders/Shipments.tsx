@@ -30,7 +30,11 @@ function ShipmentsList() {
   }, [orderId]);
 
   return (
-    <ShipmentsPage shipments={shipments.shipments ? shipments.shipments : []} entity_name={shipments.entity_name ? shipments.entity_name : null} />
+    <ShipmentsPage 
+      shipments={shipments.shipments ? shipments.shipments : []} 
+      entity_name={shipments.entity_name ? shipments.entity_name : null}
+      job_number={shipments.versions ? shipments.versions[0]?.job_number : null}
+    />
   )
 }
 
