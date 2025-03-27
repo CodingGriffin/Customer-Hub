@@ -182,7 +182,9 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                 Tracking Number
               </th>
               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
-                Actions
+                Actions                
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
               </th>
             </tr>
           </thead>
@@ -254,6 +256,13 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                     >
                       <Printer className="h-4 w-4" />
                     </button>
+                  </td>
+                  <td className="px-3 py-4 text-sm">
+                    {shipment.live_sample && (
+                      <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100">
+                        SAMPLE
+                      </span>
+                    )}
                   </td>
                 </tr>
                 {expandedShipments[shipment.shipment_id] && (
