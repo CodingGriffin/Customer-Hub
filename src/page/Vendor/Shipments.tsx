@@ -36,10 +36,16 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
               body {
                 font-family: Arial, sans-serif;
                 line-height: 1.4;
+                margin: 0;
                 padding: 20px;
+                color: #333;
+              }
+              .outer-container {
                 max-width: 800px;
                 margin: 0 auto;
-                color: #333;
+              }
+              .inner-container {
+                width: 100%;
               }
               .section {
                 margin-bottom: 20px;
@@ -72,7 +78,7 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                 font-size: 12px;
               }
               .detail-label {
-                width: 120px;
+                width: 130px;
                 font-weight: 600;
                 color: #4b5563;
               }
@@ -117,82 +123,86 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
             </style>
           </head>
           <body>
-            <div class="logo-container">
-              <img 
-                src="https://imagedelivery.net/MKEvMIcAFUaEDbHj7BP86Q/5b404e84-91b7-4e07-269e-0816162e4300/public" 
-                alt="Well Assembled Meetings Logo" 
-                class="logo"
-                onload="window.print()"
-              />
-            </div>
-            <div class="section">
-              <div class="section-title">Shipping Address</div>
-              <div class="entity-name">${entity_name || 'N/A'}</div>
-              <div class="address-details">
-                ${shipment.shipment_address[0].address_street1}<br>
-                ${shipment.shipment_address[0].address_street2 ? `${shipment.shipment_address[0].address_street2}<br>` : ''}
-                ${shipment.shipment_address[0].address_street3 ? `${shipment.shipment_address[0].address_street3}<br>` : ''}
-                ${shipment.shipment_address[0].address_city}, ${shipment.shipment_address[0].address_state} ${shipment.shipment_address[0].address_code}
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="section-title">Shipment Details</div>
-              <div class="detail-row">
-                <div class="detail-label">Shipper Account</div>
-                <div class="detail-value">${shipment.shipment_shipper_account || 'Every USB'}</div>
-              </div>
-              <div class="detail-row">
-                <div class="detail-label">Shipment Method</div>
-                <div class="detail-value">${shipment.shipment_shipping_method || 'FedEx Int\'l Priority'}</div>
-              </div>
-              <div class="detail-row">
-                <div class="detail-label">Reference Number</div>
-                <div class="detail-value">${job_number} - ${shipment.shipment_id}</div>
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="section-title">Comments</div>
-              <div class="detail-row">
-                <div class="detail-label">Recipient Comments</div>
-                <div class="detail-value">
-                  <div class="comments">${shipment.recipientComments || 'N/A'}</div>
+            <div class="outer-container">
+              <div class="inner-container">
+                <div class="logo-container">
+                  <img 
+                    src="https://imagedelivery.net/MKEvMIcAFUaEDbHj7BP86Q/5b404e84-91b7-4e07-269e-0816162e4300/public" 
+                    alt="Well Assembled Meetings Logo" 
+                    class="logo"
+                    onload="window.print()"
+                  />
                 </div>
-              </div>
-              <div class="detail-row">
-                <div class="detail-label">Production Comments</div>
-                <div class="detail-value">
-                  <div class="comments">${shipment.productionComments || 'N/A'}</div>
+                <div class="section">
+                  <div class="section-title">Shipping Address</div>
+                  ${shipment.showEntityName ? `<div class="entity-name">${entity_name || 'N/A'}</div>` : ''}
+                  <div class="address-details">
+                    ${shipment.shipment_address[0].address_street1}<br>
+                    ${shipment.shipment_address[0].address_street2 ? `${shipment.shipment_address[0].address_street2}<br>` : ''}
+                    ${shipment.shipment_address[0].address_street3 ? `${shipment.shipment_address[0].address_street3}<br>` : ''}
+                    ${shipment.shipment_address[0].address_city}, ${shipment.shipment_address[0].address_state} ${shipment.shipment_address[0].address_code}
+                  </div>
                 </div>
+
+                <div class="section">
+                  <div class="section-title">Shipment Details</div>
+                  <div class="detail-row">
+                    <div class="detail-label">Shipper Account</div>
+                    <div class="detail-value">${shipment.shipment_shipper_account || 'Every USB'}</div>
+                  </div>
+                  <div class="detail-row">
+                    <div class="detail-label">Shipment Method</div>
+                    <div class="detail-value">${shipment.shipment_shipping_method || 'FedEx Int\'l Priority'}</div>
+                  </div>
+                  <div class="detail-row">
+                    <div class="detail-label">Reference Number</div>
+                    <div class="detail-value">${job_number} - ${shipment.shipment_id}</div>
+                  </div>
+                </div>
+
+                <div class="section">
+                  <div class="section-title">Comments</div>
+                  <div class="detail-row">
+                    <div class="detail-label">Recipient Comments</div>
+                    <div class="detail-value">
+                      <div class="comments">${shipment.recipientComments || 'N/A'}</div>
+                    </div>
+                  </div>
+                  <div class="detail-row">
+                    <div class="detail-label">Production Comments</div>
+                    <div class="detail-value">
+                      <div class="comments">${shipment.productionComments || 'N/A'}</div>
+                    </div>
+                  </div>
+                </div>
+
+                ${shipment.shipment_versions && shipment.shipment_versions.length > 0 ? `
+                  <div class="section">
+                    <div class="section-title">Versions</div>
+                    <table class="versions-table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Version Name</th>
+                          <th>Bundle</th>
+                          <th>Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${shipment.shipment_versions.map((version: any, index: number) => `
+                          <tr>
+                            <td>${index + 1}</td>
+                            <td>${version.name || 'N/A'}</td>
+                            <td>${version.bundle || 'N/A'}</td>
+                            <td>${version.quantity} units</td>
+                          </tr>
+                        `).join('')}
+                      </tbody>
+                    </table>
+                  </div>
+                ` : ''}
               </div>
             </div>
-
-            ${shipment.shipment_versions && shipment.shipment_versions.length > 0 ? `
-              <div class="section">
-                <div class="section-title">Versions</div>
-                <table class="versions-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Version Name</th>
-                      <th>Bundle</th>
-                      <th>Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${shipment.shipment_versions.map((version: any, index: number) => `
-                      <tr>
-                        <td>${index + 1}</td>
-                        <td>${version.name || 'N/A'}</td>
-                        <td>${version.bundle || 'N/A'}</td>
-                        <td>${version.quantity} units</td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-            ` : ''}
           </body>
         </html>
       `);
