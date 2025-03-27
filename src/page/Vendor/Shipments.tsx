@@ -41,7 +41,7 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                 color: #333;
               }
               .outer-container {
-                max-width: 800px;
+                width: 100%;
                 margin: 0 auto;
               }
               .inner-container {
