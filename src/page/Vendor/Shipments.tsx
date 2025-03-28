@@ -326,10 +326,10 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
                                 #
                               </th>
-                              <th scope="col" className="ps-3 pe-0 me-0 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                              <th scope="col" className="ps-3 pe-0 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
                                 Job Number
                               </th>
-                              <th scope="col" className="pe-3 ps-[-5px] py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                              <th scope="col" className="ps-[-8px] pe-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
                                 Version Name
                               </th>
                               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
@@ -346,10 +346,10 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                                 <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
                                   {index + 1}
                                 </td>
-                                <td className="ps-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                                <td className="ps-3 pe-0 py-4 text-sm text-gray-900 dark:text-gray-200">
                                   {version.jobnum}
                                 </td>
-                                <td className="pe-3 py-4 text-sm text-gray-900 dark:text-gray-200">
+                                <td className="ps-[-8px] pe-3 py-4 text-sm text-gray-900 dark:text-gray-200">
                                   {version.name}
                                 </td>
                                 <td className="px-3 py-4 text-sm text-gray-900 dark:text-gray-200">
