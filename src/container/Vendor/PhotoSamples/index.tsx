@@ -74,7 +74,7 @@ export default function PhotoSampleContainer() {
       type: commentActions.GET_COMMENTS,
       payload: {
         mode: "getPhotoSampleComments",
-        resource_ids: resourceIds, // Now sending array of all resource_ids
+        resource_ids: '[' + resourceIds.join(',') + ']', // Convert array to comma-separated string
         table_code: "vendor_table"
       }
     });
