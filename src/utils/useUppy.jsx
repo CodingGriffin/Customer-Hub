@@ -39,9 +39,14 @@ export default function useUppy() {
   const dispatch = useDispatch();
   const {orderId, version_id, section} = useParams();
   
-  // Get entity_name from Redux state
+  // Get entity_name and version_name from Redux state
   const { order } = useSelector((state) => state.orders);
   const entityName = order?.data?.entities?.[0]?.entity_name || '';
+  
+  // Find the version name that matches the current version_id
+  const versionName = order?.data?.versions?.find(
+    version => version.version_id === parseInt(version_id)
+  )?.version_name || '';
 
   const uppy = new Uppy({
     id: 'uppy',
@@ -85,21 +90,22 @@ export default function useUppy() {
         const fileAddedHandler = (file) => {
           console.log("Added file name: ", file.name, file.meta.relativePath);
           
-          // Replace spaces with underscores in filename and entityName
+          // Replace spaces with underscores in filename, entityName and versionName
           const sanitizedFileName = file.name.replace(/\s+/g, '_');
           const sanitizedEntityName = entityName.replace(/\s+/g, '_');
+          const sanitizedVersionName = versionName.replace(/\s+/g, '_');
           
           // Set metadata for the file
           uppy.setFileMeta(file.id, {
             orderId: orderId,
-            versionId: version_id,
+            versionName: sanitizedVersionName, // Use version_name instead of version_id
             section: padType,
             uploadBy: 'vendor',
             type: 'samples',
             relativePath: file.meta.relativePath,
-            filename: sanitizedFileName, // Use sanitized filename
+            filename: sanitizedFileName,
             filetype: file.type,
-            entityName: sanitizedEntityName // Use sanitized entity name
+            entityName: sanitizedEntityName
           });
         };
 
@@ -108,11 +114,12 @@ export default function useUppy() {
           console.log('Tus response:', response);
           const sanitizedFileName = file.name.replace(/\s+/g, '_');
           const sanitizedEntityName = entityName.replace(/\s+/g, '_');
+          const sanitizedVersionName = versionName.replace(/\s+/g, '_');
           
           const fileUrl = response.uploadURL;
           files.push({
             name: file.name, 
-            file_path: `${sanitizedEntityName}/${orderId}/${version_id}/${padType}/samples/${sanitizedFileName}`,
+            file_path: `${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/samples/${sanitizedFileName}`,
           });
           console.log('File URL:', fileUrl);
         };
@@ -171,7 +178,7 @@ export default function useUppy() {
           uppy.off('complete', completeHandler);
           uppy.clear();
         };
-      }, [location, dispatch, version_id, section, entityName]); // Add entityName to dependencies
+      }, [location, dispatch, version_id, section, entityName, versionName]); // Add versionName to dependencies
 
     return { uppy, files };
   // })
