@@ -75,7 +75,6 @@ export default function PhotoSampleContainer() {
       payload: {
         mode: "getPhotoSampleComments",
         resource_ids: '[' + resourceIds.join(',') + ']', // Convert array to comma-separated string
-        table_code: "vendor_table"
       }
     });
   }
