@@ -12,7 +12,7 @@ import actions from "../states/PhotoSamples/actions";
 import '@uppy/core/dist/style.min.css'
 import '@uppy/dashboard/dist/style.min.css'
 
-const endPoint= "http://localhost:3000/s3-uploads"
+const endPoint= "http://54.89.206.113:3000/s3-uploads"
 const companionUrl = "http://localhost:3020/companion";
 
 function serializeSubPart(key, value) {

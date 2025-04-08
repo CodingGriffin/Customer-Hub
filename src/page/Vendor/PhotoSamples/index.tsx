@@ -17,6 +17,7 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
   const [commentText, setCommentText] = useState('');
 
   const { version_id, section } = useParams();
+  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
   
   // Find the version in the selectedOrderData.versions array
   const currentVersion = selectedOrderData?.versions?.find(
@@ -59,7 +60,7 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
                 {/* Image Preview */}
                 <div className="relative aspect-video group">
                   <img
-                    src={sample.file_path}
+                    src={baseUrl + sample.file_path}
                     alt={sample.name || 'Photo Sample'}
                     className="w-full h-full object-cover"
                   />
