@@ -1,13 +1,14 @@
 import React,  { useState, useEffect, useCallback } from 'react';
 import { Folder, File, ChevronRight, Upload, Trash2, FolderPlus, MoreVertical, Pencil, Search, Sparkles, MessageSquare } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 import Header from '../../../../component/ArtworkManager/HeaderComponent';
 import WelcomeModal from './WelcomeModal';
 import UploadModal from './UploadModal';
 import AIModal from './AIModal';
 import CommentModal from './CommentModal';
+import Bottom from './Bottom';
 import { ArtworkManagerItemType } from '../../../../types';
-import { useParams } from 'react-router-dom';
 
 interface ArtworkManagerProps {
   updateStatus: (pad_line_items_id: number) => void;
@@ -205,7 +206,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="h-screen relative">
       {/* Welcome Modal */}
       {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
@@ -222,61 +223,61 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
         ))}
       </div> */}
 
-      {/* Action Bar */}
-      <div className="flex flex-wrap gap-4 mb-6">
-        {/* Left side - Buttons */}
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-2">
-            <button
-              onClick={handleAIAnalysis}
-              className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm"
-            >
-              <Sparkles className="w-4 h-4 mr-1.5" />
-              <span>Analyze with AI</span>
-            </button>
-            <button 
-              onClick={() => setShowUploadModal(true)}
-              className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-            >
-              <Upload className="w-4 h-4 mr-1.5" />
-              <span>Upload</span>
-            </button>
+        {/* Action Bar */}
+        <div className="flex flex-wrap gap-4 mb-6">
+          {/* Left side - Buttons */}
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              <button
+                onClick={handleAIAnalysis}
+                className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm"
+              >
+                <Sparkles className="w-4 h-4 mr-1.5" />
+                <span>Analyze with AI</span>
+              </button>
+              <button 
+                onClick={() => setShowUploadModal(true)}
+                className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+              >
+                <Upload className="w-4 h-4 mr-1.5" />
+                <span>Upload</span>
+              </button>
+            </div>
           </div>
+
+          {/* Right side - Drag target area */}
+          {/* <div
+            className={`flex-1 border-2 border-dashed rounded-lg p-3 flex items-center justify-center ${
+              dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+            }`}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+          >
+            <div className="flex items-center text-sm text-gray-500">
+              <Upload className="w-4 h-4 mr-2 text-gray-400" />
+              <span>Drag files here to upload into the current folder</span>
+            </div>
+          </div> */}
         </div>
 
-        {/* Right side - Drag target area */}
-        {/* <div
-          className={`flex-1 border-2 border-dashed rounded-lg p-3 flex items-center justify-center ${
-            dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
-          }`}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
-          <div className="flex items-center text-sm text-gray-500">
-            <Upload className="w-4 h-4 mr-2 text-gray-400" />
-            <span>Drag files here to upload into the current folder</span>
+        {/* Search Bar */}
+        <div className="relative mb-6">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-400" />
           </div>
-        </div> */}
-      </div>
-
-      {/* Search Bar */}
-      <div className="relative mb-6">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search files and folders..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+          />
         </div>
-        <input
-          type="text"
-          placeholder="Search files and folders..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-        />
-      </div>
 
-      {/* Files and Folders Grid */}
-      <div className="rounded-lg shadow overflow-hidden">
+        {/* Files and Folders Grid */}
+        <div className="rounded-lg shadow overflow-hidden">
           <div className="hidden sm:grid px-4 sm:px-6 py-3 border-b border-gray-200 grid-cols-8 text-xs sm:text-sm font-medium text-gray-500">
             <div className="col-span-5">Name</div>
             <div className="col-span-1">Size</div>
@@ -419,6 +420,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
           </div>
         </div>
       </div>
+
       {/* Comment Modal */}
       {showCommentModal && <CommentModal commentText={commentText} setCommentText={setCommentText} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} />}
       {/* Upload Modal */}
@@ -426,8 +428,10 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
 
       {/* AI Modal */}
       {showAIModal && <AIModal analysisStep = {analysisStep} _closeAIModal = {handleCloseAIModal} />}
+      <Bottom />
 
     </div>
+    
   )
 }
 

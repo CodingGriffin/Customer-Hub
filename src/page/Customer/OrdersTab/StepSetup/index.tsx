@@ -143,7 +143,7 @@ function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSe
             Cancel
           </button>
         }
-        <button
+        {/* <button
           onClick={continueSetup}
           disabled={!setupOption}
           className={`ml-4 px-4 py-2 rounded-md text-white ${
@@ -153,7 +153,7 @@ function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSe
           }`}
         >
           Continue
-        </button>
+        </button> */}
       </div>
     </div>
   )
