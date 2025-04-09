@@ -3,6 +3,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
 
 import VersionSetup from './VersionSetup';
+import Bottom from './Bottom';
 
 interface StepSetupProps {
   selectedOrderData: any,
@@ -87,7 +88,7 @@ function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSe
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-h-screen relative">
       {selectedSetupOption == null && 
         <div className="grid grid-cols-3 gap-4">
           <button
@@ -155,6 +156,7 @@ function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSe
           Continue
         </button> */}
       </div>
+      <Bottom onContinue={continueSetup} />
     </div>
   )
 }
