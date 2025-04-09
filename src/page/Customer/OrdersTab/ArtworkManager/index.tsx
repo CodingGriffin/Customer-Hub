@@ -206,7 +206,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
   };
 
   return (
-    <div className="h-screen relative">
+    <div className="h-screen">
       {/* Welcome Modal */}
       {showWelcomeModal && <WelcomeModal _closeWelcomeModal = {handleCloseWelcomeModal} />}
 
@@ -428,7 +428,9 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
 
       {/* AI Modal */}
       {showAIModal && <AIModal analysisStep = {analysisStep} _closeAIModal = {handleCloseAIModal} />}
-      <Bottom setStep={setStep} updateStatus={updateStatus} pad_line_items_id={pad_line_items_id} />
+      <div className="fixed mb-6 bottom-0" style={{width: "850px"}}> {/* Add padding bottom to prevent content from being hidden behind the fixed bottom bar */}
+        <Bottom setStep={setStep} updateStatus={updateStatus} pad_line_items_id={pad_line_items_id} />
+      </div>
 
     </div>
     

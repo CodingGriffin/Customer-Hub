@@ -13,7 +13,7 @@ interface BottomProps {
 
 function Bottom({ onContinue }: BottomProps) {
   return (
-    <div className="absolute mt-6 left-0 right-0 bg-white dark:bg-gray-700 p-4 shadow-lg z-40">
+    <div className="fixed bg-white dark:bg-gray-700 p-4 shadow-lg z-40 relative w-full" style={{bottom: "25px"}}>
       <div className="container mx-auto flex justify-between items-center">
         <button
           // onClick={() => setIsUserManagementOpen(true)}

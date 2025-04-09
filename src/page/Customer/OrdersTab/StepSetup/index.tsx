@@ -156,7 +156,9 @@ function StepSetup({selectedOrderData, setStep, updateStatus, fromParam}: StepSe
           Continue
         </button> */}
       </div>
-      <Bottom onContinue={continueSetup} />
+      <div className="fixed mb-6 bottom-0" style={{width: "850px"}}> {/* Add padding bottom to prevent content from being hidden behind the fixed bottom bar */}
+        <Bottom onContinue={continueSetup} />
+      </div>
     </div>
   )
 }

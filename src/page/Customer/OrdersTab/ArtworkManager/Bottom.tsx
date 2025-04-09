@@ -19,7 +19,7 @@ function Bottom({setStep, updateStatus, pad_line_items_id} : BottomProps) {
     setStep(1);
   }
   return (
-    <div className="absolute mt-6 left-0 right-0 bg-white dark:bg-gray-700 p-4 shadow-lg z-40">
+    <div className="fixed bottom-0 bg-white dark:bg-gray-700 p-4 shadow-lg z-40 relative w-full">
       <div className="container mx-auto flex justify-between items-center">
         <button
           onClick={backSetup}
