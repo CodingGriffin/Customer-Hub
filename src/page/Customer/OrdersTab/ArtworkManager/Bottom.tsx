@@ -5,18 +5,24 @@ import {
 } from 'lucide-react';
 
 interface BottomProps {
-  // pdfError: string | null;
-  // setIsUserManagementOpen: (status: boolean) => void;
-  // setIsRejectModalOpen: (status: boolean) => void;
-  // setIsApproveModalOpen: (status: boolean) => void;
+  pad_line_items_id: number;
+  setStep: (id: number) => void;
+  updateStatus: (pad_line_items_id: number) => void;
 }
 
-function Bottom() {
+function Bottom({setStep, updateStatus, pad_line_items_id} : BottomProps) {
+  const continueSetup = async () => {
+    await updateStatus(pad_line_items_id);
+    await setStep(3);
+  }
+  const backSetup = () => {
+    setStep(1);
+  }
   return (
     <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-700 p-4 shadow-lg z-40">
       <div className="container mx-auto flex justify-between items-center">
         <button
-          // onClick={() => setIsUserManagementOpen(true)}
+          onClick={backSetup}
           className="flex items-center gap-2 px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
           title="Back"
         >
@@ -42,13 +48,13 @@ function Bottom() {
             Request Changes
           </button>
           <button
-            // onClick={() => setIsApproveModalOpen(true)}
+            onClick={continueSetup}
             className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
             // disabled={!!pdfError}
             title="Approve document for production"
           >
             <ThumbsUp size={16} />
-            Approve for Production
+            Approve
           </button>
         </div>
       </div>

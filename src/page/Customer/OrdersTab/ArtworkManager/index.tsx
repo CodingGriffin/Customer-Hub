@@ -428,7 +428,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
 
       {/* AI Modal */}
       {showAIModal && <AIModal analysisStep = {analysisStep} _closeAIModal = {handleCloseAIModal} />}
-      <Bottom />
+      <Bottom setStep={setStep} updateStatus={updateStatus} pad_line_items_id={pad_line_items_id} />
 
     </div>
     
