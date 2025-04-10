@@ -7,7 +7,7 @@ import actions from "../../../states/PhotoSamples/actions";
 import commentActions from "../../../states/Comments/actions";
 import ArtworkPhotoSample from '../../../page/Customer/OrdersTab/ArtworkPhotoSample';
 
-export default function ArtworkProof() {
+export default function ArtworkPhotoSampleContainer() {
   const { version_id, section } = useParams();
   const navigate = useNavigate();
   const { selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
@@ -18,10 +18,6 @@ export default function ArtworkProof() {
     loading,
     error,
   } = useSelector((state: any) => state.samples);
-
-  const {
-    comments,
-  } = useSelector((state: any) => state.comments);
 
   const setStep = async (step: number) => {
     await setSelectedStep(step)
@@ -39,12 +35,6 @@ export default function ArtworkProof() {
       getPhotoSamples();
     }
   }, [dispatch, version_id, section]);
-
-  useEffect(() => {
-    if (samples.data && samples.data.length > 0) {
-      getComments();
-    }
-  }, [samples.data]);
 
   const getPhotoSamples = () => {
     const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
@@ -70,25 +60,9 @@ export default function ArtworkProof() {
         table_code: "vendor_table"
       }
     });
-    getComments();
-  }
-
-  const getComments = () => {
-    // Extract all photo_sample_ids and add 100000 to each
-    const resourceIds = samples.data 
-      ? samples.data.map((sample: any) => 100000 + sample.photo_sample_id)
-      : [];
-
-    dispatch({
-      type: commentActions.GET_COMMENTS,
-      payload: {
-        mode: "getPhotoSampleComments",
-        resource_ids: '[' + resourceIds.join(',') + ']', // Convert array to comma-separated string
-      }
-    });
   }
 
   // return <PhotoSamples selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} addComment={addComment} />
 
-  return <ArtworkPhotoSample />;
+  return <ArtworkPhotoSample selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} addComment={addComment} isLiveSample={false} />;
 }
