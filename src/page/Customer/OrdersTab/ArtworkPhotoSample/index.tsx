@@ -5,6 +5,7 @@ import ProductionApprovalModal from './ProductionApprovalModal';
 import ConfirmationModal from './ConfirmationModal';
 import CommentModal from './CommentModal';
 import ImageViewer from '../../../../component/ArtworkPhotoSample/ImageViewer';
+import { useParams } from 'react-router-dom';
 
 interface PhotoSampleProps {
   addComment: (comment: string, sample_id: number) => void,
@@ -14,7 +15,7 @@ interface PhotoSampleProps {
   updatePhotoSample: (sampleId: any, status: any) => void,
 }
 
-function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample = false, updatePhotoSample}: PhotoSampleProps) {
+function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample, updatePhotoSample}: PhotoSampleProps) {
   const [images, setImages] = useState();
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -122,8 +123,8 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
     console.log(isLiveSample ? 'Live sample requested' : 'Production approved', { finalComment });
   };
 
-  // const anyRejected = images.some(img => !img.approved);
-  const anyRejected = false;
+  // Check if all samples are approved
+  const allSamplesApproved = samples.every((sample: any) => sample.status === "Approved");
 
   return (
     <div className="min-h-screen p-8">
@@ -211,16 +212,19 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
       </div>
       <button
         onClick={handleBulkAction}
+        disabled={!allSamplesApproved}
         className={`w-full py-3 rounded-lg font-medium transition-colors ${
-          anyRejected
-            ? 'bg-red-600 hover:bg-red-700'
+          !allSamplesApproved
+            ? 'bg-gray-600 cursor-not-allowed opacity-50'
+            : isLiveSample
+            ? 'bg-purple-600 hover:bg-purple-700'
             : 'bg-blue-600 hover:bg-blue-700'
         } text-white flex items-center justify-center gap-2`}
       >
-        {anyRejected ? (
+        {!allSamplesApproved ? (
           <>
             <AlertTriangle size={20} />
-            <span>Provide Comments</span>
+            <span>All samples must be approved</span>
           </>
         ) : (
           <>

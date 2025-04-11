@@ -13,6 +13,12 @@ export default function ArtworkPhotoSampleContainer() {
   const { selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
 
+  // Get the current version and its live sample status
+  const currentVersion = selectedOrderData?.versions?.find(
+    (version: any) => version.version_id == version_id
+  );
+  const isLiveSample = currentVersion?.isReqApp || false;
+
   const {
     samples,
     loading,
@@ -76,5 +82,11 @@ export default function ArtworkPhotoSampleContainer() {
 
   // return <PhotoSamples selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} addComment={addComment} />
 
-  return <ArtworkPhotoSample selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} addComment={addComment} isLiveSample={false} updatePhotoSample={updatePhotoSample} />;
+  return <ArtworkPhotoSample 
+    selectedOrderData={selectedOrderData} 
+    samples={samples.data ? samples.data : []} 
+    addComment={addComment} 
+    isLiveSample={isLiveSample} 
+    updatePhotoSample={updatePhotoSample} 
+  />;
 }
