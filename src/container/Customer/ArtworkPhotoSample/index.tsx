@@ -50,6 +50,18 @@ export default function ArtworkPhotoSampleContainer() {
     });
   }
 
+  const updatePhotoSample = (sampleId: any, status: any) => {
+    dispatch({
+      type: actions.GET_SAMPLES,
+      payload: {
+        mode: "updateSampleStatus",
+        photo_sample_id: sampleId,
+        status: status,
+      }
+    });
+    getPhotoSamples()
+  }
+
   const addComment = (comment: string, sample_id: number) => {
     dispatch({
       type: commentActions.ADD_COMMENTS,
@@ -64,5 +76,5 @@ export default function ArtworkPhotoSampleContainer() {
 
   // return <PhotoSamples selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} addComment={addComment} />
 
-  return <ArtworkPhotoSample selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} addComment={addComment} isLiveSample={false} />;
+  return <ArtworkPhotoSample selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} addComment={addComment} isLiveSample={false} updatePhotoSample={updatePhotoSample} />;
 }

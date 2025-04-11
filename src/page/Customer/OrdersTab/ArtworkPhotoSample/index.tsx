@@ -11,40 +11,10 @@ interface PhotoSampleProps {
   selectedOrderData: any,
   samples: any,
   isLiveSample: boolean,
+  updatePhotoSample: (sampleId: any, status: any) => void,
 }
 
-const initialImages = [
-  {
-    id: '1',
-    url: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop&q=60',
-    title: 'Product Photo 1',
-    approved: true,
-    message: ""
-  },
-  {
-    id: '2',
-    url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=60',
-    title: 'Product Photo 2',
-    approved: true,
-    message: ""
-  },
-  {
-    id: '3',
-    url: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&auto=format&fit=crop&q=60',
-    title: 'Product Photo 3',
-    approved: true,
-    message: ""
-  },
-  {
-    id: '4',
-    url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=60',
-    title: 'Product Photo 4',
-    approved: true,
-    message: ""
-  },
-];
-
-function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample = false}: PhotoSampleProps) {
+function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample = false, updatePhotoSample}: PhotoSampleProps) {
   const [images, setImages] = useState();
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -70,22 +40,12 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
     setImages(samples);
   }, [samples]);
 
-  const handleApprove = (id: string) => {
-    // setImages(images.map(img => {
-    //   if (img.id === id) {
-    //     return { ...img, approved: true, message: "undefined" };
-    //   }
-    //   return img;
-    // }));
+  const handleApprove = (id: number) => {
+    updatePhotoSample(id, "Approve");
   };
 
-  const handleReject = (id: string) => {
-    // setModalState({
-    //   isOpen: true,
-    //   type: 'reject',
-    //   imageId: id,
-    //   initialMessage: images.find(img => img.id === id)?.message || '',
-    // });
+  const handleReject = (id: number) => {
+    updatePhotoSample(id, "Rejected");
   };
 
   const handleEditComment = (id: string, currentMessage: string) => {
@@ -169,7 +129,7 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
     <div className="min-h-screen p-8">
       <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         {samples.map((sample: any) => (
-          <div key={sample.id} className="dark:bg-slate-900 bg-gray-600 rounded-lg overflow-hidden">
+          <div key={sample.photo_sample_id} className="dark:bg-slate-900 bg-gray-600 rounded-lg overflow-hidden">
             <div 
               className="relative group cursor-pointer"
               onClick={() => setSelectedImage({ url: baseUrl + sample.file_path, title: sample.name })}
@@ -189,14 +149,14 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
                 <div className="flex items-start gap-2 mb-3 bg-slate-800 p-2 rounded">
                   <p className="text-red-400 text-sm flex-1">{sample.message}</p>
                   <button
-                    onClick={() => handleEditComment(sample.id, sample.message || '')}
+                    onClick={() => handleEditComment(sample.photo_sample_id, sample.message || '')}
                     className="text-slate-400 hover:text-white p-1"
                     title="Edit comment"
                   >
                     <Pencil size={14} />
                   </button>
                   <button
-                    onClick={() => handleRemoveComment(sample.id)}
+                    onClick={() => handleRemoveComment(sample.photo_sample_id)}
                     className="text-slate-400 hover:text-white p-1"
                     title="Remove comment"
                   >
@@ -206,7 +166,7 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
               )}
               <div className="flex gap-2">
                 <button
-                  onClick={() => handleApprove(sample.id)}
+                  onClick={() => handleApprove(sample.photo_sample_id)}
                   className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
                     sample.approved
                       ? 'bg-green-600 text-white'
@@ -217,7 +177,7 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
                   <span>Approve</span>
                 </button>
                 <button
-                  onClick={() => handleReject(sample.id)}
+                  onClick={() => handleReject(sample.photo_sample_id)}
                   className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
                     !sample.approved
                       ? 'bg-red-600 text-white'

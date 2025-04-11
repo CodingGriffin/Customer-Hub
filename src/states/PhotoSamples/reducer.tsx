@@ -45,6 +45,24 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.UPDATE_STATUS:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.UPDATE_STATUS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // samples: action.payload,
+      };
+    case actions.UPDATE_STATUS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
     default:
       return state;
   }
