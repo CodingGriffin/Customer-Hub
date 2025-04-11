@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Check, X, AlertTriangle, Pencil, FileCheck, Package, Scale } from 'lucide-react';
+import { Check, X, AlertTriangle, Pencil, FileCheck, Package, Scale, ChevronDown, ChevronUp } from 'lucide-react';
 
 import ProductionApprovalModal from './ProductionApprovalModal';
 import ConfirmationModal from './ConfirmationModal';
@@ -9,13 +9,14 @@ import { useParams } from 'react-router-dom';
 
 interface PhotoSampleProps {
   addComment: (comment: string, sample_id: number) => void,
+  updatePhotoSample: (sampleId: any, status: any) => void,
+  comments: any,
   selectedOrderData: any,
   samples: any,
   isLiveSample: boolean,
-  updatePhotoSample: (sampleId: any, status: any) => void,
 }
 
-function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample, updatePhotoSample}: PhotoSampleProps) {
+function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample, updatePhotoSample, comments}: PhotoSampleProps) {
   const [images, setImages] = useState();
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -34,7 +35,22 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
     url: string;
     title: string;
   } | null>(null);
-  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [commentText, setCommentText] = useState('');
+  const [openAccordion, setOpenAccordion] = useState<number | null>(null);
+  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+
+  const toggleAccordion = (sampleId: number) => {
+    setOpenAccordion(openAccordion === sampleId ? null : sampleId);
+  };
+
+  const handleCommentSubmit = (sampleId: number) => {
+    if (!commentText.trim()) return;
+    
+    addComment(commentText, sampleId);
+    setEditingCommentId(null);
+    setCommentText('');
+  };
 
   useEffect(() => {
     // Update filtered orders whenever orders prop changes
@@ -128,22 +144,22 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
 
   return (
     <div className="min-h-screen p-8">
-      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {samples.map((sample: any) => (
-          <div key={sample.photo_sample_id} className="dark:bg-slate-900 bg-gray-600 rounded-lg overflow-hidden">
-            <div 
-              className="relative group cursor-pointer"
-              onClick={() => setSelectedImage({ url: baseUrl + sample.file_path, title: sample.name })}
-            >
+          <div key={sample.photo_sample_id} className="bg-gray-800 rounded-lg overflow-hidden">
+            {/* Image section */}
+            <div className="relative aspect-video">
               <img
                 src={baseUrl + sample.file_path}
                 alt={sample.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity flex items-center justify-center">
                 <span className="text-white text-sm">Click to view</span>
               </div>
             </div>
+
+            {/* Info and actions section */}
             <div className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-white font-medium">{sample.name}</h3>
@@ -157,49 +173,129 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
                   {sample.status || "Pending"}
                 </span>
               </div>
-              {sample.message && (
-                <div className="flex items-start gap-2 mb-3 bg-slate-800 p-2 rounded">
-                  <p className="text-red-400 text-sm flex-1">{sample.message}</p>
-                  <button
-                    onClick={() => handleEditComment(sample.photo_sample_id, sample.message || '')}
-                    className="text-slate-400 hover:text-white p-1"
-                    title="Edit comment"
-                  >
-                    <Pencil size={14} />
-                  </button>
-                  <button
-                    onClick={() => handleRemoveComment(sample.photo_sample_id)}
-                    className="text-slate-400 hover:text-white p-1"
-                    title="Remove comment"
-                  >
-                    <X size={14} />
-                  </button>
-                </div>
-              )}
-              <div className="flex gap-2">
+
+              {/* Comments Accordion */}
+              <div className="mb-2">
                 <button
-                  onClick={() => handleApprove(sample.photo_sample_id)}
+                  onClick={() => toggleAccordion(sample.photo_sample_id)}
+                  className="w-full flex items-center justify-between px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  <span className="text-sm font-medium text-gray-300">
+                    Comments ({comments.filter((comment: any) => 
+                      comment.resource_id === (100000 + sample.photo_sample_id) && comment.table_code !== 'vendor_table').length})
+                  </span>
+                  {openAccordion === sample.photo_sample_id ? (
+                    <ChevronUp className="w-4 h-4 text-gray-400" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                  )}
+                </button>
+
+                {openAccordion === sample.photo_sample_id && (
+                  <div className="mt-2 space-y-3">
+                    <div className="bg-gray-700 rounded-lg p-3">
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {comments
+                          .filter((comment: any) => comment.resource_id === (100000 + sample.photo_sample_id) && comment.table_code !== 'vendor_table')
+                          .map((comment: any) => (
+                            <div key={comment.comment_id} className="bg-gray-600 rounded p-2">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className={`text-xs px-2 py-0.5 rounded-full ${
+                                  comment.table_code === 'vendor_table'
+                                    ? 'bg-blue-100 text-blue-800'
+                                    : comment.table_code === 'customer_table'
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-purple-100 text-purple-800'
+                                }`}>
+                                  {comment.table_code === 'vendor_table'
+                                    ? 'Vendor'
+                                    : comment.table_code === 'customer_table'
+                                    ? 'Customer'
+                                    : 'Staff'}
+                                </span>
+                                <span className="text-xs text-gray-400">
+                                  {new Date(comment.timestamp).toLocaleDateString()}
+                                </span>
+                              </div>
+                              <p className="text-sm text-gray-300">{comment.comment}</p>
+                            </div>
+                          ))}
+                      </div>
+
+                      {/* Add comment section - disabled for approved/rejected samples */}
+                      {sample.status !== "Approved" && sample.status !== "Rejected" ? (
+                        editingCommentId === sample.photo_sample_id ? (
+                          <div className="space-y-2 mt-3">
+                            <textarea
+                              value={commentText}
+                              onChange={(e) => setCommentText(e.target.value)}
+                              className="w-full h-20 px-3 py-2 text-sm bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white resize-none"
+                              placeholder="Enter your comment..."
+                            />
+                            <div className="flex justify-end space-x-2">
+                              <button
+                                onClick={() => {
+                                  setEditingCommentId(null);
+                                  setCommentText('');
+                                }}
+                                className="px-3 py-1.5 text-sm text-gray-300 hover:text-white"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                onClick={() => handleCommentSubmit(sample.photo_sample_id)}
+                                className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setEditingCommentId(sample.photo_sample_id);
+                              setCommentText('');
+                            }}
+                            className="w-full px-3 py-2 mt-3 text-sm bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors"
+                          >
+                            Add Comment
+                          </button>
+                        )
+                      ) : (
+                        <div className="w-full px-3 py-2 mt-3 text-sm bg-gray-800 text-gray-500 rounded-lg cursor-not-allowed opacity-50">
+                          Comments disabled - Sample {sample.status.toLowerCase()}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Approve/Reject buttons */}
+              <div className="flex gap-2 mt-4">
+                <button
+                  onClick={() => updatePhotoSample(sample.photo_sample_id, "Approved")}
                   disabled={sample.status === "Approved" || sample.status === "Rejected"}
                   className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
                     sample.status === "Approved"
                       ? 'bg-green-600 text-white cursor-not-allowed opacity-50'
                       : sample.status === "Rejected"
-                      ? 'bg-slate-800 text-slate-300 cursor-not-allowed opacity-50'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      ? 'bg-gray-700 text-gray-300 cursor-not-allowed opacity-50'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
                 >
                   <Check size={16} />
                   <span>Approve</span>
                 </button>
                 <button
-                  onClick={() => handleReject(sample.photo_sample_id)}
+                  onClick={() => updatePhotoSample(sample.photo_sample_id, "Rejected")}
                   disabled={sample.status === "Approved" || sample.status === "Rejected"}
                   className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
                     sample.status === "Rejected"
                       ? 'bg-red-600 text-white cursor-not-allowed opacity-50'
                       : sample.status === "Approved"
-                      ? 'bg-slate-800 text-slate-300 cursor-not-allowed opacity-50'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      ? 'bg-gray-700 text-gray-300 cursor-not-allowed opacity-50'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
                 >
                   <X size={16} />
