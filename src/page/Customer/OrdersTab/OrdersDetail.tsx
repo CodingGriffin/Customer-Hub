@@ -121,7 +121,16 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
             >
               <div className="flex flex-col">
                 <span className="font-medium">Version {index+1}</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">{version.version_name}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{version.version_name}</span>
+                  <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                    version.isReqApp
+                      ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300"
+                      : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
+                  }`}>
+                    {version.isReqApp ? 'Live Sample' : 'No Live Sample'}
+                  </span>
+                </div>
               </div>
               {expandedVersions[index] ? (
                 <ChevronDown className="w-4 h-4" />

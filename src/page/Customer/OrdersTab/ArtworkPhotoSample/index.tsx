@@ -41,7 +41,7 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
   }, [samples]);
 
   const handleApprove = (id: number) => {
-    updatePhotoSample(id, "Approve");
+    updatePhotoSample(id, "Approved");
   };
 
   const handleReject = (id: number) => {
@@ -144,7 +144,18 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
               </div>
             </div>
             <div className="p-4">
-              <h3 className="text-white font-medium mb-3">{sample.name}</h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-white font-medium">{sample.name}</h3>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                  sample.status === "Approved"
+                    ? "bg-green-100 text-green-800"
+                    : sample.status === "Rejected"
+                    ? "bg-red-100 text-red-800"
+                    : "bg-yellow-100 text-yellow-800"
+                }`}>
+                  {sample.status || "Pending"}
+                </span>
+              </div>
               {sample.message && (
                 <div className="flex items-start gap-2 mb-3 bg-slate-800 p-2 rounded">
                   <p className="text-red-400 text-sm flex-1">{sample.message}</p>
@@ -167,9 +178,12 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
               <div className="flex gap-2">
                 <button
                   onClick={() => handleApprove(sample.photo_sample_id)}
+                  disabled={sample.status === "Approved" || sample.status === "Rejected"}
                   className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
-                    sample.approved
-                      ? 'bg-green-600 text-white'
+                    sample.status === "Approved"
+                      ? 'bg-green-600 text-white cursor-not-allowed opacity-50'
+                      : sample.status === "Rejected"
+                      ? 'bg-slate-800 text-slate-300 cursor-not-allowed opacity-50'
                       : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                   }`}
                 >
@@ -178,9 +192,12 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
                 </button>
                 <button
                   onClick={() => handleReject(sample.photo_sample_id)}
+                  disabled={sample.status === "Approved" || sample.status === "Rejected"}
                   className={`flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg transition-colors ${
-                    !sample.approved
-                      ? 'bg-red-600 text-white'
+                    sample.status === "Rejected"
+                      ? 'bg-red-600 text-white cursor-not-allowed opacity-50'
+                      : sample.status === "Approved"
+                      ? 'bg-slate-800 text-slate-300 cursor-not-allowed opacity-50'
                       : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                   }`}
                 >
