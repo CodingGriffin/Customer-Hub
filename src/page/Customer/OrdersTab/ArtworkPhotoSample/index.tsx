@@ -181,8 +181,21 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
                   className="w-full flex items-center justify-between px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
                 >
                   <span className="text-sm font-medium text-gray-300">
-                    Comments ({comments.filter((comment: any) => 
-                      comment.resource_id === (100000 + sample.photo_sample_id) && comment.table_code !== 'vendor_table').length})
+                    Comments ({comments.filter((comment: any) => {
+                            const resourceMatch = comment.resource_id === (100000 + sample.photo_sample_id);
+                            if (!resourceMatch) return false;
+                            
+                            // Show comment if it's from customer_table
+                            if (comment.table_code === 'customer_table') return true;
+                            
+                            // For staff comments, only show if table_code contains customer_table
+                            if (comment.table_code.startsWith('staff_table')) {
+                              return comment.table_code.includes('customer_table');
+                            }
+                            
+                            // Don't show vendor_table comments
+                            return false;
+                          }).length})
                   </span>
                   {openAccordion === sample.photo_sample_id ? (
                     <ChevronUp className="w-4 h-4 text-gray-400" />
