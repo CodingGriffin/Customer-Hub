@@ -89,9 +89,21 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
                   <div className="mt-3">
                     {comments && !editingCommentId && (
                       <div className="bg-gray-50 dark:bg-gray-700 rounded p-3 mb-2">
-                        {comments.filter((comment: any) => 
-                          comment.resource_id === (100000 + sample.photo_sample_id)
-                        ).map((comment: any) => (
+                        {comments.filter((comment: any) => {
+                          const resourceMatch = comment.resource_id === (100000 + sample.photo_sample_id);
+                          if (!resourceMatch) return false;
+                          
+                          // Show comment if it's from vendor_table
+                          if (comment.table_code === 'vendor_table') return true;
+                          
+                          // For staff comments, only show if table_code contains vendor_table
+                          if (comment.table_code.startsWith('staff_table')) {
+                            return comment.table_code.includes('vendor_table');
+                          }
+                          
+                          // Don't show customer_table comments
+                          return false;
+                        }).map((comment: any) => (
                           <div key={comment.comment_id} className="mb-2 last:mb-0">
                             <div className="flex items-center gap-2 mb-1">
                               <span className={`text-xs px-2 py-0.5 rounded-full ${
@@ -103,13 +115,10 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
                               }`}>
                                 {comment.table_code === 'vendor_table'
                                   ? 'Vendor'
-                                  : comment.table_code === 'customer_table'
-                                  ? 'Customer'
-                                  : 'Staff'}
+                                  : comment.table_code.startsWith('staff_table')
+                                  ? 'Staff'
+                                  : 'Customer'}
                               </span>
-                              {/* <span className="text-xs text-gray-400">
-                                {new Date(comment.timestamp).toLocaleDateString()}
-                              </span> */}
                             </div>
                             <p className="text-sm text-gray-600 dark:text-gray-300">
                               {comment.comment}
