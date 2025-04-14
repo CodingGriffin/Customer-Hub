@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
-import { ImageOff, MailCheck, Upload } from 'lucide-react';
+import { ImageOff, MailCheck, Upload, ChevronDown, ChevronUp } from 'lucide-react';
 import UploadModal from './UploadModal';
 
 interface StepSetupProps {
@@ -15,10 +15,15 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
+  const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
   const { version_id, section } = useParams();
-  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL
+  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
   
+  const toggleAccordion = (sampleId: number) => {
+    setOpenAccordion(openAccordion === sampleId ? null : sampleId);
+  };
+
   // Find the version in the selectedOrderData.versions array
   const currentVersion = selectedOrderData?.versions?.find(
     (version: any) => version.version_id == version_id
@@ -85,85 +90,111 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
                     </span>
                   </div>
 
-                  {/* Comments Section */}
-                  <div className="mt-3">
-                    {comments && !editingCommentId && (
-                      <div className="bg-gray-50 dark:bg-gray-700 rounded p-3 mb-2">
-                        {comments.filter((comment: any) => {
+                  {/* Comments Accordion */}
+                  <div className="mb-2">
+                    <button
+                      onClick={() => toggleAccordion(sample.photo_sample_id)}
+                      className="w-full flex items-center justify-between px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      <span className="text-sm font-medium text-gray-300">
+                        Comments ({comments.filter((comment: any) => {
                           const resourceMatch = comment.resource_id === (100000 + sample.photo_sample_id);
                           if (!resourceMatch) return false;
                           
-                          // Show comment if it's from vendor_table
                           if (comment.table_code === 'vendor_table') return true;
                           
-                          // For staff comments, only show if table_code contains vendor_table
                           if (comment.table_code.startsWith('staff_table')) {
                             return comment.table_code.includes('vendor_table');
                           }
                           
-                          // Don't show customer_table comments
                           return false;
-                        }).map((comment: any) => (
-                          <div key={comment.comment_id} className="mb-2 last:mb-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className={`text-xs px-2 py-0.5 rounded-full ${
-                                comment.table_code === 'vendor_table'
-                                  ? 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
-                                  : comment.table_code === 'customer_table'
-                                  ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-                                  : 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100'
-                              }`}>
-                                {comment.table_code === 'vendor_table'
-                                  ? 'Vendor'
-                                  : comment.table_code.startsWith('staff_table')
-                                  ? 'Staff'
-                                  : 'Customer'}
-                              </span>
-                            </div>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">
-                              {comment.comment}
-                            </p>
+                        }).length})
+                      </span>
+                      {openAccordion === sample.photo_sample_id ? (
+                        <ChevronUp className="w-4 h-4 text-gray-400" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                      )}
+                    </button>
+
+                    {openAccordion === sample.photo_sample_id && (
+                      <div className="mt-2 space-y-3">
+                        <div className="bg-gray-700 rounded-lg p-3">
+                          <div className="space-y-2 max-h-40 overflow-y-auto">
+                            {comments
+                              .filter((comment: any) => {
+                                const resourceMatch = comment.resource_id === (100000 + sample.photo_sample_id);
+                                if (!resourceMatch) return false;
+                                
+                                if (comment.table_code === 'vendor_table') return true;
+                                
+                                if (comment.table_code.startsWith('staff_table')) {
+                                  return comment.table_code.includes('vendor_table');
+                                }
+                                
+                                return false;
+                              })
+                              .map((comment: any) => (
+                                <div key={comment.comment_id} className="bg-gray-600 rounded p-2">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                                      comment.table_code === 'vendor_table'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : 'bg-purple-100 text-purple-800'
+                                    }`}>
+                                      {comment.table_code === 'vendor_table'
+                                        ? 'Vendor'
+                                        : 'Staff'}
+                                    </span>
+                                    <span className="text-xs text-gray-400">
+                                      {new Date(comment.timestamp).toLocaleDateString()}
+                                    </span>
+                                  </div>
+                                  <p className="text-sm text-gray-300">{comment.comment}</p>
+                                </div>
+                              ))}
                           </div>
-                        ))}
-                      </div>
-                    )}
-                    
-                    {editingCommentId === sample.photo_sample_id ? (
-                      <div className="space-y-2">
-                        <textarea
-                          value={commentText}
-                          onChange={(e) => setCommentText(e.target.value)}
-                          className="w-full h-20 px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-none"
-                          placeholder="Enter your comment..."
-                        />
-                        <div className="flex justify-end space-x-2">
-                          <button
-                            onClick={() => {
-                              setEditingCommentId(null);
-                              setCommentText('');
-                            }}
-                            className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            onClick={() => handleCommentSubmit(sample.photo_sample_id)}
-                            className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                          >
-                            Submit
-                          </button>
+
+                          {/* Add comment section */}
+                          {editingCommentId === sample.photo_sample_id ? (
+                            <div className="space-y-2 mt-3">
+                              <textarea
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                                className="w-full h-20 px-3 py-2 text-sm bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white resize-none"
+                                placeholder="Enter your comment..."
+                              />
+                              <div className="flex justify-end space-x-2">
+                                <button
+                                  onClick={() => {
+                                    setEditingCommentId(null);
+                                    setCommentText('');
+                                  }}
+                                  className="px-3 py-1.5 text-sm text-gray-300 hover:text-white"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  onClick={() => handleCommentSubmit(sample.photo_sample_id)}
+                                  className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setEditingCommentId(sample.photo_sample_id);
+                                setCommentText('');
+                              }}
+                              className="w-full px-3 py-2 mt-3 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                            >
+                              Add Comment
+                            </button>
+                          )}
                         </div>
                       </div>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setEditingCommentId(sample.photo_sample_id);
-                          setCommentText('');
-                        }}
-                        className="w-full px-3 py-2 text-sm bg-blue-600 text-gray-100 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        <span>Add Comment</span>
-                      </button>
                     )}
                   </div>
                 </div>
