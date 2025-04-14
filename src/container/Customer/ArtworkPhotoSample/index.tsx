@@ -44,8 +44,13 @@ export default function ArtworkPhotoSampleContainer() {
     if (version_id) {
       getPhotoSamples();
     }
-    getComments();
   }, [dispatch, version_id, section]);
+
+  useEffect(() => {
+    if (samples.data && samples.data.length > 0) {
+      getComments();
+    }
+  }, [samples.data]);
 
   const getPhotoSamples = async () => {
     const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
