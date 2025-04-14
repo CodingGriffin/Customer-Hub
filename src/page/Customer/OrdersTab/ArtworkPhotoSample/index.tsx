@@ -148,11 +148,17 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
         {samples.map((sample: any) => (
           <div key={sample.photo_sample_id} className="bg-gray-800 rounded-lg overflow-hidden">
             {/* Image section */}
-            <div className="relative aspect-video">
+            <div 
+              className="relative aspect-video group cursor-pointer"
+              onClick={() => setSelectedImage({
+                url: baseUrl + sample.file_path,
+                title: sample.name || 'Photo Sample'
+              })}
+            >
               <img
                 src={baseUrl + sample.file_path}
                 alt={sample.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover cursor-pointer"
               />
               <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity flex items-center justify-center">
                 <span className="text-white text-sm">Click to view</span>
