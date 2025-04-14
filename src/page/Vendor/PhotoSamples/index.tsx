@@ -3,6 +3,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
 import { ImageOff, MailCheck, Upload, ChevronDown, ChevronUp } from 'lucide-react';
 import UploadModal from './UploadModal';
+import ImageViewer from '../../../component/ArtworkPhotoSample/ImageViewer';
 
 interface StepSetupProps {
   addComment: (comment: string, sample_id: number) => void,
@@ -16,6 +17,11 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
+  // Add this new state for the image viewer
+  const [selectedImage, setSelectedImage] = useState<{
+    url: string;
+    title: string;
+  } | null>(null);
 
   const { version_id, section } = useParams();
   const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
@@ -62,20 +68,23 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
                 key={sample.photo_sample_id} 
                 className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
               >
-                {/* Image Preview */}
-                <div className="relative aspect-video group">
+                {/* Image Preview section - Updated with click handler */}
+                <div 
+                  className="relative aspect-video group cursor-pointer"
+                  onClick={() => setSelectedImage({
+                    url: baseUrl + sample.file_path,
+                    title: sample.name || 'Photo Sample'
+                  })}
+                >
                   <img
                     src={baseUrl + sample.file_path}
                     alt={sample.name || 'Photo Sample'}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-center justify-center">
-                    <button 
-                      className="opacity-0 group-hover:opacity-100 bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-4 py-2 rounded-lg shadow transition-opacity"
-                      onClick={() => window.open(sample.file_path, '_blank')}
-                    >
-                      View Full Size
-                    </button>
+                    <span className="text-white text-sm opacity-0 group-hover:opacity-100">
+                      Click to view
+                    </span>
                   </div>
                 </div>
 
@@ -221,6 +230,15 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
 
         </div>
       }
+      {/* Add the ImageViewer component */}
+      {selectedImage && (
+        <ImageViewer
+          isOpen={true}
+          onClose={() => setSelectedImage(null)}
+          imageUrl={selectedImage.url}
+          title={selectedImage.title}
+        />
+      )}
       {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
     </div>
   )
