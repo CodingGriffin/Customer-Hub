@@ -47,10 +47,10 @@ export default function ArtworkPhotoSampleContainer() {
     getComments();
   }, [dispatch, version_id, section]);
 
-  const getPhotoSamples = () => {
+  const getPhotoSamples = async () => {
     const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
 
-    dispatch({
+    await dispatch({
       type: actions.GET_SAMPLES,
       payload: {
         mode: "getPhotoSamples",
@@ -73,8 +73,8 @@ export default function ArtworkPhotoSampleContainer() {
     getPhotoSamples()
   }
 
-  const addComment = (comment: string, sample_id: number) => {
-    dispatch({
+  const addComment = async (comment: string, sample_id: number) => {
+    await dispatch({
       type: commentActions.ADD_COMMENTS,
       payload: {
         mode: "insertSampleComment",
@@ -83,16 +83,16 @@ export default function ArtworkPhotoSampleContainer() {
         table_code: "customer_table"
       }
     });
-    getComments();
+    await getComments();
   }
 
-  const getComments = () => {
+  const getComments = async () => {
     // Extract all photo_sample_ids and add 100000 to each
     const resourceIds = samples.data 
       ? samples.data.map((sample: any) => 100000 + sample.photo_sample_id)
       : [];
 
-    dispatch({
+    await dispatch({
       type: commentActions.GET_COMMENTS,
       payload: {
         mode: "getPhotoSampleComments",

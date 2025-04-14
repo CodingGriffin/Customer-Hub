@@ -196,20 +196,30 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
                     <div className="bg-gray-700 rounded-lg p-3">
                       <div className="space-y-2 max-h-40 overflow-y-auto">
                         {comments
-                          .filter((comment: any) => comment.resource_id === (100000 + sample.photo_sample_id) && comment.table_code !== 'vendor_table')
+                          .filter((comment: any) => {
+                            const resourceMatch = comment.resource_id === (100000 + sample.photo_sample_id);
+                            if (!resourceMatch) return false;
+                            
+                            // Show comment if it's from customer_table
+                            if (comment.table_code === 'customer_table') return true;
+                            
+                            // For staff comments, only show if table_code contains customer_table
+                            if (comment.table_code.startsWith('staff_table')) {
+                              return comment.table_code.includes('customer_table');
+                            }
+                            
+                            // Don't show vendor_table comments
+                            return false;
+                          })
                           .map((comment: any) => (
                             <div key={comment.comment_id} className="bg-gray-600 rounded p-2">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className={`text-xs px-2 py-0.5 rounded-full ${
-                                  comment.table_code === 'vendor_table'
-                                    ? 'bg-blue-100 text-blue-800'
-                                    : comment.table_code === 'customer_table'
+                                  comment.table_code === 'customer_table'
                                     ? 'bg-green-100 text-green-800'
                                     : 'bg-purple-100 text-purple-800'
                                 }`}>
-                                  {comment.table_code === 'vendor_table'
-                                    ? 'Vendor'
-                                    : comment.table_code === 'customer_table'
+                                  {comment.table_code === 'customer_table'
                                     ? 'Customer'
                                     : 'Staff'}
                                 </span>
