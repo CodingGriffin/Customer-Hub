@@ -86,7 +86,7 @@ export default function useUppy() {
 
       useEffect(() => {
         let files = [];
-        const padType = section === 'data' ? 3 : section === 'artwork' ? 1 : 2;
+        const padType = section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack';
         const fileAddedHandler = (file) => {
           console.log("Added file name: ", file.name, file.meta.relativePath);
           
@@ -101,7 +101,7 @@ export default function useUppy() {
             versionName: sanitizedVersionName, // Use version_name instead of version_id
             section: padType,
             uploadBy: 'vendor',
-            type: 'samples',
+            type: 'Uploads',
             relativePath: file.meta.relativePath,
             filename: sanitizedFileName,
             filetype: file.type,
@@ -117,7 +117,7 @@ export default function useUppy() {
           const sanitizedVersionName = versionName.replace(/\s+/g, '_');
           
           const fileUrl = response.uploadURL;
-          files.push(`${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/files/${sanitizedFileName}`);
+          files.push(`${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/Uploads/${sanitizedFileName}`);
           console.log('File URL:', fileUrl);
         };
 
@@ -129,7 +129,7 @@ export default function useUppy() {
           const pathParts = location.pathname.split('/');
           const isVendorRoute = pathParts[1] === 'vendor';
           const isSamplesRoute = pathParts[pathParts.length - 1] === 'samples';
-          console.log(version_id, orderId, padType, files, pathParts)
+          const padType = section === 'data' ? 3 : section === 'artwork' ? 1 : 2;
           
           if (version_id) {
             dispatch({
