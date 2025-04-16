@@ -57,5 +57,19 @@ export default function ArtworkUpload() {
     });
   }
 
-  return <ArtworkManagerPage setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} files={files.data ? files.data : []} />;
+  const updateName = async (oldName: any, newName: any) => {
+    await dispatch({
+      type: fileActions.UPDATE_NAME,
+      payload: {
+        mode: "renameFile",
+        job_id: selectedOrderData.job.job_number,
+        version_id: version_id,
+        pad_id: 1,
+        file_name: oldName,
+        new_name: newName,
+      }
+    });
+  }
+
+  return <ArtworkManagerPage setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} files={files.data ? files.data : []} updateName={updateName} />;
 }

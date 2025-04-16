@@ -13,13 +13,14 @@ import { ArtworkManagerItemType } from '../../../../types';
 interface ArtworkManagerProps {
   updateStatus: (pad_line_items_id: number) => void;
   setStep: (id: number) => void;
+  updateName: (oldName: any, newName: any) => void;
   selectedOrderData: any;
   files: any;
 }
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: ArtworkManagerProps) => {
+const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus, updateName}: ArtworkManagerProps) => {
   const { version_id, section } = useParams();
   
   // Find the version in the selectedOrderData.versions array
@@ -40,6 +41,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
   const [searchQuery, setSearchQuery] = useState('');
   const [isRenaming, setIsRenaming] = useState<string | null>(null);
   const [newName, setNewName] = useState('');
+  const [oldName, setOldName] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [items, setItems] = useState<any>([]);
 
@@ -145,6 +147,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
   const handleRename = (id: string, currentName: string) => {
     setIsRenaming(id);
     setNewName(currentName);
+    setOldName(currentName);
     setActiveDropdown(null);
   };
 
@@ -156,6 +159,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
         )
       );
     }
+    updateName(oldName ,newName);
     setIsRenaming(null);
     setNewName('');
   };
