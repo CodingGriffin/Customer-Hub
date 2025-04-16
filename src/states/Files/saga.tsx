@@ -37,8 +37,18 @@ function* updateName(action: any) {
   }
 }
 
+function*  removeFile(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.filehub.php", {...action.payload});
+    yield put({ type: actions.REMOVE_FILE_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.REMOVE_FILE_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_FILES, getFiles)]);
   yield all([takeLatest(actions.ADD_FILES, addFiles)]);
   yield all([takeLatest(actions.UPDATE_NAME, updateName)]);
+  yield all([takeLatest(actions.REMOVE_FILE, removeFile)]);
 }

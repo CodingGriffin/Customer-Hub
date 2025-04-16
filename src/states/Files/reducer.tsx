@@ -63,6 +63,24 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
+    case actions.REMOVE_FILE:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.REMOVE_FILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // files: action.payload,
+      };
+    case actions.REMOVE_FILE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };  
     default:
       return state;
   }
