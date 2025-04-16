@@ -13,12 +13,13 @@ import { ArtworkManagerItemType } from '../../../../types';
 interface ArtworkManagerProps {
   updateStatus: (pad_line_items_id: number) => void;
   setStep: (id: number) => void;
-  selectedOrderData: any
+  selectedOrderData: any;
+  files: any;
 }
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkManagerProps) => {
+const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: ArtworkManagerProps) => {
   const { version_id, section } = useParams();
   
   // Find the version in the selectedOrderData.versions array
@@ -40,17 +41,19 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
   const [isRenaming, setIsRenaming] = useState<string | null>(null);
   const [newName, setNewName] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [items, setItems] = useState<ArtworkManagerItemType[]>([
-    { id: '1', name: 'final artwork for flash drive.pdf', type: 'file', size: '2.4 MB', modified: '2024-03-15', hidden: false },
-    { id: '2', name: 'logo.ai', type: 'file', size: '5.1 MB', modified: '2024-03-14', hidden: false },
-    { id: '3', name: 'logo.png', type: 'file', size: '1.2 MB', modified: '2024-03-14', hidden: false },
-  ]);
+  const [items, setItems] = useState<[]>([]);
 
   const padType = section?.substring(0, 4);
 
   const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
     (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
   )?.pad_line_items_id;
+
+  useEffect(() => {
+    if (files && files.length > 0) {
+      setItems(files);
+    }
+  }, [files])
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -82,23 +85,23 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
     setShowAIModal(true);
     setAnalysisStep(0);
 
-    setTimeout(() => {
-      setShowAIModal(false);
-      setItems(prevItems => prevItems.map(item => ({
-        ...item,
-        aiRecommendation: Math.random() > 0.5 
-          ? { type: 'rename', newName: `optimized_${item.name}` }
-          : { type: 'delete' }
-      })));
-    }, 5000);
+    // setTimeout(() => {
+    //   setShowAIModal(false);
+    //   setItems(prevItems => prevItems.map(item => ({
+    //     ...item,
+    //     aiRecommendation: Math.random() > 0.5 
+    //       ? { type: 'rename', newName: `optimized_${item.name}` }
+    //       : { type: 'delete' }
+    //   })));
+    // }, 5000);
   };
 
   const handlePrintLocationChange = (id: string, location: string) => {
-    setItems(prevItems =>
-      prevItems.map(item =>
-        item.id === id ? { ...item, printLocation: location } : item
-      )
-    );
+    // setItems(prevItems =>
+    //   prevItems.map(item =>
+    //     item.id === id ? { ...item, printLocation: location } : item
+    //   )
+    // );
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -124,20 +127,20 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
 
   const handleCommentClick = (id: string) => {
     setActiveFileId(id);
-    const file = items.find(item => item.id === id);
-    setCommentText(file?.comment || '');
+    // const file = items.find(item => item.id === id);
+    // setCommentText(file?.comment || '');
     setShowCommentModal(true);
     setActiveDropdown(null);
   };
 
   const handleDelete = (id: string) => {
-    setItems(prevItems => prevItems.filter(item => item.id !== id));
+    // setItems(prevItems => prevItems.filter(item => item.id !== id));
     setActiveDropdown(null);
   };
 
-  const filteredItems = items.filter(item =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredItems = items.filter(item =>
+  //   item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   const handleRename = (id: string, currentName: string) => {
     setIsRenaming(id);
@@ -146,13 +149,13 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
   };
 
   const handleRenameSubmit = (id: string) => {
-    if (newName.trim()) {
-      setItems(prevItems =>
-        prevItems.map(item =>
-          item.id === id ? { ...item, name: newName.trim() } : item
-        )
-      );
-    }
+    // if (newName.trim()) {
+    //   setItems(prevItems =>
+    //     prevItems.map(item =>
+    //       item.id === id ? { ...item, name: newName.trim() } : item
+    //     )
+    //   );
+    // }
     setIsRenaming(null);
     setNewName('');
   };
@@ -166,43 +169,43 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
   };
 
   const handleToggleHidden = (id: string) => {
-    setItems(prevItems =>
-      prevItems.map(item =>
-        item.id === id ? { ...item, hidden: !item.hidden } : item
-      )
-    );
+    // setItems(prevItems =>
+    //   prevItems.map(item =>
+    //     item.id === id ? { ...item, hidden: !item.hidden } : item
+    //   )
+    // );
     setActiveDropdown(null);
   };
 
   const handleAcceptRecommendation = (id: string) => {
-    setItems(prevItems => prevItems.map(item => {
-      if (item.id === id && item.aiRecommendation) {
-        if (item.aiRecommendation.type === 'rename' && item.aiRecommendation.newName) {
-          return { ...item, name: item.aiRecommendation.newName, aiRecommendation: undefined };
-        }
-        return item.aiRecommendation.type === 'delete' ? null : item;
-      }
-      return item;
-    }).filter((item): item is ArtworkManagerItemType => item !== null));
+    // setItems(prevItems => prevItems.map(item => {
+    //   if (item.id === id && item.aiRecommendation) {
+    //     if (item.aiRecommendation.type === 'rename' && item.aiRecommendation.newName) {
+    //       return { ...item, name: item.aiRecommendation.newName, aiRecommendation: undefined };
+    //     }
+    //     return item.aiRecommendation.type === 'delete' ? null : item;
+    //   }
+    //   return item;
+    // }).filter((item): item is ArtworkManagerItemType => item !== null));
   };
 
   const handleDiscardRecommendation = (id: string) => {
-    setItems(prevItems => prevItems.map(item => 
-      item.id === id ? { ...item, aiRecommendation: undefined } : item
-    ));
+    // setItems(prevItems => prevItems.map(item => 
+    //   item.id === id ? { ...item, aiRecommendation: undefined } : item
+    // ));
   };
 
   const handleCommentSubmit = () => {
-    if (activeFileId) {
-      setItems(prevItems =>
-        prevItems.map(item =>
-          item.id === activeFileId ? { ...item, comment: commentText } : item
-        )
-      );
-      setShowCommentModal(false);
-      setCommentText('');
-      setActiveFileId(null);
-    }
+    // if (activeFileId) {
+    //   setItems(prevItems =>
+    //     prevItems.map(item =>
+    //       item.id === activeFileId ? { ...item, comment: commentText } : item
+    //     )
+    //   );
+    //   setShowCommentModal(false);
+    //   setCommentText('');
+    //   setActiveFileId(null);
+    // }
   };
 
   return (
@@ -311,7 +314,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
                             />
                           </form>
                         ) : (
-                          <span className="ml-3 text-gray-900 text-sm dark:text-white">{item.name}</span>
+                          <span className="ml-3 text-gray-900 text-sm dark:text-white">{item.file_name}</span>
                         )}
                       </div>
                     </div>
@@ -334,7 +337,7 @@ const ArtworkManagerPage = ({selectedOrderData, setStep, updateStatus}: ArtworkM
                           <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                             <div className="py-1">
                               <button
-                                onClick={() => handleRename(item.id, item.name)}
+                                onClick={() => handleRename(item.id, item.file_name)}
                                 className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                               >
                                 <Pencil className="w-4 h-4 mr-2" />

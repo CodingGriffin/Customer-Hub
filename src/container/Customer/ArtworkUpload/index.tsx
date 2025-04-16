@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ArtworkManagerPage from '../../../page/Customer/OrdersTab/ArtworkManager';
 import { VersionsContext } from '../../../types';
 import actions from "../../../states/PADStatus/actions";
+import fileActions from "../../../states/Files/actions";
 
 export default function ArtworkUpload() {
   const { setStep, currentStep, selectedOrderData } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
+  const { version_id, section } = useParams();
+
+  const {
+    files,
+    loading,
+    error,
+  } = useSelector((state: any) => state.files);
 
   if (currentStep) {
     setStep(currentStep);
   }
+
+  useEffect(() => {
+    if (version_id) {
+      getFiles();
+    }
+  }, [dispatch, version_id, section]);
 
   const updateStatus = (pad_line_items_id: number) => {
     dispatch({
@@ -29,6 +43,19 @@ export default function ArtworkUpload() {
     });
   }
 
+  const getFiles = async () => {
+    const padType = (section === 'data' ? 3 : section === 'artwork' ? 1 : 2);
 
-  return <ArtworkManagerPage setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} />;
+    await dispatch({
+      type: fileActions.GET_FILES,
+      payload: {
+        mode: "listFilesByPAD",
+        job_id: selectedOrderData.job.job_number,
+        version_id: version_id,
+        pad_id: padType,
+      }
+    });
+  }
+
+  return <ArtworkManagerPage setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} files={files.data ? files.data : []} />;
 }

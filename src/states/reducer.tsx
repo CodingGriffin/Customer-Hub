@@ -9,6 +9,7 @@ import PADStatusReducer from "./PADStatus/reducer";
 import revisionsReducer from "./Revisions/reducer";
 import samplesReducer from "./PhotoSamples/reducer";
 import commentsReducer from "./Comments/reducer";
+import filesReducer from "./Files/reducer";
 
 const rootReducer = combineReducers({
   orders: ordersReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   revisions: revisionsReducer,
   samples: samplesReducer,
   comments: commentsReducer,
+  files: filesReducer,
 });
 
 export default rootReducer;

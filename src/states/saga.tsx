@@ -10,6 +10,7 @@ import PADStatusSaga from "./PADStatus/saga";
 import revisionsSaga from "./Revisions/saga";
 import photoSamplesSaga from './PhotoSamples/saga';
 import commentsSaga from './Comments/saga';
+import fielsSaga from './Files/saga';
 
 // Here you can include all the saga which you write for components
 export default function* rootSaga() {
@@ -23,6 +24,7 @@ export default function* rootSaga() {
     revisionsSaga(),
     photoSamplesSaga(),
     commentsSaga(),
+    fielsSaga(),
   ]);
 }
 

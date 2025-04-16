@@ -7,7 +7,7 @@ import Box from '@uppy/box';
 import OneDrive from '@uppy/onedrive';
 import GoogleDrive from '@uppy/google-drive';
 import Dropbox from '@uppy/dropbox';
-import actions from "../states/PhotoSamples/actions";
+import actions from "../states/Files/actions";
 
 import '@uppy/core/dist/style.min.css'
 import '@uppy/dashboard/dist/style.min.css'
@@ -86,7 +86,7 @@ export default function useUppy() {
 
       useEffect(() => {
         let files = [];
-        const padType = section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack';
+        const padType = section === 'data' ? 3 : section === 'artwork' ? 1 : 2;
         const fileAddedHandler = (file) => {
           console.log("Added file name: ", file.name, file.meta.relativePath);
           
@@ -117,10 +117,7 @@ export default function useUppy() {
           const sanitizedVersionName = versionName.replace(/\s+/g, '_');
           
           const fileUrl = response.uploadURL;
-          files.push({
-            name: file.name, 
-            file_path: `${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/samples/${sanitizedFileName}`,
-          });
+          files.push(`${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/files/${sanitizedFileName}`);
           console.log('File URL:', fileUrl);
         };
 
@@ -132,26 +129,27 @@ export default function useUppy() {
           const pathParts = location.pathname.split('/');
           const isVendorRoute = pathParts[1] === 'vendor';
           const isSamplesRoute = pathParts[pathParts.length - 1] === 'samples';
+          console.log(version_id, orderId, padType, files, pathParts)
           
-          if (isVendorRoute && isSamplesRoute && version_id) {
+          if (version_id) {
             dispatch({
-              type: actions.ADD_SAMPLES,
+              type: actions.ADD_FILES,
               payload: {
-                mode: "insertSamples",
-                jobs_id: orderId, // Adjust this based on how you want to get the job number
-                versions_id: version_id,
-                pads_type: padType,
-                files: files,
+                mode: "uploadFile",
+                job_id: orderId, // Adjust this based on how you want to get the job number
+                version_id: version_id,
+                pad_id: padType,
+                file_paths: files,
               }
             });
 
             dispatch({
-              type: actions.GET_SAMPLES,
+              type: actions.GET_FILES,
               payload: {
-                mode: "getPhotoSamples",
-                jobs_id: orderId,
-                versions_id: version_id,
-                pads_type: padType,
+                mode: "listFilesByPAD",
+                job_id: orderId,
+                version_id: version_id,
+                pad_id: padType,
               }
             });
           }
