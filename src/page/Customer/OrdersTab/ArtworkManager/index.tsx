@@ -148,14 +148,14 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
     setActiveDropdown(null);
   };
 
-  const handleRenameSubmit = (id: string) => {
-    // if (newName.trim()) {
-    //   setItems(prevItems =>
-    //     prevItems.map(item =>
-    //       item.upload_id === id ? { ...item, name: newName.trim() } : item
-    //     )
-    //   );
-    // }
+  const handleRenameSubmit = (id: any) => {
+    if (newName.trim()) {
+      setItems((prevItems: any) =>
+        prevItems.map((item: any) =>
+          item.upload_id == id ? { ...item, file_name: newName.trim() } : item
+        )
+      );
+    }
     setIsRenaming(null);
     setNewName('');
   };
