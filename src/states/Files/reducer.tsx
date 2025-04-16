@@ -45,19 +45,19 @@ function Reducer(state = initialState, action: any) {
         loading: false,
         error: action.payload
       };
-    case actions.UPDATE_STATUS:
+    case actions.UPDATE_NAME:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case actions.UPDATE_STATUS_SUCCESS:
+    case actions.UPDATE_NAME_SUCCESS:
       return {
         ...state,
         loading: false,
         // files: action.payload,
       };
-    case actions.UPDATE_STATUS_FAILURE:
+    case actions.UPDATE_NAME_FAILURE:
       return {
         ...state,
         loading: false,
