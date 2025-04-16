@@ -41,7 +41,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
   const [isRenaming, setIsRenaming] = useState<string | null>(null);
   const [newName, setNewName] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [items, setItems] = useState<[]>([]);
+  const [items, setItems] = useState<any>([]);
 
   const padType = section?.substring(0, 4);
 
@@ -99,7 +99,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
   const handlePrintLocationChange = (id: string, location: string) => {
     // setItems(prevItems =>
     //   prevItems.map(item =>
-    //     item.id === id ? { ...item, printLocation: location } : item
+    //     item.upload_id === id ? { ...item, printLocation: location } : item
     //   )
     // );
   };
@@ -127,14 +127,14 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
 
   const handleCommentClick = (id: string) => {
     setActiveFileId(id);
-    // const file = items.find(item => item.id === id);
+    // const file = items.find(item => item.upload_id === id);
     // setCommentText(file?.comment || '');
     setShowCommentModal(true);
     setActiveDropdown(null);
   };
 
   const handleDelete = (id: string) => {
-    // setItems(prevItems => prevItems.filter(item => item.id !== id));
+    // setItems(prevItems => prevItems.filter(item => item.upload_id !== id));
     setActiveDropdown(null);
   };
 
@@ -152,7 +152,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
     // if (newName.trim()) {
     //   setItems(prevItems =>
     //     prevItems.map(item =>
-    //       item.id === id ? { ...item, name: newName.trim() } : item
+    //       item.upload_id === id ? { ...item, name: newName.trim() } : item
     //     )
     //   );
     // }
@@ -171,7 +171,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
   const handleToggleHidden = (id: string) => {
     // setItems(prevItems =>
     //   prevItems.map(item =>
-    //     item.id === id ? { ...item, hidden: !item.hidden } : item
+    //     item.upload_id === id ? { ...item, hidden: !item.hidden } : item
     //   )
     // );
     setActiveDropdown(null);
@@ -179,7 +179,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
 
   const handleAcceptRecommendation = (id: string) => {
     // setItems(prevItems => prevItems.map(item => {
-    //   if (item.id === id && item.aiRecommendation) {
+    //   if (item.upload_id === id && item.aiRecommendation) {
     //     if (item.aiRecommendation.type === 'rename' && item.aiRecommendation.newName) {
     //       return { ...item, name: item.aiRecommendation.newName, aiRecommendation: undefined };
     //     }
@@ -191,7 +191,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
 
   const handleDiscardRecommendation = (id: string) => {
     // setItems(prevItems => prevItems.map(item => 
-    //   item.id === id ? { ...item, aiRecommendation: undefined } : item
+    //   item.upload_id === id ? { ...item, aiRecommendation: undefined } : item
     // ));
   };
 
@@ -199,7 +199,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
     // if (activeFileId) {
     //   setItems(prevItems =>
     //     prevItems.map(item =>
-    //       item.id === activeFileId ? { ...item, comment: commentText } : item
+    //       item.upload_id === activeFileId ? { ...item, comment: commentText } : item
     //     )
     //   );
     //   setShowCommentModal(false);
@@ -289,18 +289,18 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
           </div>
           
           <div className="divide-y divide-gray-200">
-            {items.map((item) => (
-              <div key={item.id}>
+            {items.map((item: any) => (
+              <div key={item.upload_id}>
                 <div className={`px-4 sm:px-6 py-3 hover:bg-gray-50 hover:dark:bg-gray-700 ${item.hidden ? 'opacity-50' : ''}`}>
                   <div className="sm:grid sm:grid-cols-8 sm:gap-4">
                     <div className="col-span-5">
                       <div className="flex items-center">
                         <File className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                        {isRenaming === item.id ? (
+                        {isRenaming === item.upload_id ? (
                           <form 
                             onSubmit={(e) => {
                               e.preventDefault();
-                              handleRenameSubmit(item.id);
+                              handleRenameSubmit(item.upload_id);
                             }}
                             className="flex-1 ml-3"
                           >
@@ -310,7 +310,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
                               onChange={(e) => setNewName(e.target.value)}
                               className="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                               autoFocus
-                              onBlur={() => handleRenameSubmit(item.id)}
+                              onBlur={() => handleRenameSubmit(item.upload_id)}
                             />
                           </form>
                         ) : (
@@ -327,24 +327,24 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
                     <div className="flex justify-end col-span-1">
                       <div className="relative">
                         <button
-                          onClick={() => setActiveDropdown(activeDropdown === item.id ? null : item.id)}
+                          onClick={() => setActiveDropdown(activeDropdown === item.upload_id ? null : item.upload_id)}
                           className="p-1.5 hover:bg-gray-100 rounded-full"
                         >
                           <MoreVertical className="w-4 h-4 text-gray-400" />
                         </button>
                         
-                        {activeDropdown === item.id && (
+                        {activeDropdown === item.upload_id && (
                           <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                             <div className="py-1">
                               <button
-                                onClick={() => handleRename(item.id, item.file_name)}
+                                onClick={() => handleRename(item.upload_id, item.file_name)}
                                 className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                               >
                                 <Pencil className="w-4 h-4 mr-2" />
                                 Rename
                               </button>
                               <button
-                                onClick={() => handleDelete(item.id)}
+                                onClick={() => handleDelete(item.upload_id)}
                                 className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                               >
                                 <Trash2 className="w-4 h-4 mr-2" />
@@ -360,7 +360,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
                     <div className="flex items-center space-x-4">
                       <select
                         value={item.printLocation || ''}
-                        onChange={(e) => handlePrintLocationChange(item.id, e.target.value)}
+                        onChange={(e) => handlePrintLocationChange(item.upload_id, e.target.value)}
                         className="text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       >
                         <option value="">Select print location...</option>
@@ -371,7 +371,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
                         ))}
                       </select>
                       <button
-                        onClick={() => handleCommentClick(item.id)}
+                        onClick={() => handleCommentClick(item.upload_id)}
                         className="flex items-center text-gray-500 hover:text-gray-700 text-sm hover:dark:text-gray-400"
                       >
                         <MessageSquare className="w-4 h-4 mr-1.5" />
@@ -401,14 +401,14 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus}: A
                         </p>
                         <div className="mt-1 space-x-2">
                           <button
-                            onClick={() => handleAcceptRecommendation(item.id)}
+                            onClick={() => handleAcceptRecommendation(item.upload_id)}
                             className="text-xs text-purple-700 hover:text-purple-900 font-medium"
                           >
                             Accept
                           </button>
                           <span className="text-purple-300">|</span>
                           <button
-                            onClick={() => handleDiscardRecommendation(item.id)}
+                            onClick={() => handleDiscardRecommendation(item.upload_id)}
                             className="text-xs text-purple-700 hover:text-purple-900 font-medium"
                           >
                             Discard

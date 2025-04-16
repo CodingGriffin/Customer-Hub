@@ -100,7 +100,7 @@ export default function useUppy() {
             orderId: orderId,
             versionName: sanitizedVersionName, // Use version_name instead of version_id
             section: padType,
-            uploadBy: 'vendor',
+            uploadBy: 'customer',
             type: 'Uploads',
             relativePath: file.meta.relativePath,
             filename: sanitizedFileName,
