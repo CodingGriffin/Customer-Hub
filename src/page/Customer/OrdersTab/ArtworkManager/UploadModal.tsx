@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { UppyUploader } from '../../../../component/UppyUploader';
-import useUppy from '../../../../utils/useUppy';
+import fileUppy from '../../../../utils/fileUppy';
 
 interface UploadModalProps {
   _closeUploadModal: () => void;
@@ -11,7 +11,7 @@ interface UploadModalProps {
 
 const UploadModal = React.memo(({version_name, section, _closeUploadModal }: UploadModalProps) => {
 
-  const { uppy } = useUppy();
+  const { uppy } = fileUppy();
 
   const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
