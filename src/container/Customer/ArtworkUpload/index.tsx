@@ -71,5 +71,18 @@ export default function ArtworkUpload() {
     });
   }
 
-  return <ArtworkManagerPage setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} files={files.data ? files.data : []} updateName={updateName} />;
+  const removeFile = async (name: any) => {
+    await dispatch({
+      type: fileActions.UPDATE_NAME,
+      payload: {
+        mode: "renameFile",
+        job_id: selectedOrderData.job.job_number,
+        version_id: version_id,
+        pad_id: 1,
+        file_name: name,
+      }
+    });
+  }
+
+  return <ArtworkManagerPage setStep={setStep} selectedOrderData={selectedOrderData} updateStatus={updateStatus} files={files.data ? files.data : []} updateName={updateName} removeFile={removeFile} />;
 }

@@ -14,13 +14,14 @@ interface ArtworkManagerProps {
   updateStatus: (pad_line_items_id: number) => void;
   setStep: (id: number) => void;
   updateName: (oldName: any, newName: any) => void;
+  removeFile: (name: any) => void;
   selectedOrderData: any;
   files: any;
 }
 
 const PRINT_LOCATIONS = ['Front', 'Back', 'Cap - Front', 'Cap - Back', 'To Be Pulled From flash_drives table'];
 
-const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus, updateName}: ArtworkManagerProps) => {
+const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus, updateName, removeFile}: ArtworkManagerProps) => {
   const { version_id, section } = useParams();
   
   // Find the version in the selectedOrderData.versions array
@@ -135,8 +136,9 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus, up
     setActiveDropdown(null);
   };
 
-  const handleDelete = (id: string) => {
-    // setItems(prevItems => prevItems.filter(item => item.upload_id !== id));
+  const handleDelete = (id: string, name: string) => {
+    setItems((prevItems: any) => prevItems.filter((item: any) => item.upload_id !== id));
+    removeFile(name);
     setActiveDropdown(null);
   };
 
@@ -348,7 +350,7 @@ const ArtworkManagerPage = ({selectedOrderData, files, setStep, updateStatus, up
                                 Rename
                               </button>
                               <button
-                                onClick={() => handleDelete(item.upload_id)}
+                                onClick={() => handleDelete(item.upload_id, item.file_name)}
                                 className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                               >
                                 <Trash2 className="w-4 h-4 mr-2" />
