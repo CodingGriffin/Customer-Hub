@@ -10,9 +10,12 @@ import ArtworkPhotoSample from '../../../page/Customer/OrdersTab/ArtworkPhotoSam
 export default function ArtworkPhotoSampleContainer() {
   const { version_id, section } = useParams();
   const navigate = useNavigate();
-  const { selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
+  const { setStep, currentStep, selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
+  
   const dispatch = useDispatch();
-
+  if (currentStep) {
+    setStep(currentStep);
+  }
   // Get the current version and its live sample status
   const currentVersion = selectedOrderData?.versions?.find(
     (version: any) => version.version_id == version_id
@@ -28,17 +31,6 @@ export default function ArtworkPhotoSampleContainer() {
   const {
     comments,
   } = useSelector((state: any) => state.comments);
-
-  const setStep = async (step: number) => {
-    await setSelectedStep(step)
-    if (step === 5) {
-      if (selectedSection === 'data') {
-        navigate(`../${version_id}/data-live-sample`);
-      } else {
-        navigate(`../${version_id}/artwork-live-sample`);
-      }
-    }
-  };
 
   useEffect(() => {
     if (version_id) {
@@ -113,6 +105,7 @@ export default function ArtworkPhotoSampleContainer() {
     samples={samples.data ? samples.data : []} 
     comments={comments.data ? comments.data : []}
     isLiveSample={isLiveSample} 
+    setStep={setStep}
     addComment={addComment} 
     updatePhotoSample={updatePhotoSample} 
   />;

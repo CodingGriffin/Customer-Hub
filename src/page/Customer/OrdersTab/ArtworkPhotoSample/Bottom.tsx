@@ -1,56 +1,71 @@
 import { 
   ThumbsUp, 
   ThumbsDown, 
-  Users2, 
+  Users2,
+  AlertTriangle,
+  Package,
+  FileCheck, 
 } from 'lucide-react';
 
 interface BottomProps {
-  // pdfError: string | null;
-  onContinue: () => void;
-  // setIsRejectModalOpen: (status: boolean) => void;
-  // setIsApproveModalOpen: (status: boolean) => void;
+  // pad_line_items_id: number;
+  // updateStatus: (pad_line_items_id: number) => void;
+  allSamplesApproved: boolean;
+  isLiveSample: boolean;
+  setStep: (id: number) => void;
 }
 
-function Bottom({ onContinue }: BottomProps) {
+function Bottom({allSamplesApproved, isLiveSample, setStep} : BottomProps) {
+  // const continueSetup = async () => {
+  //   await updateStatus(pad_line_items_id);
+  //   await setStep(3);
+  // }
+  const backSetup = () => {
+    setStep(1);
+  }
   return (
-    <div className="fixed bg-white dark:bg-gray-700 p-4 shadow-lg z-40 relative w-full" style={{bottom: "25px"}}>
+    <div className="fixed bottom-0 bg-white dark:bg-gray-700 p-4 shadow-lg z-40 relative w-full">
       <div className="container mx-auto flex justify-between items-center">
         <button
-          // onClick={() => setIsUserManagementOpen(true)}
+          onClick={backSetup}
           className="flex items-center gap-2 px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
           title="Back"
         >
           <span>Back</span>
         </button>
         
-        <div className="flex items-center gap-4">
-          {/* <button
-            // onClick={() => setIsUserManagementOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors dark:text-white hover:dark:bg-gray-800"
-            title="Open reviewer management"
-          >
-            <Users2 size={20} />
-            <span>Invite Reviewers</span>
-          </button>
-          <button
-            // onClick={() => setIsRejectModalOpen(true)}
-            className="flex items-center gap-2 px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-            // disabled={!!pdfError}
-            title="Request changes to the document"
-          >
-            <ThumbsDown size={16} />
-            Request Changes
-          </button> */}
-          <button
-            onClick={() => onContinue()}
-            className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-            // disabled={!!pdfError}
-            title="Approve document for production"
-          >
-            <ThumbsUp size={16} />
-            Continue
-          </button>
-        </div>
+        <button
+          // onClick={handleBulkAction}
+          disabled={!allSamplesApproved}
+          className={`flex items-center gap-2 px-4 py-2 text-gray-700 rounded transition-colors dark:text-white ${
+            !allSamplesApproved
+              ? 'bg-gray-600 cursor-not-allowed opacity-50'
+              : isLiveSample
+              ? 'bg-purple-600 hover:bg-purple-700'
+              : 'bg-green-600 hover:bg-green-700'
+          } text-white flex items-center justify-center gap-2`}
+        >
+          {!allSamplesApproved ? (
+            <>
+              <AlertTriangle size={20} />
+              <span>All samples must be approved</span>
+            </>
+          ) : (
+            <>
+              {isLiveSample ? (
+                <>
+                  <Package size={20} />
+                  <span>Approve to get a Live Sample Shipped ASAP</span>
+                </>
+              ) : (
+                <>
+                  <FileCheck size={20} />
+                  <span>Approve for Production</span>
+                </>
+              )}
+            </>
+          )}
+        </button>
       </div>
     </div>
   )

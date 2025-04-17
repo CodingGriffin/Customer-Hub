@@ -3,6 +3,7 @@ import { Check, X, AlertTriangle, Pencil, FileCheck, Package, Scale, ChevronDown
 
 import ProductionApprovalModal from './ProductionApprovalModal';
 import ConfirmationModal from './ConfirmationModal';
+import Bottom from './Bottom';
 import CommentModal from './CommentModal';
 import ImageViewer from '../../../../component/ArtworkPhotoSample/ImageViewer';
 import { useParams } from 'react-router-dom';
@@ -10,13 +11,14 @@ import { useParams } from 'react-router-dom';
 interface PhotoSampleProps {
   addComment: (comment: string, sample_id: number) => void,
   updatePhotoSample: (sampleId: any, status: any) => void,
+  setStep: (id: number) => void;
   comments: any,
   selectedOrderData: any,
   samples: any,
   isLiveSample: boolean,
 }
 
-function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSample, updatePhotoSample, comments}: PhotoSampleProps) {
+function ArtworkPhotoSample({selectedOrderData, samples, isLiveSample, comments, updatePhotoSample, addComment, setStep}: PhotoSampleProps) {
   const [images, setImages] = useState();
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -335,38 +337,10 @@ function ArtworkPhotoSample({selectedOrderData, samples, addComment, isLiveSampl
           </div>
         ))}
       </div>
-      <button
-        onClick={handleBulkAction}
-        disabled={!allSamplesApproved}
-        className={`w-full py-3 rounded-lg font-medium transition-colors ${
-          !allSamplesApproved
-            ? 'bg-gray-600 cursor-not-allowed opacity-50'
-            : isLiveSample
-            ? 'bg-purple-600 hover:bg-purple-700'
-            : 'bg-blue-600 hover:bg-blue-700'
-        } text-white flex items-center justify-center gap-2`}
-      >
-        {!allSamplesApproved ? (
-          <>
-            <AlertTriangle size={20} />
-            <span>All samples must be approved</span>
-          </>
-        ) : (
-          <>
-            {isLiveSample ? (
-              <>
-                <Package size={20} />
-                <span>Approve to get a Live Sample Shipped ASAP</span>
-              </>
-            ) : (
-              <>
-                <FileCheck size={20} />
-                <span>Approve for Production</span>
-              </>
-            )}
-          </>
-        )}
-      </button>
+
+      <div className="fixed mb-6 bottom-0" style={{width: "850px"}}> {/* Add padding bottom to prevent content from being hidden behind the fixed bottom bar */}
+        <Bottom setStep={setStep} allSamplesApproved={allSamplesApproved} isLiveSample={isLiveSample} />
+      </div>
       <ConfirmationModal
         isOpen={showConfirmation}
         onClose={handleConfirmationClose}
