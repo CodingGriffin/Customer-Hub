@@ -39,22 +39,13 @@ function Bottom({setStep, updateStatus, pad_line_items_id} : BottomProps) {
             <span>Invite Reviewers</span>
           </button>
           <button
-            // onClick={() => setIsRejectModalOpen(true)}
-            className="flex items-center gap-2 px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-            // disabled={!!pdfError}
-            title="Request changes to the document"
-          >
-            <ThumbsDown size={16} />
-            Request Changes
-          </button>
-          <button
             onClick={continueSetup}
             className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
             // disabled={!!pdfError}
             title="Approve document for production"
           >
             <ThumbsUp size={16} />
-            Approve
+            Request Proof
           </button>
         </div>
       </div>

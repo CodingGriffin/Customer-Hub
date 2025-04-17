@@ -41,7 +41,7 @@ function Bottom({pdfError, setIsUserManagementOpen, setIsRejectModalOpen, setIsA
             title="Approve document for production"
           >
             <ThumbsUp size={16} />
-            Approve for Production
+            Approve for Photo Sample
           </button>
         </div>
       </div>
