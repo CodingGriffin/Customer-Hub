@@ -10,9 +10,9 @@ export default function StepUploadContainer() {
   const { setStep, currentStep, selectedOrderData } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
 
-  if (currentStep) {
-    setStep(currentStep);
-  }
+  // if (currentStep) {
+  //   setStep(currentStep);
+  // }
 
   const updateStatus = (pad_line_items_id: number) => {
     dispatch({

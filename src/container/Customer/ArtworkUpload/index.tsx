@@ -18,9 +18,9 @@ export default function ArtworkUpload() {
     error,
   } = useSelector((state: any) => state.files);
 
-  if (currentStep) {
-    setStep(currentStep);
-  }
+  // if (currentStep) {
+  //   setStep(currentStep);
+  // }
 
   useEffect(() => {
     if (version_id) {

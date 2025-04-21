@@ -13,9 +13,9 @@ export default function ArtworkPhotoSampleContainer() {
   const { setStep, currentStep, selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
   
   const dispatch = useDispatch();
-  if (currentStep) {
-    setStep(currentStep);
-  }
+  // if (currentStep) {
+  //   setStep(currentStep);
+  // }
   // Get the current version and its live sample status
   const currentVersion = selectedOrderData?.versions?.find(
     (version: any) => version.version_id == version_id

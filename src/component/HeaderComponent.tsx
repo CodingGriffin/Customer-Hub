@@ -20,7 +20,7 @@ const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType, ent
 
   if (isVendorRoute) hubType = 'customer';
   if (isVendorRoute && isOrdersList && (pathParts[3] == '' || !pathParts[3])) entityName = '';
-  console.log(pathParts[2]);
+  // console.log("HeaderComponent");
   
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm">

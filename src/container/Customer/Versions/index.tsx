@@ -20,65 +20,65 @@ export default function VersionsContainer() {
   const [currentStatus, setCurrentStatus] = useState<any>(null);
   const [pad_line_items_id, setPadLineItemsId] = useState<number | null>(null);
 
-  const {
-    status,
-    loading,
-    error,
-  } = useSelector((state: any) => state.PADStatus);
+  // const {
+  //   status,
+  //   loading,
+  //   error,
+  // } = useSelector((state: any) => state.PADStatus);
 
   
   const job_number = selectedOrderData?.job?.job_number;
   
-  useEffect(() => {
-    const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
-    const _pad_line_items_id = selectedOrderData?.pad_line_items?.find(
-      (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
-    )?.pad_line_items_id;
+  // useEffect(() => {
+  //   const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
+  //   const _pad_line_items_id = selectedOrderData?.pad_line_items?.find(
+  //     (item: any) => item.pad_abbreviation == padType && item.versions_id == version_id
+  //   )?.pad_line_items_id;
 
-    setPadLineItemsId(_pad_line_items_id);
+  //   setPadLineItemsId(_pad_line_items_id);
 
-    const fetchStatus = async () => {
-      if (pad_line_items_id) {
-        await getStatus();
-      }
-    };
+  //   const fetchStatus = async () => {
+  //     if (pad_line_items_id) {
+  //       await getStatus();
+  //     }
+  //   };
 
-    fetchStatus();
-  }, [pad_line_items_id]);
+  //   fetchStatus();
+  // }, [pad_line_items_id]);
 
-  useEffect(() => {
-    if (status?.data) {
-      const data = status.data.length > 0 
-        ? status.data.reduce((max: any, current: any) => 
-            (current.event_id > max.event_id) ? current : max
-          )
-        : null;
+  // useEffect(() => {
+  //   if (status?.data) {
+  //     const data = status.data.length > 0 
+  //       ? status.data.reduce((max: any, current: any) => 
+  //           (current.event_id > max.event_id) ? current : max
+  //         )
+  //       : null;
 
-      setCurrentStatus(data);
+  //     setCurrentStatus(data);
 
-      if (currentStatus) {
-        const currentAbbr = currentStatus.event_type_abbr;
-        let step = 1;
-        console.log('currentAbbr===>', currentAbbr)
+  //     if (currentStatus) {
+  //       const currentAbbr = currentStatus.event_type_abbr;
+  //       let step = 1;
+  //       console.log('currentAbbr===>', currentAbbr)
 
-        if (STEP_STATUS.setup.includes(currentAbbr)) {
-          step = 1;
-        } else if (STEP_STATUS.upload.includes(currentAbbr)) {
-          step = 2;
-        } else if (STEP_STATUS.proof.includes(currentAbbr)) {
-          step = 3;
-        } else if (STEP_STATUS.photoSample.includes(currentAbbr)) {
-          step = 4;
-        } else if (STEP_STATUS.liveSample.includes(currentAbbr)) {
-          step = 5;
-        }
+  //       if (STEP_STATUS.setup.includes(currentAbbr)) {
+  //         step = 1;
+  //       } else if (STEP_STATUS.upload.includes(currentAbbr)) {
+  //         step = 2;
+  //       } else if (STEP_STATUS.proof.includes(currentAbbr)) {
+  //         step = 3;
+  //       } else if (STEP_STATUS.photoSample.includes(currentAbbr)) {
+  //         step = 4;
+  //       } else if (STEP_STATUS.liveSample.includes(currentAbbr)) {
+  //         step = 5;
+  //       }
 
-        console.log(currentAbbr, step, currentStatus)
+  //       console.log(currentAbbr, step, currentStatus)
 
-        setStep(step);
-      }
-    }
-  }, [status, currentStatus]);
+  //       setStep(step);
+  //     }
+  //   }
+  // }, [status, currentStatus]);
 
   const getStatus = async () => {
     await dispatch({

@@ -13,7 +13,6 @@ import StepUploadContainer from './container/Customer/StepUpload';
 import DataProof from './page/Customer/OrdersTab/DataProof';
 import ArtworkUpload from './container/Customer/ArtworkUpload';
 import ArtworkProof from './container/Customer/ArtworkProof';
-import ArtworkPhotoSample from './page/Customer/OrdersTab/ArtworkPhotoSample';
 import ArtworkPhotoSampleContainer from './container/Customer/ArtworkPhotoSample';
 
 import VendorOrdersTab from './container/Vendor/Orders';
