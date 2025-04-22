@@ -40,8 +40,10 @@ function Files({selectedOrderData, revisions}: RevisionsProps) {
           
           <div className="divide-y divide-gray-200 dark:divide-gray-700">
             {(() => {
-              const currentRevision = revisions.find((rev: any) => rev.superceded === 0);
-              const files = currentRevision?.files || [];
+              // Ensure revisions is an array
+              const revisionsArray = Array.isArray(revisions) ? revisions : [];
+              const currentRevision = revisionsArray.find((rev: any) => rev.superceded === 0);
+              const files = Array.isArray(currentRevision?.files) ? currentRevision.files : [];
 
               return files.length === 0 ? (
                 <div className="px-4 sm:px-6 py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
