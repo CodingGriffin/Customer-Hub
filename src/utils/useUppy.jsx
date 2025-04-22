@@ -12,7 +12,7 @@ import actions from "../states/PhotoSamples/actions";
 import '@uppy/core/dist/style.min.css'
 import '@uppy/dashboard/dist/style.min.css'
 
-const endPoint= "https://everyusb.info/s3-uploads"
+const endPoint= "https://everyusb.click/s3-uploads"
 const companionUrl = "http://localhost:3020/companion";
 
 function serializeSubPart(key, value) {
