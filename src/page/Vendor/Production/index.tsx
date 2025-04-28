@@ -8,11 +8,9 @@ interface ProductionProps {
 }
 
 function Production({selectedOrderData}: ProductionProps) {
-  // const { version_id, section } = useParams();
-  
-  // Filter and group the line items
+  // Filter and group the line items - only 'conf' items
   const groupedItems = selectedOrderData?.line_items
-    ?.filter((item: any) => ['bulk', 'conf'].includes(item.pad_abbreviation))
+    ?.filter((item: any) => item.pad_abbreviation === 'conf')
     ?.reduce((acc: any, item: any) => {
       // Create unique key for deduplication
       const uniqueKey = `${item.line_item_name}-${item.line_item_desc}`;
