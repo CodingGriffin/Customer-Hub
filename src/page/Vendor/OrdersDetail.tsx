@@ -63,8 +63,9 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'bulk' | 'shipments' | null, version_id: number) => {
     if (section == 'bulk') {
       navigate(`../${selectedOrderData?.job?.job_number}/${version_id}/${section}`);
+    } else {
+      navigate(`../${selectedOrderData?.job?.job_number}/${version_id}/${section}/files`);
     }
-    navigate(`../${selectedOrderData?.job?.job_number}/${version_id}/${section}/files`);
     setSelectedSection(section);
     setSelectedStep(1);
   };
