@@ -150,7 +150,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
                         }`}
                       >
                         {getSectionIcon(section)}
-                        <span className="capitalize">{section}</span>
+                        <span className="capitalize">{section == 'bulk' ? 'bulk packing' : section}</span>
                       </button>
                     );
                   }
