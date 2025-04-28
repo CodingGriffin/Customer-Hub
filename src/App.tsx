@@ -19,6 +19,7 @@ import VendorOrdersTab from './container/Vendor/Orders';
 import VendorOrderDetail from './container/Vendor/Orders/detail';
 import VendorVersionContainer from './container/Vendor/Versions';
 import VendorFiles from './container/Vendor/Files';
+import VendorBulk from './container/Vendor/Bulk';
 import VendorPhotoSample from './container/Vendor/PhotoSamples';
 import VendorProduction from './container/Vendor/Production';
 import VendorShipmentsList from './container/Vendor/Orders/Shipments';
@@ -54,10 +55,11 @@ export default function App() {
             <Route index element={<VendorOrdersTab />} />
             <Route path=":orderId" element={<VendorOrderDetail />}>
               <Route index element={<VendorShipmentsList />} />
-              <Route path=":section" element={<VendorVersionContainer />}>
-                <Route path=":version_id/files" element={<VendorFiles />} />
-                <Route path=":version_id/samples" element={<VendorPhotoSample />} />
-                <Route path=":version_id/production" element={<VendorProduction />} />
+              <Route path=":version_id" element={<VendorVersionContainer />}>
+                <Route path=":section" element={<VendorBulk />} />
+                <Route path=":section/files" element={<VendorFiles />} />
+                <Route path=":section/samples" element={<VendorPhotoSample />} />
+                <Route path=":section/production" element={<VendorProduction />} />
               </Route>
               <Route path="shipments" element={<VendorShipmentsList />} />
             </Route>

@@ -109,29 +109,29 @@ export default function VersionsContainer() {
     switch (section) {
       case 'data':
         if (step ==1) {
-          navigate(`../${section}/${version_id}/files`);
+          navigate(`../${version_id}/${section}/files`);
         } else if (step == 2) {
-          navigate(`../${section}/${version_id}/samples`);
+          navigate(`../${version_id}/${section}/samples`);
         } else if (step == 3) {
-          navigate(`../${section}/${version_id}/production`);
+          navigate(`../${version_id}/${section}/production`);
         }
         break;
       case 'artwork':
         if (step ==1) {
-          navigate(`../${section}/${version_id}/files`);
+          navigate(`../${version_id}/${section}/files`);
         } else if (step == 2) {
-          navigate(`../${section}/${version_id}/samples`);
+          navigate(`../${version_id}/${section}/samples`);
         } else if (step == 3) {
-          navigate(`../${section}/${version_id}/production`);
+          navigate(`../${version_id}/${section}/production`);
         }
         break;
       default:
         if (step ==1) {
-          navigate(`../${section}/${version_id}/files`);
+          navigate(`../${version_id}/${section}/files`);
         } else if (step == 2) {
-          navigate(`../${section}/${version_id}/samples`);
+          navigate(`../${version_id}/${section}/samples`);
         } else if (step == 3) {
-          navigate(`../${section}/${version_id}/production`);
+          navigate(`../${version_id}/${section}/production`);
         }
         break;
     }

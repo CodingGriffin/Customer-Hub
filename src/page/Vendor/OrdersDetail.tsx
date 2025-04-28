@@ -61,7 +61,10 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   };
 
   const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'bulk' | 'shipments' | null, version_id: number) => {
-    navigate(`../${selectedOrderData?.job?.job_number}/${section}/${version_id}/files`);
+    if (section == 'bulk') {
+      navigate(`../${selectedOrderData?.job?.job_number}/${version_id}/${section}`);
+    }
+    navigate(`../${selectedOrderData?.job?.job_number}/${version_id}/${section}/files`);
     setSelectedSection(section);
     setSelectedStep(1);
   };
