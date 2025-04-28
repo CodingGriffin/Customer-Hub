@@ -10,7 +10,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   const navigate = useNavigate();
   
   const [expandedVersions, setExpandedVersions] = useState<Record<string, boolean>>({});
-  const [selectedSection, setSelectedSection] = useState<'packaging' | 'artwork' | 'data' | 'shipments' | null>(null);
+  const [selectedSection, setSelectedSection] = useState<'packaging' | 'artwork' | 'data' | 'bulk' | 'shipments' | null>(null);
   const [selectedStep, setSelectedStep] = useState<number>(1);
 
   // Helper function to check if section exists for a version
@@ -28,7 +28,8 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
   const sectionToPadMap = {
     'packaging': 'pack',
     'artwork': 'artw',
-    'data': 'data'
+    'data': 'data',
+    'bulk': 'bulk'
   };
 
   // Simulating data fetch - replace with actual API call
@@ -59,7 +60,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
     }
   };
 
-  const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'shipments' | null, version_id: number) => {
+  const chooseSection = async (section: 'packaging' | 'artwork' | 'data' | 'bulk' | 'shipments' | null, version_id: number) => {
     navigate(`../${selectedOrderData?.job?.job_number}/${section}/${version_id}/files`);
     setSelectedSection(section);
     setSelectedStep(1);
@@ -74,6 +75,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
       case 'packaging': return <Package className="w-5 h-5" />;
       case 'artwork': return <Palette className="w-5 h-5" />;
       case 'data': return <Database className="w-5 h-5" />;
+      case 'bulk': return <Database className="w-5 h-5" />;
       case 'shipments': return <Truck className="w-5 h-5" />;
       default: return null;
     }
@@ -132,7 +134,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
 
             {expandedVersions[index] && (
               <div className="pl-4">
-                {['packaging', 'artwork', 'data'].map((section) => {
+                {['packaging', 'artwork', 'data', 'bulk'].map((section) => {
                   const padAbbreviation = sectionToPadMap[section as keyof typeof sectionToPadMap];
                   
                   // Only render the section button if it exists in pad_line_items
@@ -140,7 +142,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
                     return (
                       <button
                         key={`${version.version_id}-${section}`}
-                        onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data', version.version_id)}
+                        onClick={() => chooseSection(section as 'packaging' | 'artwork' | 'data' | 'bulk', version.version_id)}
                         className={`w-full text-left px-4 py-2 flex items-center space-x-2 ${
                           selectedSection === section
                             ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300'
