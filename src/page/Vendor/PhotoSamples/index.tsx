@@ -51,7 +51,7 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Photo Samples</h2>
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Photo {section == 'data' ? 'Screenshots' : 'Samples'}</h2>
         {samples.length > 0 && (
           <button 
             onClick={() => setShowUploadModal(true)}
@@ -219,7 +219,7 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
               className="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               <Upload className="w-5 h-5 mr-2" />
-              <span>Upload Samples</span>
+              <span>Upload {section == 'data' ? 'Screenshots' : 'Samples'}</span>
             </button>
           </div>
         )}
