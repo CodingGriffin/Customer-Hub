@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 import Production from '../../../page/Vendor/Production';
 import { VersionsContext } from '../../../types';
@@ -10,9 +10,13 @@ export default function ProductionContainer() {
 
   const { selectedOrderData, currentAbbr } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
+  const { version_id } = useParams();
 
-  const [searchParams] = useSearchParams();
-  const fromParam = searchParams.get('from');
+  const currentVersion = selectedOrderData?.versions?.find(
+    (version: any) => version.version_id == version_id
+  );
+
+  const isLiveSample = currentVersion?.isReqApp || false;
 
   useEffect(() => {
     console.log("this is the current abbr from Photosample container ==========================> ", currentAbbr)
@@ -33,5 +37,5 @@ export default function ProductionContainer() {
     });
   }
 
-  return <Production selectedOrderData={selectedOrderData} currentAbbr={currentAbbr} />
+  return <Production selectedOrderData={selectedOrderData} currentAbbr={currentAbbr} isLiveSample={isLiveSample} />
 }

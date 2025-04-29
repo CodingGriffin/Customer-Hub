@@ -6,10 +6,11 @@ import { SAMPLE_STATUS, PRODUCTION_STATUS } from '../../../types'
 
 interface ProductionProps {
   currentAbbr: string;
-  selectedOrderData: any,
+  selectedOrderData: any;
+  isLiveSample: boolean;
 }
 
-function Production({selectedOrderData, currentAbbr}: ProductionProps) {
+function Production({selectedOrderData, currentAbbr, isLiveSample}: ProductionProps) {
   // Filter and group the line items - only 'conf' items
   const groupedItems = selectedOrderData?.line_items
     ?.filter((item: any) => item.pad_abbreviation === 'conf')
@@ -105,10 +106,11 @@ function Production({selectedOrderData, currentAbbr}: ProductionProps) {
         </div>
       ))}
 
-      <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${liveSampleStatus.textColor} ${liveSampleStatus.borderColor} ${liveSampleStatus.bgColor}`}>
-        LIVE SAMPLE - {liveSampleStatus.text}
-      </div>
-
+      {isLiveSample &&
+        <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${liveSampleStatus.textColor} ${liveSampleStatus.borderColor} ${liveSampleStatus.bgColor}`}>
+          LIVE SAMPLE - {liveSampleStatus.text}
+        </div>
+      }
       <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${productionStatus.textColor} ${productionStatus.borderColor} ${productionStatus.bgColor}`}>
         MASS PRODUCTION - {productionStatus.text}
       </div>
