@@ -53,7 +53,7 @@ function Production({selectedOrderData, currentAbbr}: ProductionProps) {
       };
     } else {
       return {
-        text: 'NOT READY',
+        text: 'UNAPPROVED',
         bgColor: 'bg-red-600',
         textColor: 'text-white',
         borderColor: 'border-red-600'
@@ -71,7 +71,7 @@ function Production({selectedOrderData, currentAbbr}: ProductionProps) {
       };
     } else {
       return {
-        text: 'NOT READY',
+        text: 'UNAPPROVED',
         bgColor: 'bg-red-600',
         textColor: 'text-white',
         borderColor: 'border-red-600'
