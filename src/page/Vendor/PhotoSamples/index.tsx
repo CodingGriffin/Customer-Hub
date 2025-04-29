@@ -52,13 +52,15 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Photo Samples</h2>
-        <button 
-          onClick={() => setShowUploadModal(true)}
-          className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-        >
-          <Upload className="w-4 h-4 mr-1.5" />
-          <span>Upload</span>
-        </button>
+        {samples.length > 0 && (
+          <button 
+            onClick={() => setShowUploadModal(true)}
+            className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+          >
+            <Upload className="w-4 h-4 mr-1.5" />
+            <span>Upload</span>
+          </button>
+        )}
       </div>
       {
         samples.length > 0 ? (
@@ -210,26 +212,17 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
               </div>
             ))}
           </div>
-        ) :
-
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center mb-6">
-          <div className="flex justify-center mb-6">
-            <ImageOff className="h-24 w-24 text-amber-500 dark:text-amber-400" strokeWidth={1.5} />
+        ) : (
+          <div className="flex flex-col items-center justify-center max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl p-8 text-center mb-6">
+            <button 
+              onClick={() => setShowUploadModal(true)}
+              className="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <Upload className="w-5 h-5 mr-2" />
+              <span>Upload Samples</span>
+            </button>
           </div>
-          
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-3">No Photo Samples Yet</h2>
-          
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Looks like you haven't uploaded any samples yet.
-          </p>
-          
-          <div className="flex items-center justify-center text-amber-500 dark:text-amber-400 font-medium">
-            <MailCheck className="mr-2 h-5 w-5" />
-            <span>Upload samples to get started</span>
-          </div>
-
-        </div>
-      }
+        )}
       {/* Add the ImageViewer component */}
       {selectedImage && (
         <ImageViewer
