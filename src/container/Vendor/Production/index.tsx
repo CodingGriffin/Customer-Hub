@@ -8,18 +8,15 @@ import { useDispatch } from 'react-redux';
 
 export default function ProductionContainer() {
 
-  const { selectedOrderData } = useOutletContext<VersionsContext>();
+  const { selectedOrderData, currentAbbr } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
 
   const [searchParams] = useSearchParams();
   const fromParam = searchParams.get('from');
 
-  // useEffect(() => {
-  //   if (currentStep) {
-  //     console.log("here is setup step===>", currentStep)
-  //     setStep(currentStep);
-  //   }
-  // }, [currentStep]);
+  useEffect(() => {
+    console.log("this is the current abbr from Photosample container ==========================> ", currentAbbr)
+  }, []);
 
   const updateStatus = (pad_line_items_id: number) => {
     dispatch({
@@ -36,5 +33,5 @@ export default function ProductionContainer() {
     });
   }
 
-  return <Production selectedOrderData={selectedOrderData} />
+  return <Production selectedOrderData={selectedOrderData} currentAbbr={currentAbbr} />
 }

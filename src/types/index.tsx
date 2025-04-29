@@ -92,3 +92,20 @@ export const STEP_STATUS = {
   photoSample: ['v-send-thanks', 'v-proof-approved', 'v-proof-nudge', 'v-sample-sent', 'v-production-live-sample-rejected'],
   liveSample: ['v-sample-sent', 'v-production-photo-sample-approved', 'v-production-live-sample-proof-sent']
 } as const;
+
+export const SAMPLE_STATUS = {
+  // 'v-sample-sent': 'SENT',
+  // 'v-photo-sample-received': 'PHOTO SAMPLE RECEIVED',
+  // 'v-production-photo-sample-approved': 'PHOTO SAMPLE APPROVED',
+  // 'v-production-photo-sample-rejected': 'PHOTO SAMPLE REJECTED',
+  'v-production-live-sample-proof-sent': 'SENT',
+  'v-live-sample-shipped': 'SHIPPED',
+  'v-live-sample-received': 'RECEIVED',
+  'v-production-live-sample-approved': 'APPROVED',
+  'v-production-live-sample-rejected': 'REJECTED'
+} as const;
+
+export const PRODUCTION_STATUS = {
+  'v-production-proof-approved': 'APPROVED',
+  'v-proof-rejected-production': 'REJECTED'
+}

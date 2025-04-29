@@ -141,6 +141,7 @@ export default function VersionsContainer() {
     <Versions 
       selectedOrderData={selectedOrderData}
       currentStep={currentStep}
+      currentAbbr={currentStatus?.event_type_abbr}
       setStep={setStep}
       updateStatus={updateStatus}
     />

@@ -4,13 +4,14 @@ import { Files, Boxes, Camera, SwatchBook } from 'lucide-react';
 import { Modal } from 'antd';
 
 interface VersionsProps {
-  selectedOrderData: any
-  currentStep: number
+  selectedOrderData: any;
+  currentStep: number;
+  currentAbbr: string;
   setStep: (step: number) => void;
   updateStatus: (pad_line_items_id: number, abbr: string, status: number) => void;
 }
 
-function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: VersionsProps) {
+function Versions({ currentStep, selectedOrderData, currentAbbr, setStep, updateStatus}: VersionsProps) {
   const { version_id, section } = useParams();
 
   const steps = [
@@ -109,7 +110,7 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
       }
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 ml-3">
-        <Outlet context={{ selectedOrderData, setStep, currentStep }} />
+        <Outlet context={{ selectedOrderData, setStep, currentStep, currentAbbr }} />
       </div>
     </>
   )
