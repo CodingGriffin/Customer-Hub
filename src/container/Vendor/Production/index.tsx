@@ -16,7 +16,7 @@ export default function ProductionContainer() {
     (version: any) => version.version_id == version_id
   );
 
-  const isLiveSample = currentVersion?.isReqApp || false;
+  const isLiveSample = currentVersion?.isSample || false;
 
   useEffect(() => {
     console.log("this is the current abbr from Photosample container ==========================> ", currentAbbr)

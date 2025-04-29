@@ -20,7 +20,7 @@ export default function ArtworkPhotoSampleContainer() {
   const currentVersion = selectedOrderData?.versions?.find(
     (version: any) => version.version_id == version_id
   );
-  const isLiveSample = currentVersion?.isReqApp || false;
+  const isLiveSample = currentVersion?.isSample || false;
 
   const {
     samples,
