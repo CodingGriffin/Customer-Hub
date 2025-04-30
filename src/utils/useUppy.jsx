@@ -48,6 +48,10 @@ export default function useUppy() {
     version => version.version_id === parseInt(version_id)
   )?.version_name || '';
 
+  const versionNumber = order?.data?.versions?.find(
+    version => version.version_id === parseInt(version_id)
+  )?.version_number || '';
+
   const uppy = new Uppy({
     id: 'uppy',
     autoProceed: false,
@@ -142,6 +146,7 @@ export default function useUppy() {
                 versions_id: version_id,
                 pads_type: padType,
                 files: files,
+                version_number: versionNumber
               }
             });
 
