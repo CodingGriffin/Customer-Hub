@@ -8,7 +8,7 @@ interface ProductionProps {
   currentAbbr: string;
   selectedOrderData: any;
   isLiveSample: boolean;
-  comments: any;
+  comments: any[];
   addComment: (comment: string) => void;
 }
 
@@ -137,6 +137,43 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
       }
       <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${productionStatus.textColor} ${productionStatus.borderColor} ${productionStatus.bgColor}`}>
         MASS PRODUCTION - {productionStatus.text}
+      </div>
+
+      {/* Comments Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mt-8">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+          Comments
+        </h2>
+        
+        <div className="space-y-4 max-h-96 overflow-y-auto">
+          {comments && comments.length > 0 ? (
+            comments.map((comment: any, index: number) => (
+              <div key={index} className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    comment.table_code === 'vendor_table'
+                      ? 'bg-blue-100 text-blue-800'
+                      : comment.table_code.startsWith('staff_table')
+                        ? 'bg-purple-100 text-purple-800'
+                        : 'bg-green-100 text-green-800'
+                  }`}>
+                    {comment.table_code.includes('vendor_table') 
+                      ? 'Vendor'
+                      : 'Staff'}
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {new Date(comment.timestamp).toLocaleDateString()} {new Date(comment.timestamp).toLocaleTimeString()}
+                  </span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300">{comment.comment}</p>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              No comments yet
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Comment Modal */}

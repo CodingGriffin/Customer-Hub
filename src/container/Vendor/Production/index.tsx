@@ -49,7 +49,7 @@ export default function ProductionContainer() {
         mode: "insertProductionComment",
         comment: comment,
         resource_id: 100000 + Number(version_id),
-        table_code: section + "_table"
+        table_code: section+ "_vendor" + "_table"
       }
     });
     getComments();
@@ -61,7 +61,7 @@ export default function ProductionContainer() {
       payload: {
         mode: "getProductionComments",
         resource_id: 100000 + Number(version_id),
-        table_code: section + "_table"
+        table_code: section
       }
     });
   }
