@@ -122,14 +122,6 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
         </div>
       ))}
 
-      <button 
-        onClick={() => setShowCommentModal(true)}
-        className="w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center justify-center"
-      >
-        <MessageSquare className="mr-2" size={24} />
-        Send Comment
-      </button>
-
       {isLiveSample &&
         <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${liveSampleStatus.textColor} ${liveSampleStatus.borderColor} ${liveSampleStatus.bgColor}`}>
           LIVE SAMPLE - {liveSampleStatus.text}
@@ -138,6 +130,14 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
       <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${productionStatus.textColor} ${productionStatus.borderColor} ${productionStatus.bgColor}`}>
         MASS PRODUCTION - {productionStatus.text}
       </div>
+
+      <button 
+        onClick={() => setShowCommentModal(true)}
+        className="w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center justify-center"
+      >
+        <MessageSquare className="mr-2" size={24} />
+        Send Comment
+      </button>
 
       {/* Comments Section */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mt-8">
