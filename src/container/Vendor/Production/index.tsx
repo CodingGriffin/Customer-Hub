@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Production from '../../../page/Vendor/Production';
 import { VersionsContext } from '../../../types';
+import Production from '../../../page/Vendor/Production';
 import actions from "../../../states/PADStatus/actions";
-import { useDispatch } from 'react-redux';
+import commentActions from "../../../states/Comments/actions";
 
 export default function ProductionContainer() {
 
   const { selectedOrderData, currentAbbr } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
-  const { version_id } = useParams();
+  const { version_id, section } = useParams();
+
+  const {
+    comments,
+  } = useSelector((state: any) => state.comments);
 
   const currentVersion = selectedOrderData?.versions?.find(
     (version: any) => version.version_id == version_id
@@ -19,7 +24,7 @@ export default function ProductionContainer() {
   const isLiveSample = currentVersion?.isSample || false;
 
   useEffect(() => {
-    console.log("this is the current abbr from Photosample container ==========================> ", currentAbbr)
+      getComments();
   }, []);
 
   const updateStatus = (pad_line_items_id: number) => {
@@ -37,5 +42,29 @@ export default function ProductionContainer() {
     });
   }
 
-  return <Production selectedOrderData={selectedOrderData} currentAbbr={currentAbbr} isLiveSample={isLiveSample} />
+  const addComment = (comment: string) => {
+    dispatch({
+      type: commentActions.ADD_COMMENTS,
+      payload: {
+        mode: "insertProductionComment",
+        comment: comment,
+        resource_id: 100000 + Number(version_id),
+        table_code: section + "_table"
+      }
+    });
+    getComments();
+  }
+
+  const getComments = () => {
+    dispatch({
+      type: commentActions.GET_COMMENTS,
+      payload: {
+        mode: "getProductionComments",
+        resource_id: 100000 + Number(version_id),
+        table_code: section + "_table"
+      }
+    });
+  }
+
+  return <Production selectedOrderData={selectedOrderData} currentAbbr={currentAbbr} isLiveSample={isLiveSample} addComment={addComment} comments={comments.data ? comments.data : []} />
 }
