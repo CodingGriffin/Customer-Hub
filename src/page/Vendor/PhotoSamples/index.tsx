@@ -4,15 +4,17 @@ import { Modal } from 'antd';
 import { ImageOff, MailCheck, Upload, ChevronDown, ChevronUp } from 'lucide-react';
 import UploadModal from './UploadModal';
 import ImageViewer from '../../../component/ArtworkPhotoSample/ImageViewer';
+import { PHOTOSAMPLE_STATUS, SAMPLE_STATUS, PRODUCTION_STATUS } from '../../../types'
 
 interface StepSetupProps {
   addComment: (comment: string, sample_id: number) => void,
   comments: any,
   selectedOrderData: any,
   samples: any,
+  currentAbbr: string;
 }
 
-function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSetupProps) {
+function PhotoSamples({selectedOrderData, samples, comments, currentAbbr, addComment}: StepSetupProps) {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
@@ -48,6 +50,34 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
     setCommentText('');
   };
 
+  // Determine status text and styling based on currentAbbr
+  const getPhotoSampleStatus = () => {
+    if (Object.keys(PHOTOSAMPLE_STATUS).includes(currentAbbr)) {
+      return {
+        text: PHOTOSAMPLE_STATUS[currentAbbr as keyof typeof PHOTOSAMPLE_STATUS],
+        bgColor: 'bg-blue-50',
+        textColor: 'text-blue-600',
+        borderColor: 'border-blue-600'
+      };
+    } else if (Object.keys(SAMPLE_STATUS).includes(currentAbbr) || Object.keys(PRODUCTION_STATUS).includes(currentAbbr)) {
+      return {
+        text: 'APPROVED',
+        bgColor: 'bg-orange-100',
+        textColor: 'text-orange-500',
+        borderColor: 'border-orange-500'
+      };
+    } else {
+      return {
+        text: 'UNAPPROVED',
+        bgColor: 'bg-red-600',
+        textColor: 'text-white',
+        borderColor: 'border-red-600'
+      };
+    }
+  };
+
+  const photoSampleStatus = getPhotoSampleStatus();
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -61,6 +91,9 @@ function PhotoSamples({selectedOrderData, samples, comments, addComment}: StepSe
             <span>Upload</span>
           </button>
         )}
+      </div>
+      <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${photoSampleStatus.textColor} ${photoSampleStatus.borderColor} ${photoSampleStatus.bgColor}`}>
+        PHOTO SAMPLE - {photoSampleStatus.text}
       </div>
       {
         samples.length > 0 ? (

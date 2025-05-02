@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function PhotoSampleContainer() {
 
-  const { selectedOrderData } = useOutletContext<VersionsContext>();
+  const { selectedOrderData, currentAbbr } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
 
   const {
@@ -79,5 +79,5 @@ export default function PhotoSampleContainer() {
     });
   }
 
-  return <PhotoSamples selectedOrderData={selectedOrderData} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} addComment={addComment} />
+  return <PhotoSamples selectedOrderData={selectedOrderData} currentAbbr={currentAbbr} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} addComment={addComment} />
 }
