@@ -26,7 +26,7 @@ function PhotoSamples({selectedOrderData, samples, comments, currentAbbr, addCom
   } | null>(null);
 
   const { version_id, section } = useParams();
-  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+  const baseUrl = `${window.location.protocol}//${window.location.host}/`;
   
   const toggleAccordion = (sampleId: number) => {
     setOpenAccordion(openAccordion === sampleId ? null : sampleId);

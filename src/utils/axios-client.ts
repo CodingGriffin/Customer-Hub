@@ -3,7 +3,7 @@ import qs from "qs"
 
 const axiosClient = axios.create();
 
-axiosClient.defaults.baseURL = import.meta.env.VITE_SERVER_BASE_URL;
+axiosClient.defaults.baseURL = `${window.location.protocol}//${window.location.host}/`;
 axiosClient.defaults.headers.common = {
   "Content-Type": "application/json",
   Accept: "application/json",
@@ -56,7 +56,7 @@ export async function getRequest(URL: string, options: AxiosRequestConfig = {}):
 
 export async function getFileDownload(URL: string): Promise<AxiosResponse> {
   return await axios.get(
-    import.meta.env.VITE_SERVER_BASE_URL + `/${URL}`,
+    `${window.location.protocol}//${window.location.host}` + `/${URL}`,
     {
       headers: {
         "Content-Type": "application/json",

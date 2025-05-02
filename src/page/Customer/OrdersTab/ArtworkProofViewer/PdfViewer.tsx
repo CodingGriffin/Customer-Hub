@@ -26,7 +26,7 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setStep}: PdfViewerPr
   const [pdfData, setPdfData] = useState<string | null>(null);
 
   // Original PDF URL
-  const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL + currentVersion?.files?.artw?.pdf?.file_path;
+  const originalPdfUrl = `${window.location.protocol}//${window.location.host}/` + currentVersion?.files?.artw?.pdf?.file_path;
   
   // Updated proxy URL for Vercel deployment
   const proxyPdfUrl = "http://localhost:3001/proxy" + currentVersion?.files?.artw?.pdf?.file_path;

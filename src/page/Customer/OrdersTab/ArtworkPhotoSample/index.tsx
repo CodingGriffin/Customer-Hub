@@ -40,7 +40,7 @@ function ArtworkPhotoSample({selectedOrderData, samples, isLiveSample, comments,
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [commentText, setCommentText] = useState('');
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-  const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+  const baseUrl = `${window.location.protocol}//${window.location.host}/`;
 
   const toggleAccordion = (sampleId: number) => {
     setOpenAccordion(openAccordion === sampleId ? null : sampleId);

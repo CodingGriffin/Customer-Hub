@@ -11,7 +11,7 @@ interface RevisionsProps {
 }
 
 function Files({selectedOrderData, revisions}: RevisionsProps) {
-  const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL;
+  const originalPdfUrl = `${window.location.protocol}//${window.location.host}/`;
 
   const getFileName = (filePath: string) => {
     return filePath.split('/').pop() || filePath;
