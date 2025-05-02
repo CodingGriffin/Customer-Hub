@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
 import { Coffee, MailCheck, MessageSquare, X } from 'lucide-react';
-import { SAMPLE_STATUS, PRODUCTION_STATUS } from '../../../types'
+import { PHOTOSAMPLE_STATUS, SAMPLE_STATUS, PRODUCTION_STATUS } from '../../../types'
 
 interface ProductionProps {
   currentAbbr: string;
@@ -42,6 +42,31 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
     }, {});
 
   // Determine status text and styling based on currentAbbr
+  const getPhotoSampleStatus = () => {
+    if (Object.keys(PHOTOSAMPLE_STATUS).includes(currentAbbr)) {
+      return {
+        text: PHOTOSAMPLE_STATUS[currentAbbr as keyof typeof PHOTOSAMPLE_STATUS],
+        bgColor: 'bg-blue-50',
+        textColor: 'text-blue-600',
+        borderColor: 'border-blue-600'
+      };
+    } else if (Object.keys(SAMPLE_STATUS).includes(currentAbbr) || Object.keys(PRODUCTION_STATUS).includes(currentAbbr)) {
+      return {
+        text: 'APPROVED',
+        bgColor: 'bg-orange-100',
+        textColor: 'text-orange-500',
+        borderColor: 'border-orange-500'
+      };
+    } else {
+      return {
+        text: 'UNAPPROVED',
+        bgColor: 'bg-red-600',
+        textColor: 'text-white',
+        borderColor: 'border-red-600'
+      };
+    }
+  };
+
   const getLiveSampleStatus = () => {
     if (Object.keys(SAMPLE_STATUS).includes(currentAbbr)) {
       return {
@@ -85,6 +110,7 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
     }
   };
 
+  const photoSampleStatus = getPhotoSampleStatus();
   const liveSampleStatus = getLiveSampleStatus();
   const productionStatus = getProductionStatus();
 
@@ -121,6 +147,10 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
           </div>
         </div>
       ))}
+
+      <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${photoSampleStatus.textColor} ${photoSampleStatus.borderColor} ${photoSampleStatus.bgColor}`}>
+        PHOTO SAMPLE - {photoSampleStatus.text}
+      </div>
 
       {isLiveSample &&
         <div className={`w-full max-w-4xl mx-auto mt-6 p-3 font-bold text-2xl text-center border-2 ${liveSampleStatus.textColor} ${liveSampleStatus.borderColor} ${liveSampleStatus.bgColor}`}>
