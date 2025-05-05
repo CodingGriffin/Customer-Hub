@@ -36,7 +36,7 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setStep}: PdfViewerPr
     const fetchPdf = async () => {
       try {
         // Fetch the PDF through our proxy
-        const response = await axios.get(proxyPdfUrl, {
+        const response = await axios.get(originalPdfUrl, {
           responseType: 'blob'
         });
         
