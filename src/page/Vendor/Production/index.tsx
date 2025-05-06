@@ -93,7 +93,21 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
   };
 
   const getProductionStatus = () => {
-    if (Object.keys(PRODUCTION_STATUS).includes(currentAbbr)) {
+    if (isLiveSample && currentAbbr === 'v-production-live-sample-approved') {
+      return {
+        text: 'APPROVED',
+        bgColor: 'bg-green-50',
+        textColor: 'text-green-600',
+        borderColor: 'border-green-600'
+      };
+    } else if (!isLiveSample && currentAbbr === 'v-production-photo-sample-approved') {
+      return {
+        text: 'APPROVED',
+        bgColor: 'bg-green-50',
+        textColor: 'text-green-600',
+        borderColor: 'border-green-600'
+      };
+    } else if (Object.keys(PRODUCTION_STATUS).includes(currentAbbr)) {
       return {
         text: PRODUCTION_STATUS[currentAbbr as keyof typeof PRODUCTION_STATUS],
         bgColor: 'bg-green-50',
