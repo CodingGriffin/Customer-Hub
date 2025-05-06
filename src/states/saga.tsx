@@ -32,6 +32,9 @@ export function* callApi(apiFunction: any, ...args: any) {
   try {
     // yield call(() => getCustomRequest('sanctum/csrf-cookie'));
     const response = yield call(apiFunction, ...args);
+    if (response.data.includes('Please request access by validating your email address.')) {
+      window.location.href = `${window.location.protocol}//${window.location.host}/resources/alpha_test/enter_email.php`
+    }
     handleSuccessfulResponse(response);
     return response.data;
   } catch (error: any) {
