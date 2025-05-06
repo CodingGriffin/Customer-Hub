@@ -12,6 +12,7 @@ export default function ProductionContainer() {
   const { selectedOrderData, currentAbbr } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
   const { version_id, section } = useParams();
+  const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
 
   const {
     comments,
@@ -49,7 +50,7 @@ export default function ProductionContainer() {
         mode: "insertProductionComment",
         comment: comment,
         resource_id: 100000 + Number(version_id),
-        table_code: section+ "_vendor" + "_table"
+        table_code: padType+ "_vendor" + "_table"
       }
     });
     getComments();
@@ -61,7 +62,7 @@ export default function ProductionContainer() {
       payload: {
         mode: "getProductionComments",
         resource_id: 100000 + Number(version_id),
-        table_code: section
+        table_code: padType
       }
     });
   }
