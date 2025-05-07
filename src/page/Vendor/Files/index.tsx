@@ -11,7 +11,7 @@ interface RevisionsProps {
 }
 
 function Files({selectedOrderData, revisions}: RevisionsProps) {
-  const originalPdfUrl = `${window.location.protocol}//${window.location.host}/`;
+  const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
   const getFileName = (filePath: string) => {
     return filePath.split('/').pop() || filePath;
@@ -34,8 +34,9 @@ function Files({selectedOrderData, revisions}: RevisionsProps) {
       : (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
           <div className="hidden sm:grid px-4 sm:px-6 py-3 border-b border-gray-200 dark:border-gray-700 grid-cols-8 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400">
-            <div className="col-span-5">Name</div>
-            <div className="col-span-3">Modified</div>
+            <div className="col-span-4">Name</div>
+            <div className="col-span-2">Modified</div>
+            <div className="col-span-2"></div>
           </div>
           
           <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -52,7 +53,7 @@ function Files({selectedOrderData, revisions}: RevisionsProps) {
               ) : (
                 files.map((file: any, index: number) => (
                   <div key={index} className="px-4 sm:px-6 py-3 sm:grid sm:grid-cols-8 sm:gap-4 hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <div className="flex items-center col-span-5 mb-2 sm:mb-0">
+                    <div className="flex items-center col-span-4 mb-2 sm:mb-0">
                       {getFileIcon(file.file_path)}
                       <a 
                         href={`${originalPdfUrl}${file.file_path}`} 
@@ -63,9 +64,16 @@ function Files({selectedOrderData, revisions}: RevisionsProps) {
                         {getFileName(file.file_path)}
                       </a>
                     </div>
-                    <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 col-span-3">
+                    <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 col-span-2">
                       {new Date(file.timestamp).toLocaleDateString()}
                     </div>
+                    {currentRevision.use_job_num && 
+                      <div className="col-span-2">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          From {currentRevision.use_job_num} V{currentRevision.use_version_num}
+                        </span>
+                      </div>
+                    }
                   </div>
                 ))
               );
