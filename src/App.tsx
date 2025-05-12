@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import FileManagerContainer from './container/FileManager';
-import HubPage from './page';
+import HubContainer from './container';
 import CustomerHubPage from './page/Customer';
 import OrdersList from './container/Customer/Orders';
 import OrderDetail from './container/Customer/Orders/detail';
@@ -27,7 +27,7 @@ import VendorShipmentsList from './container/Vendor/Orders/Shipments';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<HubPage />}>
+      <Route path="/" element={<HubContainer />}>
         <Route index element={<Navigate to="customer" replace />} />
         <Route path="customer" element={<CustomerHubPage />}>
           <Route index element={<Navigate to="orders" replace />} />
