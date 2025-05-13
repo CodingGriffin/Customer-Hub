@@ -27,7 +27,7 @@ function OrdersList() {
         p: 1,
         d: 1,
         e_n: "Hamskea Archery Solutions",
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }, [dispatch]);

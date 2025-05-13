@@ -40,7 +40,7 @@ export default function FilesContainer() {
         job_number: selectedOrderData.job.job_number,
         version_number: version_number,
         pad: padType,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }

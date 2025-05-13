@@ -30,7 +30,7 @@ function OrderDetail() {
       payload: {
         mode: "getAll",
         job_number: orderId,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }

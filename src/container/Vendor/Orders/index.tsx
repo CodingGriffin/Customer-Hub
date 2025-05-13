@@ -27,7 +27,7 @@ function OrdersList() {
         joblimit: 25,
         p: 1,
         d: 1,
-        hash: encodeURIComponent(hash)
+        hash: hash
         // e_n: "Hamskea Archery Solutions"
       }
     });

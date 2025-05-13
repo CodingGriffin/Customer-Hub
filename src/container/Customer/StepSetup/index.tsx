@@ -56,7 +56,7 @@ export default function StepSetupContainer() {
         mode: "getEventStatus",
         pad_line_items_id: pad_line_items_id,
         job_number: selectedOrderData.job.job_number,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   };

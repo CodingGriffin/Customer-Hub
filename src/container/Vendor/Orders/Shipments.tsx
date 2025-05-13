@@ -24,7 +24,7 @@ function ShipmentsList() {
         payload: {
           mode: "getshipments",
           job_number: orderId,
-          hash: encodeURIComponent(hash)
+          hash: hash
         }
       });
     }

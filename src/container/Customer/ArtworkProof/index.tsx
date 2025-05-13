@@ -85,7 +85,7 @@ export default function ArtworkProof() {
         mode: "getReviewers",
         entities_id: 163,
         job_number: Number(selectedOrderData.job.job_number),
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }

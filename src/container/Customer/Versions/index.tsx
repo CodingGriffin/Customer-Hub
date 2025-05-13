@@ -88,7 +88,7 @@ export default function VersionsContainer() {
         mode: "getEventStatus",
         pad_line_items_id: pad_line_items_id,
         job_number: job_number,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   };

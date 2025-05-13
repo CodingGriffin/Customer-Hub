@@ -27,7 +27,7 @@ function ContactsList() {
       payload: {
         mode: "getcontact",
         entities_id: 266,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }

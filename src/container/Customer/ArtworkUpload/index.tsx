@@ -54,7 +54,7 @@ export default function ArtworkUpload() {
         job_id: selectedOrderData.job.job_number,
         version_id: version_id,
         pad_id: padType,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }

@@ -48,7 +48,7 @@ export default function PhotoSampleContainer() {
         jobs_id: selectedOrderData.job.job_number,
         versions_id: version_id,
         pads_type: padType,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }
@@ -77,7 +77,7 @@ export default function PhotoSampleContainer() {
       payload: {
         mode: "getPhotoSampleComments",
         resource_ids: '[' + resourceIds.join(',') + ']', // Convert array to comma-separated string
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }

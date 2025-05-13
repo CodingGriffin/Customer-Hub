@@ -64,7 +64,7 @@ export default function ProductionContainer() {
         mode: "getProductionComments",
         resource_id: 100000 + Number(version_id),
         table_code: padType,
-        hash: encodeURIComponent(hash)
+        hash: hash
       }
     });
   }
