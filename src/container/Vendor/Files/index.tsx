@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function FilesContainer() {
 
   const { selectedOrderData } = useOutletContext<VersionsContext>();
+  const hash = window.location.hash;
   const dispatch = useDispatch();
 
   const {
@@ -39,6 +40,7 @@ export default function FilesContainer() {
         job_number: selectedOrderData.job.job_number,
         version_number: version_number,
         pad: padType,
+        hash: encodeURIComponent(hash)
       }
     });
   }
