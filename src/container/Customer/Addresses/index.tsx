@@ -9,6 +9,7 @@ import actions from "../../../states/Addresses/actions";
 function AddressesList() {
 
   const dispatch = useDispatch();
+  const hash = window.location.hash;
 
   const countries = [
     {"name": "Afghanistan", "code": "AF"},
@@ -298,7 +299,8 @@ function AddressesList() {
       type: actions.GET_ADDRESSES,
       payload: {
         mode: "getaddress",
-        entities_id: 266
+        entities_id: 266,
+        hash: encodeURIComponent(hash)
       }
     });
   }

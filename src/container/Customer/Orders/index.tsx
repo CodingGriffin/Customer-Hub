@@ -9,6 +9,7 @@ import { Order } from '../../../types';
 function OrdersList() {
 
   const dispatch = useDispatch();
+  const hash = window.location.hash;
   
   const {
     orders,
@@ -25,7 +26,8 @@ function OrdersList() {
         joblimit: 25,
         p: 1,
         d: 1,
-        e_n: "Hamskea Archery Solutions"
+        e_n: "Hamskea Archery Solutions",
+        hash: encodeURIComponent(hash)
       }
     });
   }, [dispatch]);
