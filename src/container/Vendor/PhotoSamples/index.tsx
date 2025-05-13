@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function PhotoSampleContainer() {
 
   const { selectedOrderData, currentAbbr } = useOutletContext<VersionsContext>();
+  const hash = window.location.hash;
   const dispatch = useDispatch();
 
   const {
@@ -47,6 +48,7 @@ export default function PhotoSampleContainer() {
         jobs_id: selectedOrderData.job.job_number,
         versions_id: version_id,
         pads_type: padType,
+        hash: encodeURIComponent(hash)
       }
     });
   }
@@ -75,6 +77,7 @@ export default function PhotoSampleContainer() {
       payload: {
         mode: "getPhotoSampleComments",
         resource_ids: '[' + resourceIds.join(',') + ']', // Convert array to comma-separated string
+        hash: encodeURIComponent(hash)
       }
     });
   }
