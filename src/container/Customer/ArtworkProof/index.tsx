@@ -8,6 +8,7 @@ import actions from "../../../states/ArtworkProof/actions";
 
 export default function ArtworkProof() {
   const { version_id } = useParams();
+  const hash = window.location.hash;
 
   const {
     reviewers,
@@ -84,6 +85,7 @@ export default function ArtworkProof() {
         mode: "getReviewers",
         entities_id: 163,
         job_number: Number(selectedOrderData.job.job_number),
+        hash: encodeURIComponent(hash)
       }
     });
   }

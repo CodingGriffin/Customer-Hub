@@ -11,6 +11,7 @@ export default function ArtworkUpload() {
   const { setStep, currentStep, selectedOrderData } = useOutletContext<VersionsContext>();
   const dispatch = useDispatch();
   const { version_id, section } = useParams();
+  const hash = window.location.hash;
 
   const {
     files,
@@ -53,6 +54,7 @@ export default function ArtworkUpload() {
         job_id: selectedOrderData.job.job_number,
         version_id: version_id,
         pad_id: padType,
+        hash: encodeURIComponent(hash)
       }
     });
   }

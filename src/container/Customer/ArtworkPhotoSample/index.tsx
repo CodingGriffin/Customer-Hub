@@ -11,6 +11,7 @@ export default function ArtworkPhotoSampleContainer() {
   const { version_id, section } = useParams();
   const navigate = useNavigate();
   const { setStep, currentStep, selectedOrderData, selectedSection, setSelectedStep } = useOutletContext<VersionsContext>();
+  const hash = window.location.hash;
   
   const dispatch = useDispatch();
   // if (currentStep) {
@@ -54,6 +55,7 @@ export default function ArtworkPhotoSampleContainer() {
         jobs_id: selectedOrderData.job.job_number,
         versions_id: version_id,
         pads_type: padType,
+        hash: encodeURIComponent(hash)
       }
     });
   }
@@ -94,6 +96,7 @@ export default function ArtworkPhotoSampleContainer() {
       payload: {
         mode: "getPhotoSampleComments",
         resource_ids: '[' + resourceIds.join(',') + ']', // Convert array to comma-separated string
+        hash: encodeURIComponent(hash)
       }
     });
   }
