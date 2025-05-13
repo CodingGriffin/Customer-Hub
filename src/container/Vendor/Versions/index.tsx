@@ -19,6 +19,7 @@ export default function VersionsContainer() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [currentStatus, setCurrentStatus] = useState<any>(null);
   const [pad_line_items_id, setPadLineItemsId] = useState<number | null>(null);
+  const hash = window.location.hash;
 
   const {
     status,
@@ -82,7 +83,8 @@ export default function VersionsContainer() {
       payload: {
         mode: "getEventStatus",
         pad_line_items_id: pad_line_items_id,
-        job_number: job_number
+        job_number: job_number,
+        hash: encodeURIComponent(hash)
       }
     });
   };
