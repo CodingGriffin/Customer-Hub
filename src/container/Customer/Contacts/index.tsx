@@ -9,6 +9,7 @@ import actions from "../../../states/Contacts/actions";
 function ContactsList() {
 
   const dispatch = useDispatch();
+  const hash = window.location.hash;
   
   const {
     contacts,
@@ -25,7 +26,8 @@ function ContactsList() {
       type: actions.GET_CONTACTS,
       payload: {
         mode: "getcontact",
-        entities_id: 266
+        entities_id: 266,
+        hash: encodeURIComponent(hash)
       }
     });
   }
