@@ -13,6 +13,7 @@ interface OrderContext {
 export default function VersionsContainer() {
   const { selectedOrderData, setSelectedStep } = useOutletContext<OrderContext>();
   const { version_id, section } = useParams();
+  const hash = window.location.hash;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -86,7 +87,8 @@ export default function VersionsContainer() {
       payload: {
         mode: "getEventStatus",
         pad_line_items_id: pad_line_items_id,
-        job_number: job_number
+        job_number: job_number,
+        hash: encodeURIComponent(hash)
       }
     });
   };
