@@ -8,6 +8,7 @@ import actions from "../../../states/Shipments/actions";
 function ShipmentsList() {
   const { orderId } = useParams();
   const dispatch = useDispatch();
+  const hash = window.location.hash;
   
   const {
     shipments,
@@ -22,7 +23,8 @@ function ShipmentsList() {
         type: actions.GET_SHIPMENTS,
         payload: {
           mode: "getshipments",
-          job_number: orderId
+          job_number: orderId,
+          hash: encodeURIComponent(hash)
         }
       });
     }

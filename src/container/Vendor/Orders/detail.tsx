@@ -10,6 +10,7 @@ import { Order } from '../../../types';
 function OrderDetail() {
   const { orderId } = useParams();
   const dispatch = useDispatch();
+  const hash = window.location.hash;
   
   const {
     order,
@@ -28,7 +29,8 @@ function OrderDetail() {
       type: actions.GET_ORDER,
       payload: {
         mode: "getAll",
-        job_number: orderId
+        job_number: orderId,
+        hash: encodeURIComponent(hash)
       }
     });
   }
