@@ -13,6 +13,7 @@ export default function ProductionContainer() {
   const dispatch = useDispatch();
   const { version_id, section } = useParams();
   const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
+  const hash = window.location.hash;
 
   const {
     comments,
@@ -62,7 +63,8 @@ export default function ProductionContainer() {
       payload: {
         mode: "getProductionComments",
         resource_id: 100000 + Number(version_id),
-        table_code: padType
+        table_code: padType,
+        hash: encodeURIComponent(hash)
       }
     });
   }
