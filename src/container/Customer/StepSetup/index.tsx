@@ -15,6 +15,7 @@ export default function StepSetupContainer() {
   const { version_id, section } = useParams();
   
   const dispatch = useDispatch();
+  const hash = window.location.hash;
 
   const [searchParams] = useSearchParams();
   const fromParam = searchParams.get('from');
@@ -54,7 +55,8 @@ export default function StepSetupContainer() {
       payload: {
         mode: "getEventStatus",
         pad_line_items_id: pad_line_items_id,
-        job_number: selectedOrderData.job.job_number
+        job_number: selectedOrderData.job.job_number,
+        hash: encodeURIComponent(hash)
       }
     });
   };
