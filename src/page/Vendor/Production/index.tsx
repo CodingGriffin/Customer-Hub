@@ -206,7 +206,7 @@ function Production({selectedOrderData, currentAbbr, isLiveSample, comments, add
                       : 'Staff'}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {new Date(comment.timestamp).toLocaleDateString()} {new Date(comment.timestamp).toLocaleTimeString()}
+                    {comment.formatted_timestamp}
                   </span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300">{comment.comment}</p>
