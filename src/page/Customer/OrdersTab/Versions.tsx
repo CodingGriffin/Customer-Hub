@@ -52,6 +52,8 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
     } else if (currentStep === 2 && step === 1) {
       // await updateStatus(pad_line_items_id, "start", 0);
       await setStep(1);
+    } else {
+      await setStep(step);
     }
   }
 
@@ -116,7 +118,7 @@ function Versions({ currentStep, selectedOrderData, setStep, updateStatus}: Vers
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-500 dark:text-gray-400'
               }`}
-              disabled={currentStep < step.number}
+              // disabled={currentStep < step.number}
             >
               <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
                 currentStep === step.number
