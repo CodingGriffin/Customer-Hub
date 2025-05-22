@@ -9,12 +9,13 @@ import PartitionCard from './PartitionCard';
 interface RevisionsProps {
   addComment: (comment: string, sample_id: number, field: string) => void,
   getComments: (partition_id: number) => void,
+  updatePartitionVerificationState: (partition_id: number, state: string) => void,
   selectedOrderData: any,
   revisions: any,
   comments: any,
 }
 
-function Files({selectedOrderData, revisions, comments, addComment, getComments}: RevisionsProps) {
+function Files({selectedOrderData, revisions, comments, addComment, getComments, updatePartitionVerificationState}: RevisionsProps) {
   const [verifiedPartitions, setVerifiedPartitions] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -54,6 +55,9 @@ function Files({selectedOrderData, revisions, comments, addComment, getComments}
     });
   };
 
+  const allPartitionsVerified = verifiedPartitions.size === partitions.length;
+  console.log(allPartitionsVerified, verifiedPartitions.size, partitions.length);
+
   return (
     <div>
       {revisions === "No revisions found." ? <Empty />
@@ -66,8 +70,9 @@ function Files({selectedOrderData, revisions, comments, addComment, getComments}
                 key={index}
                 partition={partition}
                 comments={comments}
-                onVerificationChange={(verified) => handlePartitionVerified(partition.partitionNumber, verified)}
+                onVerificationChange={(verified) => handlePartitionVerified(partition.rev_partition, verified)}
                 addComment={addComment}
+                updatePartitionVerificationState={updatePartitionVerificationState}
               />
             ))
           ) : (
@@ -78,19 +83,19 @@ function Files({selectedOrderData, revisions, comments, addComment, getComments}
         </>
       )}
 
-        {/* <div className="fixed realtive bottom-8 left-1/2 transform -translate-x-1/2">
-          <button
-            className={`px-6 py-3 rounded-full shadow-lg flex items-center gap-2 text-lg font-medium transition-all duration-200 ${
-              allPartitionsVerified
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-            }`}
-            disabled={!allPartitionsVerified}
-          >
-            {allPartitionsVerified ? 'Continue' : 'Verify to Continue'}
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </div> */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2">
+        <button
+          className={`px-6 py-3 rounded-full shadow-lg flex items-center gap-2 text-lg font-medium transition-all duration-200 ${
+            allPartitionsVerified
+              ? 'bg-blue-600 text-white hover:bg-blue-700'
+              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          }`}
+          disabled={!allPartitionsVerified}
+        >
+          {allPartitionsVerified ? 'Continue' : 'Verify to Continue'}
+          <ArrowRight className="w-5 h-5" />
+        </button>
+      </div>
     </div>
   );
 }

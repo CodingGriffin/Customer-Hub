@@ -48,6 +48,17 @@ export default function FilesContainer() {
     });
   }
 
+  const updatePartitionVerificationState = (rev_partition_id: number, state: string) => {
+    dispatch({
+      type: actions.UPDATE_PARTITIONVERFICATIONSTATE,
+      payload: {
+        mode: "updatePartitionVerificationState",
+        rev_partition_id: rev_partition_id,
+        verification_state: state,
+      }
+    });
+  }
+
   const getComments = (resource_ids: any) => {
     // Extract all photo_sample_ids and add 100000 to each
     dispatch({
@@ -71,5 +82,5 @@ export default function FilesContainer() {
     });
   }
 
-  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} comments={comments.data ? comments.data : []} addComment={addComment} getComments={getComments} />;
+  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} comments={comments.data ? comments.data : []} addComment={addComment} getComments={getComments} updatePartitionVerificationState={updatePartitionVerificationState} />;
 }

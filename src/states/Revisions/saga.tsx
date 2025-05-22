@@ -19,6 +19,16 @@ function* getRevisions(action: any) {
   }
 }
 
+function* updatePartitionVerificationState(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.revisions.php", {...action.payload});
+    yield put({ type: actions.UPDATE_PARTITIONVERFICATIONSTATE_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.UPDATE_PARTITIONVERFICATIONSTATE_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_REVISIONS, getRevisions)]);
+  yield all([takeLatest(actions.UPDATE_PARTITIONVERFICATIONSTATE, updatePartitionVerificationState)]);
 }

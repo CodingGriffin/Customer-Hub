@@ -6,6 +6,7 @@ interface PartitionCardProps {
   comments: any[];
   onVerificationChange: (verified: boolean) => void;
   addComment: (comment: string, sample_id: number, field: string) => void;
+  updatePartitionVerificationState: (partition_id: number, state: string) => void;
 }
 
 const PartitionCard: React.FC<PartitionCardProps> = ({
@@ -13,6 +14,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   comments,
   onVerificationChange,
   addComment,
+  updatePartitionVerificationState,
 }) => {
   const [verificationState, setVerificationState] = useState<'verify' | 'confirm' | 'matching' | 'not-matching'>('verify');
   const [validationFields, setValidationFields] = useState<{
@@ -109,7 +111,10 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
     } else if (verificationState === 'confirm') {
       const allFieldsMatch = Object.values(validationFields).every(field => field.checked);
       const commentKey = getFirstUncheckedField();
-      addComment(validationFields[`${commentKey}`].value, partition.rev_partition_id, commentKey);
+
+      if (!allFieldsMatch && commentKey != '') addComment(validationFields[`${commentKey}`].value, partition.rev_partition_id, commentKey);
+      updatePartitionVerificationState(partition.rev_partition_id, allFieldsMatch ? 'matching' : 'not-matching');
+      
       setVerificationState(allFieldsMatch ? 'matching' : 'not-matching');
       onVerificationChange(allFieldsMatch);
     }
@@ -222,7 +227,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
             <button
               onClick={handleVerifyClick}
               className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}
-              disabled={verificationState == 'matching' || verificationState == 'not-matching'}
+              // disabled={verificationState == 'matching' || verificationState == 'not-matching'}
             >
               {verificationState === 'matching' && <Check size={16} />}
               {getButtonText()}
@@ -292,7 +297,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                 <div className="flex justify-between items-center">
                   <span className="text-gray-500">{displayLabels[key]}</span>
                   <div className="flex items-center gap-3">
-                    <span className="font-medium">{value}</span>
+                    <span className="font-medium">{key == 'totalSize' ? Number(value).toLocaleString() : value}</span>
                     {verificationState === 'confirm' && (
                       <input
                         type="checkbox"
