@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import VendorFiles from '../../../page/Vendor/Files';
 import { VersionsContext } from '../../../types';
 import actions from "../../../states/Revisions/actions";
-import { useDispatch, useSelector } from 'react-redux';
+import commentActions from "../../../states/Comments/actions";
 
 export default function FilesContainer() {
 
   const { selectedOrderData } = useOutletContext<VersionsContext>();
-  const hash = window.location.hash;
   const dispatch = useDispatch();
 
   const {
@@ -17,6 +17,10 @@ export default function FilesContainer() {
     loading,
     error,
   } = useSelector((state: any) => state.revisions);
+
+  const {
+    comments,
+  } = useSelector((state: any) => state.comments);
 
   const { version_id, section } = useParams();
 
@@ -40,10 +44,32 @@ export default function FilesContainer() {
         job_number: selectedOrderData.job.job_number,
         version_number: version_number,
         pad: padType,
-        hash: hash
       }
     });
   }
 
-  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} />;
+  const getComments = (resource_ids: any) => {
+    // Extract all photo_sample_ids and add 100000 to each
+    dispatch({
+      type: commentActions.GET_COMMENTS,
+      payload: {
+        mode: "getPartitionComments",
+        resource_ids: resource_ids, // Convert array to comma-separated string
+      }
+    });
+  }
+
+  const addComment = (comment: string, partition_id: number, field: string) => {
+    dispatch({
+      type: commentActions.ADD_COMMENTS,
+      payload: {
+        mode: "insertPartitionComment",
+        comment: comment,
+        resource_id: partition_id,
+        table_code: "partition_" + field + "_table"
+      }
+    });
+  }
+
+  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} comments={comments.data ? comments.data : []} addComment={addComment} getComments={getComments} />;
 }
