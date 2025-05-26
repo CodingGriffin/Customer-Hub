@@ -84,6 +84,7 @@ function Versions({ currentStep, selectedOrderData, currentAbbr, setStep, update
           </div>
           <div className="ml-3 mb-4 relative flex justify-between">
             {steps.map((step) => (
+              (section == 'data' && step.title == 'Samples') ? <></> :
               <button
                 key={step.number}
                 onClick={() => updateStep(step.number)}
@@ -104,6 +105,7 @@ function Versions({ currentStep, selectedOrderData, currentAbbr, setStep, update
                   {(section == 'data' && step.title == 'Samples') ? 'Screenshots' : step.title}
                 </span>
               </button>
+              
             ))}
           </div>
         </div>

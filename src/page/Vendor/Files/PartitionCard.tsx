@@ -1,50 +1,89 @@
-import React, { useEffect, useState } from 'react';
-import { Check, X } from 'lucide-react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Check, Upload, X } from 'lucide-react';
+
+import PhotoSamples from './PhotoSamples';
+import UploadModal from './UploadModal';
+import { useParams } from 'react-router-dom';
 
 interface PartitionCardProps {
   partition: any;
   comments: any[];
+  samples: any[];
+  partitionComments: any[];
+  selectedOrderData: any;
   onVerificationChange: (verified: boolean) => void;
-  addComment: (comment: string, sample_id: number, field: string) => void;
+  addPartitionComment: (comment: string, sample_id: number, field: string) => void;
+  addPhotoSampleComment: (comment: string, sample_id: number) => void;
   updatePartitionVerificationState: (partition_id: number, state: string) => void;
 }
 
 const PartitionCard: React.FC<PartitionCardProps> = ({
   partition,
   comments,
+  partitionComments,
+  selectedOrderData,
+  samples,
   onVerificationChange,
-  addComment,
+  addPartitionComment,
+  addPhotoSampleComment,
   updatePartitionVerificationState,
 }) => {
   const [verificationState, setVerificationState] = useState<'verify' | 'confirm' | 'matching' | 'not-matching'>('verify');
   const [validationFields, setValidationFields] = useState<{
     [key: string]: { checked: boolean; value: string };
   }>({});
-  
-  // Get comments for this partition
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<{
+    url: string;
+    title: string;
+  } | null>(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleCloseWUploadModal = useCallback(() => {
+    setShowUploadModal(false);
+  }, []);
+
+  const handleOpenUploadModal = () => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('resource_id', partition.rev_partition_id); // Add or update the query parameter
+    navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
+
+    setShowUploadModal(true);
+  };
+
+  const { version_id, section } = useParams();
+  const currentVersion = selectedOrderData?.versions?.find(
+    (version: any) => version.version_id == version_id
+  );
+
+  // Get partitionComments for this partition
   const getPartitionComment = async () => {
-    // Filter comments where resource_id matches partition.rev_partition_id
-    const partitionComments = comments.filter(
+    // Filter partitionComments where resource_id matches partition.rev_partition_id
+    const comments = partitionComments.filter(
       (comment: any) => comment.resource_id === partition.rev_partition_id
     );
+    console.log(partitionComments)
     
     // Split table_code by underscores
-    if (partitionComments.length > 0) {
-      const parts = partitionComments[0].table_code?.split('_');
+    if (comments.length > 0) {
+      const parts = comments[0].table_code?.split('_');
       
       // Get the middle word if it exists
       const middleWord = parts.length >= 3 ? parts[1] : '';
-      const commentText = partitionComments[0].comment
+      const commentText = comments[0].comment
       await setValidationFields({
         ...validationFields,
         [middleWord]: { checked: false, value: commentText },
       });
-      console.log(validationFields, partitionComments)
+      console.log(validationFields, comments)
     }
   };
   useEffect(() => {
     getPartitionComment();
-  }, [comments]);
+  }, [partitionComments]);
   
   // Get the first key where checked is false
   const getFirstUncheckedField = () => {
@@ -112,7 +151,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
       const allFieldsMatch = Object.values(validationFields).every(field => field.checked);
       const commentKey = getFirstUncheckedField();
 
-      if (!allFieldsMatch && commentKey != '') addComment(validationFields[`${commentKey}`].value, partition.rev_partition_id, commentKey);
+      if (!allFieldsMatch && commentKey != '') addPartitionComment(validationFields[`${commentKey}`].value, partition.rev_partition_id, commentKey);
       updatePartitionVerificationState(partition.rev_partition_id, allFieldsMatch ? 'matching' : 'not-matching');
       
       setVerificationState(allFieldsMatch ? 'matching' : 'not-matching');
@@ -224,6 +263,15 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                 Cancel
               </button>
             )}
+            {(verificationState === 'matching' || verificationState === 'not-matching') &&
+              <button
+                onClick={() => handleOpenUploadModal()}
+                className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+              >
+                <Upload className="w-4 h-4 mr-1.5" />
+                <span>Upload</span>
+              </button>
+            }
             <button
               onClick={handleVerifyClick}
               className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}
@@ -328,6 +376,17 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           </div>
         </div>
       </div>
+
+      <PhotoSamples selectedOrderData={selectedOrderData} samples={samples} resource_id={partition.rev_partition_id} comments={comments} addPhotoSampleComment={addPhotoSampleComment} />
+      {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
+      {/* {selectedImage && (
+        <ImageViewer
+          isOpen={true}
+          onClose={() => setSelectedImage(null)}
+          imageUrl={selectedImage.url}
+          title={selectedImage.title}
+        />
+      )} */}
     </div>
   );
 };

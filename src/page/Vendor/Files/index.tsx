@@ -7,15 +7,18 @@ import Empty from '../../../component/Vendor/Files/Empty';
 import PartitionCard from './PartitionCard';
 
 interface RevisionsProps {
-  addComment: (comment: string, sample_id: number, field: string) => void,
-  getComments: (partition_id: number) => void,
+  addPartitionComment: (comment: string, sample_id: number, field: string) => void,
+  addPhotoSampleComment: (comment: string, sample_id: number) => void,
+  getPartitionComments: (partition_id: number) => void,
   updatePartitionVerificationState: (partition_id: number, state: string) => void,
   selectedOrderData: any,
   revisions: any,
+  samples: any,
   comments: any,
+  partitionComments: any,
 }
 
-function Files({selectedOrderData, revisions, comments, addComment, getComments, updatePartitionVerificationState}: RevisionsProps) {
+function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState}: RevisionsProps) {
   const [verifiedPartitions, setVerifiedPartitions] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -24,8 +27,8 @@ function Files({selectedOrderData, revisions, comments, addComment, getComments,
       // Extract all partition IDs
       const partitionIds = currentRevision.partitions.map((partition: any) => partition.rev_partition_id);
       
-      // Call getComments with the partition IDs
-      getComments(partitionIds);
+      // Call getPartitionComments with the partition IDs
+      getPartitionComments(partitionIds);
     }
   }, [revisions]);
   // Get current revision and all its partitions
@@ -69,9 +72,13 @@ function Files({selectedOrderData, revisions, comments, addComment, getComments,
               <PartitionCard
                 key={index}
                 partition={partition}
+                samples={samples}
                 comments={comments}
+                partitionComments={partitionComments}
+                selectedOrderData={selectedOrderData}
                 onVerificationChange={(verified) => handlePartitionVerified(partition.rev_partition, verified)}
-                addComment={addComment}
+                addPartitionComment={addPartitionComment}
+                addPhotoSampleComment={addPhotoSampleComment}
                 updatePartitionVerificationState={updatePartitionVerificationState}
               />
             ))

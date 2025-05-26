@@ -28,7 +28,17 @@ function* getComments(action: any) {
   }
 }
 
+function* getPartitionComments(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.comments.php", {...action.payload});
+    yield put({ type: actions.GET_PARTITIONCOMMENTS_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.GET_PARTITIONCOMMENTS_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.ADD_COMMENTS, addComments)]);
   yield all([takeLatest(actions.GET_COMMENTS, getComments)]);
+  yield all([takeLatest(actions.GET_PARTITIONCOMMENTS, getPartitionComments)]);
 }

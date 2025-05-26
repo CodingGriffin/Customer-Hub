@@ -36,6 +36,7 @@ function serialize(data) {
 export default function useUppy() {
   const [files, setFiles] = useState([]);
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const dispatch = useDispatch();
   const {orderId, version_id, section} = useParams();
   
@@ -130,6 +131,7 @@ export default function useUppy() {
 
         const completeHandler = (result) => {
           const successResults = result.successful;
+          const resource_id = queryParams.get('resource_id');
           console.log("uploading completed============>", files);
           
           // Check if we're on vendor/*/samples route
@@ -137,13 +139,14 @@ export default function useUppy() {
           const isVendorRoute = pathParts[1] === 'vendor';
           const isSamplesRoute = pathParts[pathParts.length - 1] === 'samples';
           
-          if (isVendorRoute && isSamplesRoute && version_id) {
+          if (isVendorRoute && version_id) {
             dispatch({
               type: actions.ADD_SAMPLES,
               payload: {
                 mode: "insertSamples",
                 jobs_id: orderId, // Adjust this based on how you want to get the job number
                 versions_id: version_id,
+                resource_id: resource_id,
                 pads_type: padType,
                 files: files,
                 version_number: versionNumber
