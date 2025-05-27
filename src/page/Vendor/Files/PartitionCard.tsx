@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Check, Upload, X } from 'lucide-react';
+import { Modal } from 'antd';
 
 import PhotoSamples from './PhotoSamples';
 import UploadModal from './UploadModal';
-import { useParams } from 'react-router-dom';
 
 interface PartitionCardProps {
   partition: any;
@@ -131,7 +131,24 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
 
   const handleVerifyClick = () => {
     if (verificationState === 'matching' || verificationState === 'not-matching') {
-      resetVerification();
+      Modal.confirm({
+        title: 'Do you want to start over the process?',
+        okText: 'Yes, Reset',
+        cancelText: 'No, Cancel',
+        cancelButtonProps: {
+          className: 'bg-gray-300 hover:bg-gray-400',
+        },
+        okButtonProps: {
+          className: 'bg-red-600 hover:bg-red-700',
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+
+        async onOk() {
+          resetVerification();
+        },
+      });
     } else if (verificationState === 'verify') {
       const initialFields: { [key: string]: { checked: boolean; value: string } } = {};
       
