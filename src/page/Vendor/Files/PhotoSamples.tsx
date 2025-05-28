@@ -209,7 +209,7 @@ const handleDeletePhotoSample = (photoSampleId: number, sampleName: string) => {
                                         : 'Staff'}
                                     </span>
                                     <span className="text-xs text-gray-400">
-                                      {new Date(comment.timestamp).toLocaleDateString()}
+                                      {comment.formatted_timestamp}
                                     </span>
                                   </div>
                                   <p className="text-sm text-gray-300">{comment.comment}</p>
