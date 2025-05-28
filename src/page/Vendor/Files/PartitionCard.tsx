@@ -15,7 +15,7 @@ interface PartitionCardProps {
   onVerificationChange: (verified: boolean) => void;
   addPartitionComment: (comment: string, sample_id: number, field: string) => void;
   addPhotoSampleComment: (comment: string, sample_id: number) => void;
-  updatePartitionVerificationState: (partition_id: number, state: string) => void;
+  updatePartitionVerificationState: (partition_id: number, state: string, rev_partition: number) => void;
 }
 
 const PartitionCard: React.FC<PartitionCardProps> = ({
@@ -112,6 +112,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   
   useEffect(() => {
     console.log(partition.verification_state)
+    if(partition.verification_state == 'matching') onVerificationChange(true);
     setVerificationState(partition.verification_state)
   }, []);
   const isValidUrl = (str: string) => {
@@ -169,7 +170,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
       const commentKey = getFirstUncheckedField();
 
       if (!allFieldsMatch && commentKey != '') addPartitionComment(validationFields[`${commentKey}`].value, partition.rev_partition_id, commentKey);
-      updatePartitionVerificationState(partition.rev_partition_id, allFieldsMatch ? 'matching' : 'not-matching');
+      updatePartitionVerificationState(partition.rev_partition_id, allFieldsMatch ? 'matching' : 'not-matching', partition.rev_partition);
       
       setVerificationState(allFieldsMatch ? 'matching' : 'not-matching');
       onVerificationChange(allFieldsMatch);
@@ -280,7 +281,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                 Cancel
               </button>
             )}
-            {(verificationState === 'matching' || verificationState === 'not-matching') &&
+            {/* {(verificationState === 'matching' || verificationState === 'not-matching') && */}
               <button
                 onClick={() => handleOpenUploadModal()}
                 className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
@@ -288,7 +289,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                 <Upload className="w-4 h-4 mr-1.5" />
                 <span>Upload</span>
               </button>
-            }
+            {/* } */}
             <button
               onClick={handleVerifyClick}
               className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}

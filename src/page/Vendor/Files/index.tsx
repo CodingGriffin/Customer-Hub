@@ -10,7 +10,8 @@ interface RevisionsProps {
   addPartitionComment: (comment: string, sample_id: number, field: string) => void,
   addPhotoSampleComment: (comment: string, sample_id: number) => void,
   getPartitionComments: (partition_id: number) => void,
-  updatePartitionVerificationState: (partition_id: number, state: string) => void,
+  updatePartitionVerificationState: (partition_id: number, state: string, rev_partition: number) => void,
+  updateStatus: () => void,
   selectedOrderData: any,
   revisions: any,
   samples: any,
@@ -18,9 +19,9 @@ interface RevisionsProps {
   partitionComments: any,
 }
 
-function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState}: RevisionsProps) {
+function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus}: RevisionsProps) {
   const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL;
-  
+
   const [verifiedPartitions, setVerifiedPartitions] = useState<Set<number>>(new Set());
   const { version_id, section } = useParams();
 
@@ -107,7 +108,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
             </div>
           )}
         </> :
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
           <div className="hidden sm:grid px-4 sm:px-6 py-3 border-b border-gray-200 dark:border-gray-700 grid-cols-8 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400">
             <div className="col-span-5">Name</div>
             <div className="col-span-3">Modified</div>
@@ -156,9 +157,10 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
               ? 'bg-blue-600 text-white hover:bg-blue-700'
               : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
+          onClick={updateStatus}
           disabled={!allPartitionsVerified}
         >
-          {allPartitionsVerified ? 'Continue' : 'Verify to Continue'}
+          {allPartitionsVerified ? 'Request Approval' : 'Verify to Continue'}
           <ArrowRight className="w-5 h-5" />
         </button>
       </div>

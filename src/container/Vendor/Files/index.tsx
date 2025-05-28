@@ -7,6 +7,7 @@ import { VersionsContext } from '../../../types';
 import actions from "../../../states/Revisions/actions";
 import commentActions from "../../../states/Comments/actions";
 import photoSampleActions from "../../../states/PhotoSamples/actions";
+import padActions from "../../../states/PADStatus/actions";
 
 export default function FilesContainer() {
 
@@ -27,6 +28,10 @@ export default function FilesContainer() {
   } = useSelector((state: any) => state.comments);
 
   const { version_id, section } = useParams();
+
+  const pad_line_items_id = selectedOrderData?.pad_line_items?.find(
+    (item: any) => item.pad_abbreviation == section && item.versions_id == version_id
+  )?.pad_line_items_id;
 
   useEffect(() => {
     if (version_id) {
@@ -75,13 +80,22 @@ export default function FilesContainer() {
     });
   }
 
-  const updatePartitionVerificationState = (rev_partition_id: number, state: string) => {
+  const updatePartitionVerificationState = (rev_partition_id: number, state: string, rev_partition: number) => {
+    const version = selectedOrderData?.versions?.find(
+      (v: any) => v.version_id == version_id
+    );
+    const version_number = version?.version_number;
+
     dispatch({
       type: actions.UPDATE_PARTITIONVERFICATIONSTATE,
       payload: {
         mode: "updatePartitionVerificationState",
         rev_partition_id: rev_partition_id,
+        rev_partition: rev_partition,
         verification_state: state,
+        jobs_id: selectedOrderData.job.job_number, // Adjust this based on how you want to get the job number
+        version_number: version_number,
+        pads_type: section
       }
     });
   }
@@ -137,5 +151,20 @@ export default function FilesContainer() {
     getPhotoSampleComments();
   }
 
-  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} partitionComments={partitionComments.data ? partitionComments.data : []} addPhotoSampleComment={addPhotoSampleComment} addPartitionComment={addPartitionComment} getPartitionComments={getPartitionComments} updatePartitionVerificationState={updatePartitionVerificationState} />;
+  const updateStatus = () => {
+    dispatch({
+      type: padActions.UPDATE_STATUS,
+      payload: {
+        mode: "proofSent",
+        pad_line_items_id: pad_line_items_id,
+        status: 0,
+        job_number: selectedOrderData.job.job_number,
+        code: "p",
+        abbr: "v-photo-sample-received",
+        onlyPhoto: false
+      }
+    });
+  }
+
+  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} partitionComments={partitionComments.data ? partitionComments.data : []} addPhotoSampleComment={addPhotoSampleComment} addPartitionComment={addPartitionComment} getPartitionComments={getPartitionComments} updatePartitionVerificationState={updatePartitionVerificationState} updateStatus={updateStatus} />;
 }
