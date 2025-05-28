@@ -16,6 +16,7 @@ interface PartitionCardProps {
   addPartitionComment: (comment: string, sample_id: number, field: string) => void;
   addPhotoSampleComment: (comment: string, sample_id: number) => void;
   updatePartitionVerificationState: (partition_id: number, state: string, rev_partition: number) => void;
+  deletePhotoSample: (photo_sample_id: number) => void,
 }
 
 const PartitionCard: React.FC<PartitionCardProps> = ({
@@ -28,6 +29,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   addPartitionComment,
   addPhotoSampleComment,
   updatePartitionVerificationState,
+  deletePhotoSample,
 }) => {
   const [verificationState, setVerificationState] = useState<'verify' | 'confirm' | 'matching' | 'not-matching'>('verify');
   const [validationFields, setValidationFields] = useState<{
@@ -130,7 +132,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
     onVerificationChange(false);
   };
 
-  const handleVerifyClick = () => {
+  const startOver = () => {
     if (verificationState === 'matching' || verificationState === 'not-matching') {
       Modal.confirm({
         title: 'Do you want to start over the process?',
@@ -150,6 +152,12 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           resetVerification();
         },
       });
+    }
+  }
+
+  const handleVerifyClick = () => {
+    if (verificationState === 'matching' || verificationState === 'not-matching') {
+
     } else if (verificationState === 'verify') {
       const initialFields: { [key: string]: { checked: boolean; value: string } } = {};
       
@@ -293,11 +301,20 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
             <button
               onClick={handleVerifyClick}
               className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}
-              // disabled={verificationState == 'matching' || verificationState == 'not-matching'}
+              disabled={verificationState == 'matching' || verificationState == 'not-matching'}
             >
               {verificationState === 'matching' && <Check size={16} />}
               {getButtonText()}
             </button>
+            {(verificationState === 'matching' || verificationState === 'not-matching') &&
+              <button
+                onClick={startOver}
+                className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-all duration-200 flex items-center gap-1"
+              >
+                <Check size={16} />
+                Start Over
+              </button>
+            }
           </div>
         </div>
         <div className="text-sm text-gray-600">
@@ -395,7 +412,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
         </div>
       </div>
 
-      <PhotoSamples selectedOrderData={selectedOrderData} samples={samples} resource_id={partition.rev_partition_id} comments={comments} addPhotoSampleComment={addPhotoSampleComment} />
+      <PhotoSamples selectedOrderData={selectedOrderData} samples={samples} resource_id={partition.rev_partition_id} comments={comments} addPhotoSampleComment={addPhotoSampleComment} deletePhotoSample={deletePhotoSample} />
       {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
       {/* {selectedImage && (
         <ImageViewer

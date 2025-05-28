@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
-import { ImageOff, MailCheck, Upload, ChevronDown, ChevronUp } from 'lucide-react';
+import { ImageOff, MailCheck, Upload, ChevronDown, ChevronUp, Trash2, X } from 'lucide-react';
 import UploadModal from './UploadModal';
 import ImageViewer from '../../../component/ArtworkPhotoSample/ImageViewer';
-import { PHOTOSAMPLE_STATUS, SAMPLE_STATUS, PRODUCTION_STATUS } from '../../../types'
 
 interface StepSetupProps {
   addPhotoSampleComment: (comment: string, sample_id: number) => void,
+  deletePhotoSample: (photo_sample_id: number) => void,
   comments: any,
   selectedOrderData: any,
   samples: any,
   resource_id: number;
 }
 
-function PhotoSamples({selectedOrderData, samples, resource_id, comments, addPhotoSampleComment}: StepSetupProps) {
+function PhotoSamples({selectedOrderData, samples, resource_id, comments, addPhotoSampleComment, deletePhotoSample}: StepSetupProps) {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
@@ -36,7 +36,24 @@ function PhotoSamples({selectedOrderData, samples, resource_id, comments, addPho
   const currentVersion = selectedOrderData?.versions?.find(
     (version: any) => version.version_id == version_id
   );
-
+// Add handleDeletePhotoSample function
+const handleDeletePhotoSample = (photoSampleId: number, sampleName: string) => {
+  Modal.confirm({
+    title: 'Delete Photo Sample',
+    content: `Are you sure you want to delete "${sampleName}"? This action cannot be undone.`,
+    okText: 'Yes, Delete',
+    cancelText: 'No, Cancel',
+    okButtonProps: {
+      className: 'bg-red-600 hover:bg-red-700',
+    },
+    onOk() {
+      deletePhotoSample(photoSampleId);
+    },
+    onCancel() {
+      console.log('Delete cancelled');
+    }
+  });
+};
   const handleCloseWUploadModal = useCallback(() => {
     setShowUploadModal(false);
   }, []);
@@ -240,6 +257,17 @@ function PhotoSamples({selectedOrderData, samples, resource_id, comments, addPho
                         </div>
                       </div>
                     )}
+                  </div>
+
+                  {/* Add delete button */}
+                  <div className="flex justify-between mt-4">
+                    <button
+                      onClick={() => handleDeletePhotoSample(sample.photo_sample_id, sample.name)}
+                      className="w-full px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-all duration-200 flex items-center gap-1"
+                    >
+                      <Trash2 size={16} />
+                      Remove Sample
+                    </button>
                   </div>
                 </div>
               </div>

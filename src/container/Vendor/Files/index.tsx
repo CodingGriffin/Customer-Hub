@@ -80,6 +80,21 @@ export default function FilesContainer() {
     });
   }
 
+  const deletePhotoSample = (photo_sample_id: number) => {
+    const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
+
+    dispatch({
+      type: photoSampleActions.GET_SAMPLES,
+      payload: {
+        mode: "deleteSample",
+        jobs_id: selectedOrderData.job.job_number,
+        versions_id: version_id,
+        pads_type: padType,
+        photo_sample_id: photo_sample_id
+      }
+    });
+  }
+
   const updatePartitionVerificationState = (rev_partition_id: number, state: string, rev_partition: number) => {
     const version = selectedOrderData?.versions?.find(
       (v: any) => v.version_id == version_id
@@ -166,5 +181,5 @@ export default function FilesContainer() {
     });
   }
 
-  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} partitionComments={partitionComments.data ? partitionComments.data : []} addPhotoSampleComment={addPhotoSampleComment} addPartitionComment={addPartitionComment} getPartitionComments={getPartitionComments} updatePartitionVerificationState={updatePartitionVerificationState} updateStatus={updateStatus} />;
+  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} partitionComments={partitionComments.data ? partitionComments.data : []} addPhotoSampleComment={addPhotoSampleComment} addPartitionComment={addPartitionComment} getPartitionComments={getPartitionComments} updatePartitionVerificationState={updatePartitionVerificationState} updateStatus={updateStatus} deletePhotoSample={deletePhotoSample} />;
 }

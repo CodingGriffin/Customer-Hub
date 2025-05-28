@@ -37,8 +37,18 @@ function* updateStatus(action: any) {
   }
 }
 
+function* deleteSample(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.photoSample.php", {...action.payload});
+    yield put({ type: actions.DELETE_SAMPLE_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.DELETE_SAMPLE_FAILURE, payload: error });
+  }
+}
+
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_SAMPLES, getSamples)]);
   yield all([takeLatest(actions.ADD_SAMPLES, addSamples)]);
   yield all([takeLatest(actions.UPDATE_STATUS, updateStatus)]);
+  yield all([takeLatest(actions.DELETE_SAMPLE, deleteSample)]);
 }

@@ -9,6 +9,7 @@ import PartitionCard from './PartitionCard';
 interface RevisionsProps {
   addPartitionComment: (comment: string, sample_id: number, field: string) => void,
   addPhotoSampleComment: (comment: string, sample_id: number) => void,
+  deletePhotoSample: (photo_sample_id: number) => void,
   getPartitionComments: (partition_id: number) => void,
   updatePartitionVerificationState: (partition_id: number, state: string, rev_partition: number) => void,
   updateStatus: () => void,
@@ -19,8 +20,19 @@ interface RevisionsProps {
   partitionComments: any,
 }
 
-function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus}: RevisionsProps) {
+function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus, deletePhotoSample}: RevisionsProps) {
   const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL;
+
+  const getCurrentDate = (): string => {
+    const today = new Date();
+    
+    // Get month, day, and year
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const day = today.getDate().toString().padStart(2, '0');
+    const year = today.getFullYear().toString().slice(-2); // Get last 2 digits of year
+    
+    return `${month}/${day}/${year}`;
+  };
 
   const [verifiedPartitions, setVerifiedPartitions] = useState<Set<number>>(new Set());
   const { version_id, section } = useParams();
@@ -100,6 +112,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
                 addPartitionComment={addPartitionComment}
                 addPhotoSampleComment={addPhotoSampleComment}
                 updatePartitionVerificationState={updatePartitionVerificationState}
+                deletePhotoSample={deletePhotoSample}
               />
             ))
           ) : (
@@ -154,13 +167,13 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
         <button
           className={`px-6 py-3 rounded-full shadow-lg flex items-center gap-2 text-lg font-medium transition-all duration-200 ${
             allPartitionsVerified
-              ? 'bg-blue-600 text-white hover:bg-blue-700'
+              ? 'bg-green-600 text-white hover:bg-green-700'
               : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
           onClick={updateStatus}
           disabled={!allPartitionsVerified}
         >
-          {allPartitionsVerified ? 'Request Approval' : 'Verify to Continue'}
+          {allPartitionsVerified ? 'Requested Approval ' + getCurrentDate() : 'Verify to Continue'}
           <ArrowRight className="w-5 h-5" />
         </button>
       </div>
