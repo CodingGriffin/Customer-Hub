@@ -233,6 +233,9 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                 Tracking Number
               </th>
               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
+                Date                
+              </th>
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
                 Actions                
               </th>
               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200">
@@ -298,6 +301,9 @@ function Shipments({ shipments, entity_name, job_number }: ShipmentsProps) {
                         Not yet shipped
                       </span>
                     )}
+                  </td>
+                  <td className="px-3 py-4 text-sm">
+                    {shipment.inHandsDate}
                   </td>
                   <td className="px-3 py-4 text-sm">
                     <button
