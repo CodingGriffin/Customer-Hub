@@ -114,7 +114,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   
   useEffect(() => {
     console.log(partition.verification_state)
-    if(partition.verification_state == 'matching') onVerificationChange(true);
+    if(partition.verification_state == 'matching' || partition.verification_state == 'not-matching') onVerificationChange(true);
     setVerificationState(partition.verification_state)
   }, []);
   const isValidUrl = (str: string) => {
@@ -181,7 +181,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
       updatePartitionVerificationState(partition.rev_partition_id, allFieldsMatch ? 'matching' : 'not-matching', partition.rev_partition);
       
       setVerificationState(allFieldsMatch ? 'matching' : 'not-matching');
-      onVerificationChange(allFieldsMatch);
+      onVerificationChange(true);
     }
   };
 
@@ -195,7 +195,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
       const allFieldsMatch = Object.values(newFields).every(field => field.checked);
       if (!allFieldsMatch && verificationState === 'matching') {
         setVerificationState('not-matching');
-        onVerificationChange(false);
+        // onVerificationChange(false);
       }
       
       return newFields;

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Building2, Sun, Moon } from 'lucide-react';
+
+import actions from "../states/Contacts/actions";
 import { HubType } from '../types';
 
 interface HeaderProps {
@@ -18,10 +21,33 @@ const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType, ent
   const isVendorRoute = pathParts[1] === 'vendor';
   const isOrdersList = pathParts[2] === 'orders';
 
+  const {
+    session,
+    loading,
+    error,
+  } = useSelector((state: any) => state.contacts);
+
   if (isVendorRoute) hubType = 'customer';
   if (isVendorRoute && isOrdersList && (pathParts[3] == '' || !pathParts[3])) entityName = '';
   // console.log("HeaderComponent");
   
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    getSession();
+  }, []);
+
+  const getSession = () => {
+    dispatch({
+      type: actions.GET_SESSION,
+      payload: {
+        mode: "getSession"
+      }
+    });
+  }
+
+  console.log("session ====================================> ", session);
+
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -53,6 +79,7 @@ const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType, ent
                 <Moon className="w-5 h-5" />
               )}
             </button>
+            {session.data?.entities_id == 1 &&
             <button
               onClick={async () => {await setHubType(hubType === 'customer' ? 'vendor' : 'customer'); navigate(`/${hubType}`);}}
               className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -60,6 +87,7 @@ const Header = React.memo(({hubType, isDarkMode, toggleDarkMode, setHubType, ent
               <Building2 className="w-4 h-4 mr-2" />
               Switch to {hubType === 'vendor' ? 'Vendor' : 'Customer'} Hub
             </button>
+            }
           </div>
         </div>
       </div>

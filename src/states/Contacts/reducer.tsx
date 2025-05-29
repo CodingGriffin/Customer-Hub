@@ -2,6 +2,7 @@ import actions from "./actions";
 
 const initialState = {
   contacts: [],
+  session: {},
   loading: false,
   error: null,
 };
@@ -78,6 +79,24 @@ function Reducer(state = initialState, action: any) {
         // contacts: state.contacts.filter(contact => contact.id !== action.payload.id),
       };
     case actions.DELETE_CONTACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case actions.GET_SESSION:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.GET_SESSION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        session: action.payload,
+      };
+    case actions.GET_SESSION_FAILURE:
       return {
         ...state,
         loading: false,
