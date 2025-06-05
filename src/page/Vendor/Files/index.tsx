@@ -21,7 +21,7 @@ interface RevisionsProps {
 }
 
 function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus, deletePhotoSample}: RevisionsProps) {
-  const originalPdfUrl = import.meta.env.VITE_SERVER_BASE_URL;
+  const originalPdfUrl = `${window.location.protocol}//${window.location.host}/`;
 
   const getCurrentDate = (): string => {
     const today = new Date();
