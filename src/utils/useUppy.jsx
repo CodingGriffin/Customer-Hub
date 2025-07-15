@@ -132,14 +132,14 @@ export default function useUppy() {
         const completeHandler = (result) => {
           const successResults = result.successful;
           const resource_id = queryParams.get('resource_id');
-          console.log("uploading completed============>", files);
+          console.log("uploading completed============>", successResults);
           
           // Check if we're on vendor/*/samples route
           const pathParts = location.pathname.split('/');
           const isVendorRoute = pathParts[1] === 'vendor';
           const isSamplesRoute = pathParts[pathParts.length - 1] === 'samples';
           
-          if (isVendorRoute && version_id) {
+          if (isVendorRoute && version_id && (successResults.length > 0)) {
             dispatch({
               type: actions.ADD_SAMPLES,
               payload: {
