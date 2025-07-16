@@ -99,16 +99,36 @@ export default function useUppy() {
           const sanitizedFileName = file.name.replace(/\s+/g, '_');
           const sanitizedEntityName = entityName.replace(/\s+/g, '_');
           const sanitizedVersionName = versionName.replace(/\s+/g, '_');
-          
+
+          const newId = `${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/samples/${sanitizedFileName}`
+          console.log("Added file name =====================================> ", file, file.name, file.name != newId);
+          file.meta.name = file.data.name;
+          if (file.data.name == file.name) {
+
+              // Create a new file object with the new ID
+              const newFile = {
+                  ...file,
+                  name: newId,
+              };
+              newFile.meta.name = file.name
+              console.log("Added new file name =====================================> ", newFile);
+
+              // Remove the old file
+              uppy.removeFile(file.id);
+
+              // Add the new file with the new ID
+              uppy.addFile(newFile);
+          }
           // Set metadata for the file
           uppy.setFileMeta(file.id, {
+            key: `${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/samples/${sanitizedFileName}`,
             orderId: orderId,
             versionName: sanitizedVersionName, // Use version_name instead of version_id
             section: padType,
             uploadBy: 'vendor',
             type: 'samples',
             relativePath: file.meta.relativePath,
-            filename: sanitizedFileName,
+            filename: file.data.name.replace(/\s+/g, '_'),
             filetype: file.type,
             entityName: sanitizedEntityName
           });
@@ -117,13 +137,13 @@ export default function useUppy() {
         const uploadSuccessHandler = (file, response) => {
           console.log('Upload successful:', file.name);
           console.log('Tus response:', response);
-          const sanitizedFileName = file.name.replace(/\s+/g, '_');
+          const sanitizedFileName = file.data.name.replace(/\s+/g, '_');
           const sanitizedEntityName = entityName.replace(/\s+/g, '_');
           const sanitizedVersionName = versionName.replace(/\s+/g, '_');
           
           const fileUrl = response.uploadURL;
           files.push({
-            name: file.name, 
+            name: file.data.name, 
             file_path: `${sanitizedEntityName}/${orderId}/${sanitizedVersionName}/${padType}/samples/${sanitizedFileName}`,
           });
           console.log('File URL:', fileUrl);
