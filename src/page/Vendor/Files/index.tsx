@@ -101,19 +101,20 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
           {/* Partitions Information */}
           {partitions.length > 0 ? (
             partitions.map((partition: any, index: number) => (
-              <PartitionCard
-                key={index}
-                partition={partition}
-                samples={samples}
-                comments={comments}
-                partitionComments={partitionComments}
-                selectedOrderData={selectedOrderData}
-                onVerificationChange={(verified) => handlePartitionVerified(partition.rev_partition, verified)}
-                addPartitionComment={addPartitionComment}
-                addPhotoSampleComment={addPhotoSampleComment}
-                updatePartitionVerificationState={updatePartitionVerificationState}
-                deletePhotoSample={deletePhotoSample}
-              />
+              // <PartitionCard
+              //   key={index}
+              //   partition={partition}
+              //   samples={samples}
+              //   comments={comments}
+              //   partitionComments={partitionComments}
+              //   selectedOrderData={selectedOrderData}
+              //   onVerificationChange={(verified) => handlePartitionVerified(partition.rev_partition, verified)}
+              //   addPartitionComment={addPartitionComment}
+              //   addPhotoSampleComment={addPhotoSampleComment}
+              //   updatePartitionVerificationState={updatePartitionVerificationState}
+              //   deletePhotoSample={deletePhotoSample}
+              // />
+              partition.rev_partition_upload && <a href={partition.rev_partition_upload}>{partition.rev_partition_upload}</a>
             ))
           ) : (
             <div className="px-4 sm:px-6 py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
@@ -162,7 +163,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
           </div>
         </div>
       )}
-      {section == 'data' &&
+      {/* {section == 'data' &&
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2">
         <button
           className={`px-6 py-3 rounded-full shadow-lg flex items-center gap-2 text-lg font-medium transition-all duration-200 ${
@@ -177,7 +178,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
           <ArrowRight className="w-5 h-5" />
         </button>
       </div>
-      }
+      } */}
     </div>
   );
 }

@@ -103,6 +103,7 @@ function Versions({ currentStep, selectedOrderData, currentAbbr, setStep, update
                 </div>
                 <span className="ml-2 text-sm font-medium bg-white dark:bg-gray-800 px-2">
                   {(section == 'data' && step.title == 'Samples') ? 'Screenshots' : step.title}
+                  {(section == 'data' && step.title == 'Files') ? 'Instructions' : step.title}
                 </span>
               </button>
               
