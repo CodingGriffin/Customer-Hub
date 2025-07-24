@@ -113,10 +113,10 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   };
   
   useEffect(() => {
-    console.log(partition.verification_state)
+    console.log("this is the verfication state at partition card =================================>", partition.verification_state)
     if(partition.verification_state == 'matching' || partition.verification_state == 'not-matching') onVerificationChange(true);
     setVerificationState(partition.verification_state)
-  }, []);
+  }, [partition]);
   const isValidUrl = (str: string) => {
     try {
       new URL(str);

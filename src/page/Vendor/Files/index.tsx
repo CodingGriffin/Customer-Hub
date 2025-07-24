@@ -71,7 +71,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
     
     // Get comments for all partitions in the current revision
 
-    
+    console.log("this is the current revision==============>", currentRevision)
     return currentRevision.partitions;
   };
 
