@@ -289,15 +289,15 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                 Cancel
               </button>
             )}
-            {/* {(verificationState === 'matching' || verificationState === 'not-matching') && */}
+            {(verificationState === 'matching' || verificationState === 'not-matching') &&
               <button
                 onClick={() => handleOpenUploadModal()}
                 className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
               >
                 <Upload className="w-4 h-4 mr-1.5" />
-                <span>Upload</span>
+                <span>Upload Screenshots.</span>
               </button>
-            {/* } */}
+            }
             <button
               onClick={handleVerifyClick}
               className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}
@@ -318,7 +318,8 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           </div>
         </div>
         <div className="text-sm text-gray-600">
-          {partition.rev_partition_upload && <a href={partition.rev_partition_upload}>{partition.rev_partition_upload}</a>}
+          {partition.rev_partition_upload && <a href={partition.rev_partition_upload}>{partition.rev_partition_upload}</a>} <br></br>
+          Please ensure that each of these values match the values on your master USB drive.
         </div>
       </div>
 
