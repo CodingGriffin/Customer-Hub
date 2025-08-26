@@ -109,7 +109,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
     format: partition.rev_partition_filesystem,
     totalFolders: partition.rev_partition_folders,
     totalFiles: partition.rev_partition_files,
-    totalSize: partition.rev_partition_size,
+    totalSize: partition.rev_partition_bytes,
   };
   
   useEffect(() => {
