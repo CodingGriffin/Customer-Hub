@@ -92,11 +92,14 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
   const allPartitionsVerified = verifiedPartitions.size === partitions.length;
   console.log(allPartitionsVerified, verifiedPartitions.size, partitions.length);
 
+  const pad_line_item_status = selectedOrderData?.pad_line_items?.find(
+    (item: any) => item.pad_abbreviation == section && item.versions_id == version_id
+  )?.status;
   return (
     <div>
       {revisions === "No revisions found." ? <Empty />
       : ( 
-        section == 'data' ?
+        (section == 'data' && pad_line_item_status >= 4) ?
         <>
           {/* Partitions Information */}
           {partitions.length > 0 ? (
