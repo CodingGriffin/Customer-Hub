@@ -99,13 +99,14 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
     <div>
       {revisions === "No revisions found." ? <Empty />
       : ( 
-        (section == 'data' && pad_line_item_status >= 4) ?
+        (section == 'data') ?
         <>
           {/* Partitions Information */}
           {partitions.length > 0 ? (
             partitions.map((partition: any, index: number) => (
               <PartitionCard
                 key={index}
+                pad_line_item_status={pad_line_item_status}
                 partition={partition}
                 samples={samples}
                 comments={comments}

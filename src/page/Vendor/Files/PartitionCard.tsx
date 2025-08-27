@@ -7,6 +7,7 @@ import PhotoSamples from './PhotoSamples';
 import UploadModal from './UploadModal';
 
 interface PartitionCardProps {
+  pad_line_item_status: any;
   partition: any;
   comments: any[];
   samples: any[];
@@ -20,6 +21,7 @@ interface PartitionCardProps {
 }
 
 const PartitionCard: React.FC<PartitionCardProps> = ({
+  pad_line_item_status,
   partition,
   comments,
   partitionComments,
@@ -322,97 +324,99 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           Please ensure that each of these values match the values on your master USB drive.
         </div>
       </div>
-
-      <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1 border border-gray-200 rounded-lg p-5 bg-white shadow-sm">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-medium text-gray-800">Drive Labels</h3>
-            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
-              <Check size={16} className="text-green-600" />
+      {pad_line_item_status >= 4 ?
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1 border border-gray-200 rounded-lg p-5 bg-white shadow-sm">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-800">Drive Labels</h3>
+              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <Check size={16} className="text-green-600" />
+              </div>
+            </div>
+            <div className="space-y-4">
+              {Object.entries(driveLabels).map(([key, value]) => (
+                <div key={key} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">{displayLabels[key]}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium">{value}</span>
+                      {verificationState === 'confirm' && (
+                        <input
+                          type="checkbox"
+                          checked={validationFields[key]?.checked ?? true}
+                          onChange={() => handleCheckChange(key)}
+                          className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  {shouldShowValidationFields && validationFields[key]?.checked==false && (
+                    <div className={`p-2 rounded-md ${verificationState === 'not-matching' ? 'bg-pink-50' : ''}`}>
+                      <input
+                        type="text"
+                        value={validationFields[key]?.value ?? ''}
+                        onChange={(e) => handleInputChange(key, e.target.value)}
+                        placeholder="Enter information about the issue..."
+                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 transition-colors duration-200 ${
+                          verificationState === 'not-matching'
+                            ? 'bg-pink-50 border-pink-300 focus:ring-pink-500 focus:border-pink-500'
+                            : 'border-blue-300 focus:ring-blue-500 focus:border-blue-500'
+                        }`}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
-          <div className="space-y-4">
-            {Object.entries(driveLabels).map(([key, value]) => (
-              <div key={key} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500">{displayLabels[key]}</span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-medium">{value}</span>
-                    {verificationState === 'confirm' && (
-                      <input
-                        type="checkbox"
-                        checked={validationFields[key]?.checked ?? true}
-                        onChange={() => handleCheckChange(key)}
-                        className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                      />
-                    )}
-                  </div>
-                </div>
-                {shouldShowValidationFields && validationFields[key]?.checked==false && (
-                  <div className={`p-2 rounded-md ${verificationState === 'not-matching' ? 'bg-pink-50' : ''}`}>
-                    <input
-                      type="text"
-                      value={validationFields[key]?.value ?? ''}
-                      onChange={(e) => handleInputChange(key, e.target.value)}
-                      placeholder="Enter information about the issue..."
-                      className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 transition-colors duration-200 ${
-                        verificationState === 'not-matching'
-                          ? 'bg-pink-50 border-pink-300 focus:ring-pink-500 focus:border-pink-500'
-                          : 'border-blue-300 focus:ring-blue-500 focus:border-blue-500'
-                      }`}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
 
-        <div className="flex-1 border border-gray-200 rounded-lg p-5 bg-white shadow-sm">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-medium text-gray-800">Metadata</h3>
-            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
-              <Check size={16} className="text-green-600" />
+          <div className="flex-1 border border-gray-200 rounded-lg p-5 bg-white shadow-sm">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-800">Metadata</h3>
+              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                <Check size={16} className="text-green-600" />
+              </div>
+            </div>
+            <div className="space-y-4">
+              {Object.entries(metadata).map(([key, value]) => (
+                <div key={key} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">{displayLabels[key]}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium">{key == 'totalSize' ? Number(value).toLocaleString() : value}</span>
+                      {verificationState === 'confirm' && (
+                        <input
+                          type="checkbox"
+                          checked={validationFields[key]?.checked ?? true}
+                          onChange={() => handleCheckChange(key)}
+                          className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  {shouldShowValidationFields && validationFields[key]?.checked==false && (
+                    <div className={`p-2 rounded-md ${verificationState === 'not-matching' ? 'bg-pink-50' : ''}`}>
+                      <input
+                        type="text"
+                        value={validationFields[key]?.value ?? ''}
+                        onChange={(e) => handleInputChange(key, e.target.value)}
+                        placeholder="Enter information about the issue..."
+                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 transition-colors duration-200 ${
+                          verificationState === 'not-matching'
+                            ? 'bg-pink-50 border-pink-300 focus:ring-pink-500 focus:border-pink-500'
+                            : 'border-blue-300 focus:ring-blue-500 focus:border-blue-500'
+                        }`}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
-          <div className="space-y-4">
-            {Object.entries(metadata).map(([key, value]) => (
-              <div key={key} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500">{displayLabels[key]}</span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-medium">{key == 'totalSize' ? Number(value).toLocaleString() : value}</span>
-                    {verificationState === 'confirm' && (
-                      <input
-                        type="checkbox"
-                        checked={validationFields[key]?.checked ?? true}
-                        onChange={() => handleCheckChange(key)}
-                        className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                      />
-                    )}
-                  </div>
-                </div>
-                {shouldShowValidationFields && validationFields[key]?.checked==false && (
-                  <div className={`p-2 rounded-md ${verificationState === 'not-matching' ? 'bg-pink-50' : ''}`}>
-                    <input
-                      type="text"
-                      value={validationFields[key]?.value ?? ''}
-                      onChange={(e) => handleInputChange(key, e.target.value)}
-                      placeholder="Enter information about the issue..."
-                      className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 transition-colors duration-200 ${
-                        verificationState === 'not-matching'
-                          ? 'bg-pink-50 border-pink-300 focus:ring-pink-500 focus:border-pink-500'
-                          : 'border-blue-300 focus:ring-blue-500 focus:border-blue-500'
-                      }`}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
         </div>
-      </div>
-
+        :
+        <div className=''>Data not submitted for sample</div>
+      }
       <PhotoSamples selectedOrderData={selectedOrderData} samples={samples} resource_id={partition.rev_partition_id} comments={comments} addPhotoSampleComment={addPhotoSampleComment} deletePhotoSample={deletePhotoSample} />
       {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
       {/* {selectedImage && (
