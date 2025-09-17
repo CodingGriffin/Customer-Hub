@@ -51,7 +51,8 @@ export default function ProductionContainer() {
         mode: "insertProductionComment",
         comment: comment,
         resource_id: 100000 + Number(version_id),
-        table_code: padType+ "_vendor" + "_table"
+        table_code: padType+ "_vendor" + "_table",
+        pads_type: padType
       }
     });
     getComments();

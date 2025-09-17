@@ -54,13 +54,15 @@ export default function PhotoSampleContainer() {
   }
 
   const addComment = (comment: string, sample_id: number) => {
+    const padType = (section === 'data' ? 'data' : section === 'artwork' ? 'artw' : 'pack');
     dispatch({
       type: commentActions.ADD_COMMENTS,
       payload: {
         mode: "insertSampleComment",
         comment: comment,
         resource_id: 100000 + sample_id,
-        table_code: "vendor_table"
+        table_code: "vendor_table",
+        pads_type: padType
       }
     });
     getComments();
