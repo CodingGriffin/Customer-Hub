@@ -16,6 +16,7 @@ export default function FilesContainer() {
 
   const {
     revisions,
+    icon,
   } = useSelector((state: any) => state.revisions);
 
   const {
@@ -37,6 +38,7 @@ export default function FilesContainer() {
     if (version_id) {
       getRevisions();
       getPhotoSamples();
+      getIcon();
     };
   }, [dispatch, version_id, section]);
 
@@ -62,6 +64,24 @@ export default function FilesContainer() {
         job_number: selectedOrderData.job.job_number,
         version_number: version_number,
         pad: padType,
+      }
+    });
+  }
+
+  const getIcon = () => {
+    
+    // Find the version_number from selectedOrderData.versions
+    const version = selectedOrderData?.versions?.find(
+      (v: any) => v.version_id == version_id
+    );
+    const version_number = version?.version_number;
+
+    dispatch({
+      type: actions.GET_ICON,
+      payload: {
+        mode: "getIconFilePath",
+        job_number: selectedOrderData.job.job_number,
+        version_number: version_number,
       }
     });
   }
@@ -183,5 +203,5 @@ export default function FilesContainer() {
     });
   }
 
-  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} partitionComments={partitionComments.data ? partitionComments.data : []} addPhotoSampleComment={addPhotoSampleComment} addPartitionComment={addPartitionComment} getPartitionComments={getPartitionComments} updatePartitionVerificationState={updatePartitionVerificationState} updateStatus={updateStatus} deletePhotoSample={deletePhotoSample} />;
+  return <VendorFiles selectedOrderData={selectedOrderData} revisions={revisions.data ? revisions.data : []} samples={samples.data ? samples.data : []} comments={comments.data ? comments.data : []} partitionComments={partitionComments.data ? partitionComments.data : []} icon={icon.data ? icon.data: {}} addPhotoSampleComment={addPhotoSampleComment} addPartitionComment={addPartitionComment} getPartitionComments={getPartitionComments} updatePartitionVerificationState={updatePartitionVerificationState} updateStatus={updateStatus} deletePhotoSample={deletePhotoSample} />;
 }

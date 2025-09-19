@@ -19,6 +19,15 @@ function* getRevisions(action: any) {
   }
 }
 
+function* getIcon(action: any) {
+  try {
+    const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.dataProofGenerated.php", {...action.payload});
+    yield put({ type: actions.GET_ICON_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: actions.GET_ICON_FAILURE, payload: error });
+  }
+}
+
 function* updatePartitionVerificationState(action: any) {
   try {
     const response: any = yield* callApi(postRequestNoToken, "j/inc/class/class.revisions.php", {...action.payload});
@@ -30,5 +39,6 @@ function* updatePartitionVerificationState(action: any) {
 
 export default function* rootSaga() {
   yield all([takeLatest(actions.GET_REVISIONS, getRevisions)]);
+  yield all([takeLatest(actions.GET_ICON, getIcon)]);
   yield all([takeLatest(actions.UPDATE_PARTITIONVERFICATIONSTATE, updatePartitionVerificationState)]);
 }

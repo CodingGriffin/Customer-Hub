@@ -18,9 +18,10 @@ interface RevisionsProps {
   samples: any,
   comments: any,
   partitionComments: any,
+  icon: any
 }
 
-function Files({selectedOrderData, revisions, samples, comments, partitionComments, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus, deletePhotoSample}: RevisionsProps) {
+function Files({selectedOrderData, revisions, samples, comments, partitionComments, icon, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus, deletePhotoSample}: RevisionsProps) {
   const originalPdfUrl = `${window.location.protocol}//${window.location.host}/`;
 
   const getCurrentDate = (): string => {
@@ -106,6 +107,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
             partitions.map((partition: any, index: number) => (
               <PartitionCard
                 key={index}
+                icon={icon}
                 pad_line_item_status={pad_line_item_status}
                 partition={partition}
                 samples={samples}

@@ -2,6 +2,7 @@ import actions from "./actions";
 
 const initialState = {
   revisions: {},
+  icon: {},
   loading: false,
   error: null,
 };
@@ -40,6 +41,24 @@ function Reducer(state = initialState, action: any) {
         // revisions: action.payload,
       };
     case actions.UPDATE_PARTITIONVERFICATIONSTATE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case actions.GET_ICON:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actions.GET_ICON_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        icon: action.payload,
+      };
+    case actions.GET_ICON_FAILURE:
       return {
         ...state,
         loading: false,

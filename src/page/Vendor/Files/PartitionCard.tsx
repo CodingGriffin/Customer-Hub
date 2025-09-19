@@ -13,6 +13,7 @@ interface PartitionCardProps {
   samples: any[];
   partitionComments: any[];
   selectedOrderData: any;
+  icon: any,
   onVerificationChange: (verified: boolean) => void;
   addPartitionComment: (comment: string, sample_id: number, field: string) => void;
   addPhotoSampleComment: (comment: string, sample_id: number) => void;
@@ -27,6 +28,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   partitionComments,
   selectedOrderData,
   samples,
+  icon,
   onVerificationChange,
   addPartitionComment,
   addPhotoSampleComment,
@@ -339,7 +341,12 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                   <div className="flex justify-between items-center">
                     <span className="text-gray-500">{displayLabels[key]}</span>
                     <div className="flex items-center gap-3">
-                      <span className="font-medium">{value}</span>
+                      {
+                        (displayLabels[key] == "Windows Icon" || displayLabels[key] == "Mac Icon") 
+                          ? 
+                        <img src={'https://everyusb.info/j/f/' + icon.file_path} /> :
+                        <span className="font-medium">{value}</span>
+                      }
                       {verificationState === 'confirm' && (
                         <input
                           type="checkbox"
