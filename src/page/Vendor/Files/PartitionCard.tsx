@@ -344,7 +344,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                       {
                         (displayLabels[key] == "Windows Icon" || displayLabels[key] == "Mac Icon") 
                           ? 
-                        <img src={'https://everyusb.info/j/f/' + icon.file_path} /> :
+                        <img src={'https://everyusb.info/j/f/' + icon.file_path} className='w-[75px]' /> :
                         <span className="font-medium">{value}</span>
                       }
                       {verificationState === 'confirm' && (
