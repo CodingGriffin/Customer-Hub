@@ -85,6 +85,8 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
     }
   };
 
+  const priorities = ["No Rush - Soft Date", "Typical Flow", "Event Sensitive", "URGENT"];
+
   if (!selectedOrderData) {
     return <div>Loading...</div>;
   }
@@ -103,6 +105,15 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
           <h2 className="text-xl font-medium text-gray-900 dark:text-white">
             Order #{selectedOrderData?.job?.job_number}
           </h2>
+          Job Priority: {
+            selectedOrderData?.job?.job_priority == 4 ? 
+            <span className="text-sm font-medium px-2 py-1 bg-red-400 text-grey-800 rounded-md">{priorities[selectedOrderData?.job?.job_priority-1]}</span>
+            :
+            (selectedOrderData?.job?.job_priority == 3 ? 
+            <span className="text-sm font-medium px-2 py-1 bg-yellow-400 text-grey-800 rounded-md">{priorities[selectedOrderData?.job?.job_priority-1]}</span>
+            :
+            <span className="text-sm font-medium px-2 py-1 bg-blue-400 text-grey-800 rounded-md">{priorities[selectedOrderData?.job?.job_priority-1]}</span>)
+          }
         </div>
 
         <div className="py-2 space-y-2">
