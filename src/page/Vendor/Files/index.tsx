@@ -6,6 +6,8 @@ import { FileSearch, FileX, FileText, File, Image, HardDrive, Database, Monitor,
 import Empty from '../../../component/Vendor/Files/Empty';
 import PartitionCard from './PartitionCard';
 
+import { baseURL } from '../../../utils/config';
+
 interface RevisionsProps {
   addPartitionComment: (comment: string, sample_id: number, field: string) => void,
   addPhotoSampleComment: (comment: string, sample_id: number) => void,
@@ -22,7 +24,7 @@ interface RevisionsProps {
 }
 
 function Files({selectedOrderData, revisions, samples, comments, partitionComments, icon, addPartitionComment, addPhotoSampleComment, getPartitionComments, updatePartitionVerificationState, updateStatus, deletePhotoSample}: RevisionsProps) {
-  const originalPdfUrl = `${window.location.protocol}//${window.location.host}/`;
+  const originalPdfUrl = baseURL;
 
   const getCurrentDate = (): string => {
     const today = new Date();

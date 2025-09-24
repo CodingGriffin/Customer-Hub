@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Check, X, AlertTriangle, Pencil, FileCheck, Package, Scale, ChevronDown, ChevronUp } from 'lucide-react';
 
 import ProductionApprovalModal from './ProductionApprovalModal';
@@ -6,7 +7,7 @@ import ConfirmationModal from './ConfirmationModal';
 import Bottom from './Bottom';
 import CommentModal from './CommentModal';
 import ImageViewer from '../../../../component/ArtworkPhotoSample/ImageViewer';
-import { useParams } from 'react-router-dom';
+import { baseURL } from '../../../../utils/config';
 
 interface PhotoSampleProps {
   addComment: (comment: string, sample_id: number) => void,
@@ -40,7 +41,7 @@ function ArtworkPhotoSample({selectedOrderData, samples, isLiveSample, comments,
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [commentText, setCommentText] = useState('');
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-  const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+  const baseUrl = baseURL;
 
   const toggleAccordion = (sampleId: number) => {
     setOpenAccordion(openAccordion === sampleId ? null : sampleId);
