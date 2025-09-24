@@ -194,7 +194,7 @@ export default function FilesContainer() {
       payload: {
         mode: "proofSent",
         pad_line_items_id: pad_line_items_id,
-        status: 0,
+        status: 4,
         job_number: selectedOrderData.job.job_number,
         code: "p",
         abbr: "v-photo-sample-received",
