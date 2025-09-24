@@ -56,13 +56,15 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
   };
 
   useEffect(() => {
-    const currentRevision = revisions.find((rev: any) => rev.superceded === 0);
-    if (partitions.length > 0) {
-      // Extract all partition IDs
-      const partitionIds = currentRevision.partitions.map((partition: any) => partition.rev_partition_id);
-      
-      // Call getPartitionComments with the partition IDs
-      getPartitionComments(partitionIds);
+    if(revisions !== "No revisions found.") {
+      const currentRevision = revisions.find((rev: any) => rev.superceded === 0);
+      if (partitions.length > 0) {
+        // Extract all partition IDs
+        const partitionIds = currentRevision.partitions.map((partition: any) => partition.rev_partition_id);
+        
+        // Call getPartitionComments with the partition IDs
+        getPartitionComments(partitionIds);
+      }
     }
   }, [revisions]);
   // Get current revision and all its partitions
