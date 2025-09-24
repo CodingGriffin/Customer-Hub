@@ -190,6 +190,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   };
 
   const handleCheckChange = (key: string) => {
+    console.log(validationFields);
     setValidationFields(prev => {
       const newFields = {
         ...prev,
@@ -207,8 +208,13 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
   };
 
   const handleInputChange = (key: string, value: string) => {
-    setValidationFields({
-      [key]: { ...validationFields[key], value },
+    setValidationFields(prev => {
+      const newFields = {
+        ...prev,
+        [key]: { ...prev[key], value },
+      };
+      
+      return newFields;
     });
   };
 
