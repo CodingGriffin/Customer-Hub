@@ -53,7 +53,6 @@ export default function AddressesTab({addresses, countries, addAddress, editAddr
       address_code: dataParam.address_code,
       address_country: dataParam.address_country
     }
-    const baseUrl = `${window.location.protocol}//${window.location.host}/`;
     try{
       addAddress(data);
       // console.log(response);

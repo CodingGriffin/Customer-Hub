@@ -11,6 +11,8 @@ import {
   Loader
 } from 'lucide-react';
 
+import { baseURL } from '../../../../utils/config';
+
 interface PdfViewerProps {
   currentVersion: any
   pdfError: string | null;
@@ -26,7 +28,7 @@ function PdfViewer({currentVersion, pdfError, setPdfError, setStep}: PdfViewerPr
   const [pdfData, setPdfData] = useState<string | null>(null);
 
   // Original PDF URL
-  const originalPdfUrl = `${window.location.protocol}//${window.location.host}/` + currentVersion?.files?.artw?.pdf?.file_path;
+  const originalPdfUrl = baseURL + currentVersion?.files?.artw?.pdf?.file_path;
   
   // Updated proxy URL for Vercel deployment
   const proxyPdfUrl = "http://localhost:3001/proxy" + currentVersion?.files?.artw?.pdf?.file_path;

@@ -5,6 +5,8 @@ import { ImageOff, MailCheck, Upload, ChevronDown, ChevronUp, Trash2, X } from '
 import UploadModal from './UploadModal';
 import ImageViewer from '../../../component/ArtworkPhotoSample/ImageViewer';
 
+import { baseURL } from '../../../utils/config';
+
 interface StepSetupProps {
   addPhotoSampleComment: (comment: string, sample_id: number) => void,
   deletePhotoSample: (photo_sample_id: number) => void,
@@ -26,7 +28,7 @@ function PhotoSamples({selectedOrderData, samples, resource_id, comments, addPho
   } | null>(null);
 
   const { version_id, section } = useParams();
-  const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+  const baseUrl = baseURL;
   
   const toggleAccordion = (sampleId: number) => {
     setOpenAccordion(openAccordion === sampleId ? null : sampleId);

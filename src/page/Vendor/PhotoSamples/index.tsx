@@ -6,6 +6,8 @@ import UploadModal from './UploadModal';
 import ImageViewer from '../../../component/ArtworkPhotoSample/ImageViewer';
 import { PHOTOSAMPLE_STATUS, SAMPLE_STATUS, PRODUCTION_STATUS } from '../../../types'
 
+import { baseURL } from '../../../utils/config';
+
 interface StepSetupProps {
   addComment: (comment: string, sample_id: number) => void,
   comments: any,
@@ -26,7 +28,7 @@ function PhotoSamples({selectedOrderData, samples, comments, currentAbbr, addCom
   } | null>(null);
 
   const { version_id, section } = useParams();
-  const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+  const baseUrl = baseURL;
   
   const toggleAccordion = (sampleId: number) => {
     setOpenAccordion(openAccordion === sampleId ? null : sampleId);

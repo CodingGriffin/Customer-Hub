@@ -1,6 +1,8 @@
 import { all, call, put } from "redux-saga/effects";
 import { notification } from "antd";
 
+import { baseURL } from "../utils/config";
+
 import ordersSaga from "./Orders/saga";
 import contactsSaga from "./Contacts/saga";
 import addressesSaga from "./Addresses/saga";
@@ -34,7 +36,7 @@ export function* callApi(apiFunction: any, ...args: any) {
     const response = yield call(apiFunction, ...args);
     console.log('callApi============================>', typeof response?.data, typeof response?.data === 'string', response?.data instanceof String)
     if (typeof response?.data === 'string' && response.data.includes('Please request access by validating your email address.')) {
-      window.location.href = `${window.location.protocol}//${window.location.host}/resources/alpha_test/enter_email.php`
+      window.location.href = `${baseURL}/resources/alpha_test/enter_email.php`
     }
     handleSuccessfulResponse(response);
     return response.data;

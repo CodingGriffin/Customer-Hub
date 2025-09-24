@@ -1,9 +1,11 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import qs from "qs"
 
+import { baseURL } from "./config";
+
 const axiosClient = axios.create();
 
-axiosClient.defaults.baseURL = `${window.location.protocol}//${window.location.host}/`;
+axiosClient.defaults.baseURL = baseURL;
 axiosClient.defaults.headers.common = {
   "Content-Type": "application/json",
   Accept: "application/json",
@@ -56,7 +58,7 @@ export async function getRequest(URL: string, options: AxiosRequestConfig = {}):
 
 export async function getFileDownload(URL: string): Promise<AxiosResponse> {
   return await axios.get(
-    `${window.location.protocol}//${window.location.host}` + `/${URL}`,
+    baseURL + `/${URL}`,
     {
       headers: {
         "Content-Type": "application/json",
