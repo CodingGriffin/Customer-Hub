@@ -328,8 +328,10 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           </div>
         </div>
         <div className="text-sm text-gray-600">
-          {partition.rev_partition_upload && <a className='border-b border-blue-400' href={partition.rev_partition_upload}>{partition.rev_partition_upload}</a>}  <br></br>
-          Please ensure that each of these values match the values on your master USB drive.
+          {partition.rev_partition_upload && 
+            <div><span className='font-bold'>Download Files:</span> <a href={partition.rev_partition_upload}>{partition.rev_partition_upload}</a></div>} 
+            <br/>
+            Please ensure that each of these values match the values on your master USB drive.
         </div>
       </div>
       {pad_line_item_status >= 4 ?
