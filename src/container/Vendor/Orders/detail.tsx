@@ -22,6 +22,7 @@ function OrderDetail() {
     if (!order.data || order.data?.job?.job_number !== orderId) {
       getOrder();
     }
+    document.title = `Every USB PO#${orderId}`
   }, [orderId]);
 
   const getOrder = () => {

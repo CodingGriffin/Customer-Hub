@@ -103,7 +103,7 @@ function OrdersDetail({selectedOrderData}: OrdersDetailProps) {
             Back to Orders
           </button>
           <h2 className="text-xl font-medium text-gray-900 dark:text-white">
-            Every USB PO #{selectedOrderData?.job?.job_number}
+            PO #{selectedOrderData?.job?.job_number}
           </h2>
           Job Priority: {
             selectedOrderData?.job?.job_priority == 4 ? 
