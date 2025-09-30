@@ -56,7 +56,8 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
   };
 
   useEffect(() => {
-    if(revisions !== "No revisions found.") {
+    console.log("This is revisions from useEffect function of index.tsx ==============> ", revisions);
+    if(revisions !== "No revisions found." && revisions.res !== "No revisions found.") {
       const currentRevision = revisions.find((rev: any) => rev.superceded === 0);
       if (partitions.length > 0) {
         // Extract all partition IDs
@@ -102,7 +103,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
   )?.status;
   return (
     <div>
-      {revisions === "No revisions found." ? <Empty />
+      {(revisions === "No revisions found." || revisions.res === "No revisions found.") ? <div className='flex justify-center'><Empty /></div>
       : ( 
         (section == 'data') ?
         <>

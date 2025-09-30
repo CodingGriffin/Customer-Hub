@@ -10,13 +10,8 @@ function Empty () {
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-3">No Files Uploaded</h2>
       
       <p className="text-gray-600 dark:text-gray-300 mb-6">
-        Looks like you haven't uploaded any files yet. We need your materials to create something amazing for you!
+        Looks like you haven't uploaded any files yet.
       </p>
-      
-      <div className="flex items-center justify-center text-rose-500 dark:text-rose-400 font-medium">
-        <FileSearch className="mr-2 h-5 w-5" />
-        <span>Upload files to get started</span>
-      </div>
     </div>
   )
 }
