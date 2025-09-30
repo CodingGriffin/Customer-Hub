@@ -2,7 +2,7 @@ import { FileSearch, FileX } from "lucide-react";
 
 function Empty () {
   return (
-    <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center mb-6">
+    <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-xl p-8 text-center mb-6">
       <div className="flex justify-center mb-6">
         <FileX className="h-24 w-24 text-rose-500 dark:text-rose-400" strokeWidth={1.5} />
       </div>
