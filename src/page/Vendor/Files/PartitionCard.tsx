@@ -5,6 +5,7 @@ import { Modal } from 'antd';
 
 import PhotoSamples from './PhotoSamples';
 import UploadModal from './UploadModal';
+import PartitionEmpty from '../../../component/Vendor/Files/PartitionEmpty';
 
 interface PartitionCardProps {
   pad_line_item_status: any;
@@ -430,7 +431,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           </div>
         </div>
         :
-        <div className=''>Data not submitted for sample</div>
+        <div className='flex justify-center'><PartitionEmpty /></div>
       }
       <PhotoSamples selectedOrderData={selectedOrderData} samples={samples} resource_id={partition.rev_partition_id} comments={comments} addPhotoSampleComment={addPhotoSampleComment} deletePhotoSample={deletePhotoSample} />
       {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}
