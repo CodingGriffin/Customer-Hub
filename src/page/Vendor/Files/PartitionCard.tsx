@@ -290,43 +290,45 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
               </span>
             )}
           </h2>
-          <div className="flex gap-2">
-            {verificationState === 'confirm' && (
+          {(pad_line_item_status >= 4 && partition.rev_partition_freespace != 1) &&
+            <div className="flex gap-2">
+              {verificationState === 'confirm' && (
+                <button
+                  onClick={resetVerification}
+                  className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200 flex items-center gap-1"
+                >
+                  <X size={16} />
+                  Cancel
+                </button>
+              )}
+              {(verificationState === 'matching' || verificationState === 'not-matching') &&
+                <button
+                  onClick={() => handleOpenUploadModal()}
+                  className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                >
+                  <Upload className="w-4 h-4 mr-1.5" />
+                  <span>Upload Screenshots.</span>
+                </button>
+              }
               <button
-                onClick={resetVerification}
-                className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200 flex items-center gap-1"
+                onClick={handleVerifyClick}
+                className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}
+                disabled={verificationState == 'matching' || verificationState == 'not-matching'}
               >
-                <X size={16} />
-                Cancel
+                {verificationState === 'matching' && <Check size={16} />}
+                {getButtonText()}
               </button>
-            )}
-            {(verificationState === 'matching' || verificationState === 'not-matching') &&
-              <button
-                onClick={() => handleOpenUploadModal()}
-                className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-              >
-                <Upload className="w-4 h-4 mr-1.5" />
-                <span>Upload Screenshots.</span>
-              </button>
-            }
-            <button
-              onClick={handleVerifyClick}
-              className={`px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 flex items-center gap-1 ${getVerifyButtonStyles()}`}
-              disabled={verificationState == 'matching' || verificationState == 'not-matching'}
-            >
-              {verificationState === 'matching' && <Check size={16} />}
-              {getButtonText()}
-            </button>
-            {(verificationState === 'matching' || verificationState === 'not-matching') &&
-              <button
-                onClick={startOver}
-                className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-all duration-200 flex items-center gap-1"
-              >
-                <Check size={16} />
-                Start Over
-              </button>
-            }
-          </div>
+              {(verificationState === 'matching' || verificationState === 'not-matching') &&
+                <button
+                  onClick={startOver}
+                  className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-all duration-200 flex items-center gap-1"
+                >
+                  <Check size={16} />
+                  Start Over
+                </button>
+              }
+            </div>
+          }
         </div>
         <div className="text-sm text-gray-600">
           {partition.rev_partition_upload && 
@@ -336,7 +338,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
         </div>
       </div>
       {pad_line_item_status >= 4 ?
-        <div className="flex flex-col md:flex-row gap-4">
+        partition.rev_partition_freespace ? 'This partition is Free Space' : <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 border border-gray-200 rounded-lg p-5 bg-white shadow-sm">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-medium text-gray-800">Drive Labels</h3>
@@ -431,7 +433,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
           </div>
         </div>
         :
-        <div className='flex justify-center'><PartitionEmpty /></div>
+          partition.rev_partition_freespace ? 'This partition is Free Space' : <div className='flex justify-center'><PartitionEmpty /></div>
       }
       <PhotoSamples selectedOrderData={selectedOrderData} samples={samples} resource_id={partition.rev_partition_id} comments={comments} addPhotoSampleComment={addPhotoSampleComment} deletePhotoSample={deletePhotoSample} />
       {showUploadModal && <UploadModal _closeUploadModal={handleCloseWUploadModal} version_name={currentVersion?.version_name} section={section} />}

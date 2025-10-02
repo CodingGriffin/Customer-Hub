@@ -4,6 +4,8 @@ import { Modal } from 'antd';
 import { FileSearch, FileX, FileText, File, Image, HardDrive, Database, Monitor, X, Check, ArrowRight } from 'lucide-react';
 
 import Empty from '../../../component/Vendor/Files/Empty';
+import PartitionEmpty from '../../../component/Vendor/Files/PartitionEmpty';
+
 import PartitionCard from './PartitionCard';
 
 import { baseURL } from '../../../utils/config';
@@ -105,7 +107,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
     <div>
       {(revisions === "No revisions found." || revisions.res === "No revisions found.") ? <div className='flex justify-center'><Empty /></div>
       : ( 
-        (section == 'data') ?
+        (section == 'data' && pad_line_item_status >= 4 ) ?
         <>
           {/* Partitions Information */}
           {partitions.length > 0 ? (
@@ -146,9 +148,7 @@ function Files({selectedOrderData, revisions, samples, comments, partitionCommen
               const files = Array.isArray(currentRevision?.files) ? currentRevision.files : [];
 
               return files.length === 0 ? (
-                <div className="px-4 sm:px-6 py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
-                  No files found in this revision
-                </div>
+                <div className='flex justify-center'><PartitionEmpty /></div>
               ) : (
                 files.map((file: any, index: number) => (
                   <div key={index} className="px-4 sm:px-6 py-3 sm:grid sm:grid-cols-8 sm:gap-4 hover:bg-gray-50 dark:hover:bg-gray-700">
