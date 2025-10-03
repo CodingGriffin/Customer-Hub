@@ -3,6 +3,8 @@ import { Outlet, useParams } from 'react-router-dom';
 import { Files, Boxes, Camera, SwatchBook } from 'lucide-react';
 import { Modal } from 'antd';
 
+import { baseURL } from '../../utils/config';
+
 interface VersionsProps {
   selectedOrderData: any;
   currentStep: number;
@@ -44,6 +46,7 @@ function Versions({ currentStep, selectedOrderData, currentAbbr, setStep, update
           if (b.line_item_type === 4) return -1;
           return 0;
         });
+        console.log("this is the sortedItems ======================> ", sortedItems);
 
         // Combine into single object with concatenated strings
         const combinedItem = {
@@ -53,14 +56,21 @@ function Versions({ currentStep, selectedOrderData, currentAbbr, setStep, update
               return item.line_item_desc.replace('Color: ', '');
             }
             return item.line_item_desc;
-          }).join(' ')
+          }).join(' '),
+          image_url: sortedItems.map((item: any) => {
+            if (item.file_name !== null && item.file_name.length > 4) {
+              item.file_name = item.file_name;
+              return item.file_name;
+            }
+          }).filter((item: any) => item != null && item != undefined)
         };
+        console.log("this is the combinedItem ======================> ", combinedItem);
 
         return (
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6 mx-3">
             <div className="flex items-center space-x-4 mb-4 last:mb-0">
               <img
-                src={sortedItems[0]?.image_url || 'https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=50&h=50&q=80'}
+                src={combinedItem.image_url.length !== 0 ? `${baseURL}images/${combinedItem.image_url[0].substr(2, combinedItem.image_url[0].length-4)}` : 'https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=50&h=50&q=80'}
                 alt={combinedItem.name}
                 className="w-[50px] h-[50px] object-cover rounded-lg"
               />
