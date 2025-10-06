@@ -6,6 +6,7 @@ import { Modal } from 'antd';
 import PhotoSamples from './PhotoSamples';
 import UploadModal from './UploadModal';
 import PartitionEmpty from '../../../component/Vendor/Files/PartitionEmpty';
+import { baseURL } from '../../../utils/config';
 
 interface PartitionCardProps {
   pad_line_item_status: any;
@@ -355,7 +356,7 @@ const PartitionCard: React.FC<PartitionCardProps> = ({
                       {
                         (displayLabels[key] == "Windows Icon" || displayLabels[key] == "Mac Icon") 
                           ? 
-                        <img src={'https://everyusb.info/j/f/' + icon.file_path} className='w-[75px]' /> :
+                        <img src={`${baseURL}j/f/` + icon.file_path} className='w-[75px]' /> :
                         <span className="font-medium">{value}</span>
                       }
                       {verificationState === 'confirm' && (
